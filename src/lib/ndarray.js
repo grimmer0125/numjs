@@ -19,7 +19,7 @@ var _ = require('./utils');
 * data-type object (dtype), one of which is associated with each NdArray.
 * @constructor
 */
-var NdArray = function NdArray () {
+var NdArray = function NdArray() {
   if (arguments.length === 1) {
     this.selection = arguments[0];
   } else if (arguments.length === 0) {
@@ -640,7 +640,7 @@ NdArray.prototype.toString = function () {
   var reg2 = /\[\s+\[/g;
   var spacer2 = '[[';
 
-  function formatArray (k, v) {
+  function formatArray(k, v) {
     if (_.isString(v)) { return v; }
     if (_.isNumber(v)) {
       var s = formatNumber(v);
@@ -818,15 +818,15 @@ var doConvolve3x3 = cwise({
     'scalar', // fg
     'scalar', // fh
     'scalar', // fi
-    {offset: [-1, -1], array: 1}, // xa
-    {offset: [-1, 0], array: 1}, // xb
-    {offset: [-1, 1], array: 1}, // xc
-    {offset: [0, -1], array: 1}, // xd
+    { offset: [-1, -1], array: 1 }, // xa
+    { offset: [-1, 0], array: 1 }, // xb
+    { offset: [-1, 1], array: 1 }, // xc
+    { offset: [0, -1], array: 1 }, // xd
     // {offset:[ 9,  0], array:1}, // useless since available already
-    {offset: [0, 1], array: 1}, // xf
-    {offset: [1, -1], array: 1}, // xg
-    {offset: [1, 0], array: 1}, // xh
-    {offset: [1, 1], array: 1} // xi
+    { offset: [0, 1], array: 1 }, // xf
+    { offset: [1, -1], array: 1 }, // xg
+    { offset: [1, 0], array: 1 }, // xh
+    { offset: [1, 1], array: 1 } // xi
   ],
   body: function (c, xe, fa, fb, fc, fd, fe, ff, fg, fh, fi, xa, xb, xc, xd, xf, xg, xh, xi) {
     c = xa * fi + xb * fh + xc * fg + xd * ff + xe * fe + xf * fd + xg * fc + xh * fb + xi * fa;
@@ -863,31 +863,31 @@ var doConvolve5x5 = cwise({
     'scalar', // fw
     'scalar', // fx
     'scalar', // fy
-    {offset: [-2, -2], array: 1}, // xa
-    {offset: [-2, -1], array: 1}, // xb
-    {offset: [-2, 0], array: 1}, // xc
-    {offset: [-2, 1], array: 1}, // xd
-    {offset: [-2, 2], array: 1}, // xe
-    {offset: [-1, -2], array: 1}, // xf
-    {offset: [-1, -1], array: 1}, // xg
-    {offset: [-1, 0], array: 1}, // xh
-    {offset: [-1, 1], array: 1}, // xi
-    {offset: [-1, 2], array: 1}, // xj
-    {offset: [0, -2], array: 1}, // xk
-    {offset: [0, -1], array: 1}, // xl
+    { offset: [-2, -2], array: 1 }, // xa
+    { offset: [-2, -1], array: 1 }, // xb
+    { offset: [-2, 0], array: 1 }, // xc
+    { offset: [-2, 1], array: 1 }, // xd
+    { offset: [-2, 2], array: 1 }, // xe
+    { offset: [-1, -2], array: 1 }, // xf
+    { offset: [-1, -1], array: 1 }, // xg
+    { offset: [-1, 0], array: 1 }, // xh
+    { offset: [-1, 1], array: 1 }, // xi
+    { offset: [-1, 2], array: 1 }, // xj
+    { offset: [0, -2], array: 1 }, // xk
+    { offset: [0, -1], array: 1 }, // xl
     // {offset:[ 0,  0], array:1},
-    {offset: [0, 1], array: 1}, // xn
-    {offset: [0, 2], array: 1}, // xo
-    {offset: [1, -2], array: 1}, // xp
-    {offset: [1, -1], array: 1}, // xq
-    {offset: [1, 0], array: 1}, // xr
-    {offset: [1, 1], array: 1}, // xs
-    {offset: [1, 2], array: 1}, // xt
-    {offset: [2, -2], array: 1}, // xu
-    {offset: [2, -1], array: 1}, // xv
-    {offset: [2, 0], array: 1}, // xw
-    {offset: [2, 1], array: 1}, // xx
-    {offset: [2, 2], array: 1} // xy
+    { offset: [0, 1], array: 1 }, // xn
+    { offset: [0, 2], array: 1 }, // xo
+    { offset: [1, -2], array: 1 }, // xp
+    { offset: [1, -1], array: 1 }, // xq
+    { offset: [1, 0], array: 1 }, // xr
+    { offset: [1, 1], array: 1 }, // xs
+    { offset: [1, 2], array: 1 }, // xt
+    { offset: [2, -2], array: 1 }, // xu
+    { offset: [2, -1], array: 1 }, // xv
+    { offset: [2, 0], array: 1 }, // xw
+    { offset: [2, 1], array: 1 }, // xx
+    { offset: [2, 2], array: 1 } // xy
   ],
   body: function (index, c, xm,
     fa, fb, fc, fd, fe, ff, fg, fh, fi, fj, fk, fl, fm, fn, fo, fp, fq, fr, fs, ft, fu, fv, fw, fx, fy,
@@ -1107,7 +1107,7 @@ NdArray.prototype.fftconvolve = function (filter) {
   return out;
 };
 
-function createArray (arr, dtype) {
+function createArray(arr, dtype) {
   if (arr instanceof NdArray) { return arr; }
   var T = _.getType(dtype);
   if (_.isNumber(arr)) {
@@ -1131,7 +1131,7 @@ NdArray.new = createArray;
 module.exports = NdArray;
 
 /*     utils    */
-function initNativeArray (shape, i) {
+function initNativeArray(shape, i) {
   i = i || 0;
   var c = shape[i] | 0;
   if (c <= 0) { return []; }
@@ -1151,7 +1151,7 @@ function initNativeArray (shape, i) {
 
 var doUnpack = cwise({
   args: ['array', 'scalar', 'index'],
-  body: function unpackCwise (arr, a, idx) {
+  body: function unpackCwise(arr, a, idx) {
     var v = a;
     var i;
     for (i = 0; i < idx.length - 1; ++i) {
@@ -1161,12 +1161,12 @@ var doUnpack = cwise({
   }
 });
 
-function unpackArray (arr) {
+function unpackArray(arr) {
   var result = initNativeArray(arr.shape, 0);
   doUnpack(arr, result);
   return result;
 }
 
-function formatNumber (v) {
+function formatNumber(v) {
   return String(Number((v || 0).toFixed(CONF.nFloatingValues)));
 }
