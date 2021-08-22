@@ -856,6 +856,5 @@ module.exports = {
   int32: function (array) { return NdArray.new(array, 'int32'); },
   uint32: function (array) { return NdArray.new(array, 'uint32'); },
   float32: function (array) { return NdArray.new(array, 'float32'); },
-  float64: function (array) { return NdArray.new(array, 'float64'); },
-  images: require('./images')
+  float64: function (array) { return NdArray.new(array, 'float64'); }
 };
