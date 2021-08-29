@@ -1,25 +1,27 @@
-'use strict';
+"use strict";
 
-var ndarray = require('ndarray');
-var cwise = require('cwise');
-var ops = require('ndarray-ops');
-var ndFFT = require('ndarray-fft');
+// const ndarray = require("ndarray");
+const cwise = require("cwise");
+const ops = require("ndarray-ops");
+const ndFFT = require("ndarray-fft");
 
-var CONF = require('./config');
-var DTYPES = require('./dtypes');
-var NdArray = require('./ndarray');
-var _ = require('./utils');
-var errors = require('./errors');
+import ndarray from "ndarray";
+
+import CONF from "./config";
+import DTYPES from "./dtypes";
+import NdArray from "./ndarray";
+import _ from "./utils";
+import * as errors from "./errors";
 
 function broadcast(shape1, shape2) {
   if (shape1.length === 0 || shape2.length === 0) {
     return;
   }
-  var reversed1 = shape1.slice().reverse();
-  var reversed2 = shape2.slice().reverse();
-  var maxLength = Math.max(shape1.length, shape2.length);
-  var outShape = new Array(maxLength);
-  for (var i = 0; i < maxLength; i++) {
+  const reversed1 = shape1.slice().reverse();
+  const reversed2 = shape2.slice().reverse();
+  const maxLength = Math.max(shape1.length, shape2.length);
+  const outShape = new Array(maxLength);
+  for (let i = 0; i < maxLength; i++) {
     if (!reversed1[i] || reversed1[i] === 1) {
       outShape[i] = reversed2[i];
     } else if (!reversed2[i] || reversed2[i] === 1) {
@@ -207,7 +209,6 @@ function mod(x1, x2) {
   return NdArray.new(x1).mod(x2);
 }
 
-
 /**
  * Permute the dimensions of the input array according to the given axes.
  *
@@ -267,8 +268,8 @@ function arange(start, stop, step, dtype) {
   } else if (arguments.length === 3 && !_.isNumber(step)) {
     return arange(start, stop, 1, step);
   }
-  var result = [];
-  var i = 0;
+  const result = [];
+  let i = 0;
   while (start < stop) {
     result[i++] = start;
     start += step;
@@ -288,10 +289,10 @@ function zeros(shape, dtype) {
   if (_.isNumber(shape) && shape >= 0) {
     shape = [shape];
   }
-  var s = _.shapeSize(shape);
-  var T = _.getType(dtype);
-  var arr = new NdArray(new T(s), shape);
-  if (arr.dtype === 'array') {
+  const s = _.shapeSize(shape);
+  const T = _.getType(dtype);
+  const arr = new NdArray(new T(s), shape);
+  if (arr.dtype === "array") {
     ops.assigns(arr.selection, 0);
   }
   return arr;
@@ -309,9 +310,9 @@ function ones(shape, dtype) {
   if (_.isNumber(shape) && shape >= 0) {
     shape = [shape];
   }
-  var s = _.shapeSize(shape);
-  var T = _.getType(dtype);
-  var arr = new NdArray(new T(s), shape);
+  const s = _.shapeSize(shape);
+  const T = _.getType(dtype);
+  const arr = new NdArray(new T(s), shape);
   ops.assigns(arr.selection, 1);
   return arr;
 }
@@ -328,8 +329,8 @@ function empty(shape, dtype) {
   if (_.isNumber(shape) && shape >= 0) {
     shape = [shape];
   }
-  var s = _.shapeSize(shape);
-  var T = _.getType(dtype);
+  const s = _.shapeSize(shape);
+  const T = _.getType(dtype);
   return new NdArray(new T(s), shape);
 }
 
@@ -346,8 +347,8 @@ function random(shape) {
   } else {
     shape = [].slice.call(arguments);
   }
-  var s = _.shapeSize(shape);
-  var arr = new NdArray(new Float64Array(s), shape);
+  const s = _.shapeSize(shape);
+  const arr = new NdArray(new Float64Array(s), shape);
   ops.random(arr.selection);
   return arr;
 }
@@ -358,17 +359,17 @@ function random(shape) {
  * @returns {NdArray}
  */
 function softmax(x) {
-  var e = NdArray.new(x).exp();
-  var se = e.sum(); // scalar
+  const e = NdArray.new(x).exp();
+  const se = e.sum(); // scalar
   ops.divseq(e.selection, se);
   return e;
 }
 
-var doSigmoid = cwise({
-  args: ['array', 'scalar'],
+const doSigmoid = cwise({
+  args: ["array", "scalar"],
   body: function sigmoidCwise(a, t) {
     a = a < -30 ? 0 : a > 30 ? 1 : 1 / (1 + Math.exp(-1 * t * a));
-  }
+  },
 });
 
 /**
@@ -384,11 +385,11 @@ function sigmoid(x, t) {
   return x;
 }
 
-var doClip = cwise({
-  args: ['array', 'scalar', 'scalar'],
+const doClip = cwise({
+  args: ["array", "scalar", "scalar"],
   body: function clipCwise(a, min, max) {
     a = Math.min(Math.max(min, a), max);
-  }
+  },
 });
 
 /**
@@ -406,30 +407,30 @@ function clip(x, min, max) {
   } else if (arguments.length === 2) {
     max = 1;
   }
-  var s = (x instanceof NdArray) ? x.clone() : NdArray.new(x);
+  const s = x instanceof NdArray ? x.clone() : NdArray.new(x);
   doClip(s.selection, min, max);
   return s;
 }
 
-var doLeakyRelu = cwise({
-  args: ['array', 'scalar'],
+const doLeakyRelu = cwise({
+  args: ["array", "scalar"],
   body: function leakyReluCwise(xi, alpha) {
     xi = Math.max(alpha * xi, xi);
-  }
+  },
 });
 
 function leakyRelu(x, alpha) {
   alpha = alpha || 1e-3;
-  var s = (x instanceof NdArray) ? x.clone() : NdArray.new(x);
+  const s = x instanceof NdArray ? x.clone() : NdArray.new(x);
   doLeakyRelu(s.selection, alpha);
   return s;
 }
 
-var doTanh = cwise({
-  args: ['array'],
+const doTanh = cwise({
+  args: ["array"],
   body: function tanhCwise(xi) {
     xi = (Math.exp(2 * xi) - 1) / (Math.exp(2 * xi) + 1);
-  }
+  },
 });
 
 /**
@@ -439,7 +440,7 @@ var doTanh = cwise({
  * @returns {NdArray}
  */
 function tanh(x) {
-  var s = (x instanceof NdArray) ? x.clone() : NdArray.new(x);
+  const s = x instanceof NdArray ? x.clone() : NdArray.new(x);
   doTanh(s.selection);
   return s;
 }
@@ -451,7 +452,7 @@ function tanh(x) {
  * @returns {NdArray}
  */
 function abs(x) {
-  var s = (x instanceof NdArray) ? x.clone() : NdArray.new(x);
+  const s = x instanceof NdArray ? x.clone() : NdArray.new(x);
   ops.abseq(s.selection);
   return s;
 }
@@ -463,7 +464,7 @@ function abs(x) {
  * @returns {NdArray}
  */
 function cos(x) {
-  var s = (x instanceof NdArray) ? x.clone() : NdArray.new(x);
+  const s = x instanceof NdArray ? x.clone() : NdArray.new(x);
   ops.coseq(s.selection);
   return s;
 }
@@ -475,7 +476,7 @@ function cos(x) {
  * @returns {NdArray}
  */
 function arccos(x) {
-  var s = (x instanceof NdArray) ? x.clone() : NdArray.new(x);
+  const s = x instanceof NdArray ? x.clone() : NdArray.new(x);
   ops.acoseq(s.selection);
   return s;
 }
@@ -487,7 +488,7 @@ function arccos(x) {
  * @returns {NdArray}
  */
 function sin(x) {
-  var s = (x instanceof NdArray) ? x.clone() : NdArray.new(x);
+  const s = x instanceof NdArray ? x.clone() : NdArray.new(x);
   ops.sineq(s.selection);
   return s;
 }
@@ -499,7 +500,7 @@ function sin(x) {
  * @returns {NdArray}
  */
 function arcsin(x) {
-  var s = (x instanceof NdArray) ? x.clone() : NdArray.new(x);
+  const s = x instanceof NdArray ? x.clone() : NdArray.new(x);
   ops.asineq(s.selection);
   return s;
 }
@@ -511,7 +512,7 @@ function arcsin(x) {
  * @returns {NdArray}
  */
 function tan(x) {
-  var s = (x instanceof NdArray) ? x.clone() : NdArray.new(x);
+  const s = x instanceof NdArray ? x.clone() : NdArray.new(x);
   ops.taneq(s.selection);
   return s;
 }
@@ -523,7 +524,7 @@ function tan(x) {
  * @returns {NdArray}
  */
 function arctan(x) {
-  var s = (x instanceof NdArray) ? x.clone() : NdArray.new(x);
+  const s = x instanceof NdArray ? x.clone() : NdArray.new(x);
   ops.ataneq(s.selection);
   return s;
 }
@@ -554,38 +555,55 @@ function concatenate(arrays) {
   if (arguments.length > 1) {
     arrays = [].slice.call(arguments);
   }
-  var i, a;
+  let i, a;
   for (i = 0; i < arrays.length; i++) {
     a = arrays[i];
-    arrays[i] = (a instanceof NdArray) ? a.tolist() : _.isNumber(a) ? [a] : a;
+    arrays[i] = a instanceof NdArray ? a.tolist() : _.isNumber(a) ? [a] : a;
   }
-  var m = arrays[0];
+  let m = arrays[0];
   for (i = 1; i < arrays.length; i++) {
     a = arrays[i];
-    var mShape = _.getShape(m);
-    var aShape = _.getShape(a);
+    const mShape = _.getShape(m);
+    const aShape = _.getShape(a);
     if (mShape.length !== aShape.length) {
-      throw new errors.ValueError('all the input arrays must have same number of dimensions');
+      throw new errors.ValueError(
+        "all the input arrays must have same number of dimensions"
+      );
     } else if (mShape.length === 1 && aShape.length === 1) {
       m = m.concat(a);
-    } else if ((mShape.length === 2 && aShape.length === 2 && mShape[0] === aShape[0]) ||
+    } else if (
+      (mShape.length === 2 && aShape.length === 2 && mShape[0] === aShape[0]) ||
       (mShape.length === 1 && aShape.length === 2 && mShape[0] === aShape[0]) ||
-      (mShape.length === 2 && aShape.length === 1 && mShape[0] === aShape[0])) {
-      for (var row = 0; row < mShape[0]; row++) {
+      (mShape.length === 2 && aShape.length === 1 && mShape[0] === aShape[0])
+    ) {
+      for (let row = 0; row < mShape[0]; row++) {
         m[row] = m[row].concat(a[row]);
       }
-    } else if ((mShape.length === 3 && aShape.length === 3 && mShape[0] === aShape[0] && mShape[1] === aShape[1]) ||
-      (mShape.length === 2 && aShape.length === 3 && mShape[0] === aShape[0] && mShape[1] === aShape[1]) ||
-      (mShape.length === 3 && aShape.length === 2 && mShape[0] === aShape[0] && mShape[1] === aShape[1])) {
-      for (var rowI = 0; rowI < mShape[0]; rowI++) {
-        var rowV = new Array(mShape[1]);
-        for (var colI = 0; colI < mShape[1]; colI++) {
+    } else if (
+      (mShape.length === 3 &&
+        aShape.length === 3 &&
+        mShape[0] === aShape[0] &&
+        mShape[1] === aShape[1]) ||
+      (mShape.length === 2 &&
+        aShape.length === 3 &&
+        mShape[0] === aShape[0] &&
+        mShape[1] === aShape[1]) ||
+      (mShape.length === 3 &&
+        aShape.length === 2 &&
+        mShape[0] === aShape[0] &&
+        mShape[1] === aShape[1])
+    ) {
+      for (let rowI = 0; rowI < mShape[0]; rowI++) {
+        const rowV = new Array(mShape[1]);
+        for (let colI = 0; colI < mShape[1]; colI++) {
           rowV[colI] = m[rowI][colI].concat(a[rowI][colI]);
         }
         m[rowI] = rowV;
       }
     } else {
-      throw new errors.ValueError('cannot concatenate  "' + mShape + '" with "' + aShape + '"');
+      throw new errors.ValueError(
+        'cannot concatenate  "' + mShape + '" with "' + aShape + '"'
+      );
     }
   }
   return NdArray.new(m, arrays[0].dtype);
@@ -628,32 +646,44 @@ function fftconvolve(a, b) {
 }
 
 function fft(x) {
-  x = (x instanceof NdArray) ? x.clone() : NdArray.new(x);
-  var xShape = x.shape;
-  var d = xShape.length;
+  x = x instanceof NdArray ? x.clone() : NdArray.new(x);
+  const xShape = x.shape;
+  const d = xShape.length;
   if (xShape[d - 1] !== 2) {
-    throw new errors.ValueError('expect last dimension of the array to have 2 values (for both real and imaginary part)');
+    throw new errors.ValueError(
+      "expect last dimension of the array to have 2 values (for both real and imaginary part)"
+    );
   }
-  var rPicker = new Array(d);
-  var iPicker = new Array(d);
+  let rPicker = new Array(d);
+  let iPicker = new Array(d);
   rPicker[d - 1] = 0;
   iPicker[d - 1] = 1;
-  ndFFT(1, x.selection.pick.apply(x.selection, rPicker), x.selection.pick.apply(x.selection, iPicker));
+  ndFFT(
+    1,
+    x.selection.pick.apply(x.selection, rPicker),
+    x.selection.pick.apply(x.selection, iPicker)
+  );
   return x;
 }
 
 function ifft(x) {
-  x = (x instanceof NdArray) ? x.clone() : NdArray.new(x);
-  var xShape = x.shape;
-  var d = xShape.length;
+  x = x instanceof NdArray ? x.clone() : NdArray.new(x);
+  const xShape = x.shape;
+  const d = xShape.length;
   if (xShape[d - 1] !== 2) {
-    throw new errors.ValueError('expect last dimension of the array to have 2 values (for both real and imaginary part)');
+    throw new errors.ValueError(
+      "expect last dimension of the array to have 2 values (for both real and imaginary part)"
+    );
   }
-  var rPicker = new Array(d);
-  var iPicker = new Array(d);
+  let rPicker = new Array(d);
+  let iPicker = new Array(d);
   rPicker[d - 1] = 0;
   iPicker[d - 1] = 1;
-  ndFFT(-1, x.selection.pick.apply(x.selection, rPicker), x.selection.pick.apply(x.selection, iPicker));
+  ndFFT(
+    -1,
+    x.selection.pick.apply(x.selection, rPicker),
+    x.selection.pick.apply(x.selection, iPicker)
+  );
   return x;
 }
 
@@ -674,8 +704,8 @@ function diag(x) {
  * @return {Array} n x n array with its main diagonal set to one, and all other elements 0
  */
 function identity(n, dtype) {
-  var arr = zeros([n, n], dtype);
-  for (var i = 0; i < n; i++) arr.set(i, i, 1);
+  const arr = zeros([n, n], dtype);
+  for (let i = 0; i < n; i++) arr.set(i, i, 1);
   return arr;
 }
 
@@ -690,24 +720,30 @@ function identity(n, dtype) {
 function stack(arrays, axis) {
   axis = axis || 0;
   if (!arrays || arrays.length === 0) {
-    throw new errors.ValueError('need at least one array to stack');
+    throw new errors.ValueError("need at least one array to stack");
   }
-  arrays = arrays.map(function (a) { return _.isNumber(a) ? a : NdArray.new(a); });
-  var expectedShape = arrays[0].shape || []; // for numbers
+  arrays = arrays.map(function (a) {
+    return _.isNumber(a) ? a : NdArray.new(a);
+  });
+  const expectedShape = arrays[0].shape || []; // for numbers
 
-  for (var i = 1; i < arrays.length; i++) {
-    var shape = arrays[i].shape || []; // for numbers
-    var len = Math.max(expectedShape.length, shape.length);
-    for (var j = 0; j < len; j++) {
-      if (expectedShape[j] !== shape[j]) throw new errors.ValueError('all input arrays must have the same shape');
+  for (let i = 1; i < arrays.length; i++) {
+    const shape = arrays[i].shape || []; // for numbers
+    const len = Math.max(expectedShape.length, shape.length);
+    for (let j = 0; j < len; j++) {
+      if (expectedShape[j] !== shape[j])
+        throw new errors.ValueError(
+          "all input arrays must have the same shape"
+        );
     }
   }
-  var stacked;
-  if (expectedShape.length === 0) { // stacking numbers
+  let stacked;
+  if (expectedShape.length === 0) {
+    // stacking numbers
     stacked = concatenate(arrays);
   } else {
     stacked = zeros([arrays.length].concat(expectedShape));
-    for (var i = 0; i < arrays.length; i++) {
+    for (let i = 0; i < arrays.length; i++) {
       stacked.pick(i).assign(arrays[i], false);
     }
   }
@@ -716,9 +752,9 @@ function stack(arrays, axis) {
     // recompute neg axis
     if (axis < 0) axis = stacked.ndim + axis;
 
-    var d = stacked.ndim;
-    var axes = new Array(d);
-    for (var i = 0; i < d; i++) {
+    const d = stacked.ndim;
+    const axes = new Array(d);
+    for (let i = 0; i < d; i++) {
       axes[i] = i < axis ? i + 1 : i === axis ? 0 : i;
     }
 
@@ -726,7 +762,6 @@ function stack(arrays, axis) {
   }
   return stacked;
 }
-
 
 /**
  * Reverse the order of elements in an array along the given axis.
@@ -738,13 +773,15 @@ function stack(arrays, axis) {
  */
 function flip(m, axis) {
   m = NdArray.new(m);
-  var indexer = ones(m.ndim).tolist();
-  var cleanaxis = axis;
+  const indexer = ones(m.ndim).tolist();
+  let cleanaxis = axis;
   while (cleanaxis < 0) {
     cleanaxis += m.ndim;
   }
   if (indexer[cleanaxis] === undefined) {
-    throw new errors.ValueError('axis=' + axis + 'invalid for the ' + m.ndim + '-dimensional input array');
+    throw new errors.ValueError(
+      "axis=" + axis + "invalid for the " + m.ndim + "-dimensional input array"
+    );
   }
   indexer[cleanaxis] = -1;
   return m.step.apply(m, indexer);
@@ -768,11 +805,11 @@ function rot90(m, k, axes) {
   m = NdArray.new(m);
   axes = NdArray.new(axes || [0, 1]);
   if (axes.shape.length !== 1 || axes.shape[0] !== 2) {
-    throw new errors.ValueError('len(axes) must be 2');
+    throw new errors.ValueError("len(axes) must be 2");
   }
   axes = axes.tolist();
   if (axes[0] === axes[1] || abs(axes[0] - axes[1]) === m.ndim) {
-    throw new errors.ValueError("Axes must be different.")
+    throw new errors.ValueError("Axes must be different.");
   }
 
   if (k === 0) {
@@ -781,8 +818,8 @@ function rot90(m, k, axes) {
   if (k === 2) {
     return flip(flip(m, axes[0]), axes[1]);
   }
-  var axesList = arange(m.ndim).tolist();
-  var keep = axesList[axes[0]];
+  const axesList = arange(m.ndim).tolist();
+  const keep = axesList[axes[0]];
   axesList[axes[0]] = axesList[axes[1]];
   axesList[axes[1]] = keep;
   if (k === 1) {
@@ -792,7 +829,7 @@ function rot90(m, k, axes) {
   }
 }
 
-module.exports = {
+export default {
   config: CONF,
   dtypes: DTYPES,
   NdArray: NdArray,
@@ -849,12 +886,28 @@ module.exports = {
   identity: identity,
   stack: stack,
   rot90: rot90,
-  int8: function (array) { return NdArray.new(array, 'int8'); },
-  uint8: function (array) { return NdArray.new(array, 'uint8'); },
-  int16: function (array) { return NdArray.new(array, 'int16'); },
-  uint16: function (array) { return NdArray.new(array, 'uint16'); },
-  int32: function (array) { return NdArray.new(array, 'int32'); },
-  uint32: function (array) { return NdArray.new(array, 'uint32'); },
-  float32: function (array) { return NdArray.new(array, 'float32'); },
-  float64: function (array) { return NdArray.new(array, 'float64'); }
+  int8: function (array) {
+    return NdArray.new(array, "int8");
+  },
+  uint8: function (array) {
+    return NdArray.new(array, "uint8");
+  },
+  int16: function (array) {
+    return NdArray.new(array, "int16");
+  },
+  uint16: function (array) {
+    return NdArray.new(array, "uint16");
+  },
+  int32: function (array) {
+    return NdArray.new(array, "int32");
+  },
+  uint32: function (array) {
+    return NdArray.new(array, "uint32");
+  },
+  float32: function (array) {
+    return NdArray.new(array, "float32");
+  },
+  float64: function (array) {
+    return NdArray.new(array, "float64");
+  },
 };

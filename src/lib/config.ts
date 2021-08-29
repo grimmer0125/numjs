@@ -1,6 +1,6 @@
-'use strict';
+"use strict";
 
-module.exports = {
+export default {
   printThreshold: 7,
-  nFloatingValues: 5
+  nFloatingValues: 5,
 };

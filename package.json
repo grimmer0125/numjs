@@ -16,6 +16,7 @@
     "typedarray-pool": "^1.1.0"
   },
   "devDependencies": {
+    "@types/ndarray": "^1.0.10",
     "browserify-shim": "^3.8.12",
     "chai": "^3.5.0",
     "expect.js": "^0.3.1",
