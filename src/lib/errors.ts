@@ -1,19 +1,25 @@
-'use strict';
+"use strict";
 
-module.exports = {
-  ValueError: function ValueError() {
-    var err = Error.apply(this, arguments);
-    err.name = this.constructor.name;
-    return err;
-  },
-  ConfigError: function ConfigError() {
-    var err = Error.apply(this, arguments);
-    err.name = this.constructor.name;
-    return err;
-  },
-  NotImplementedError: function NotImplementedError() {
-    var err = Error.apply(this, arguments);
-    err.name = this.constructor.name;
-    return err;
-  }
-};
+export class ValueError extends Error {}
+
+// function ValueError() {
+//   const err = Error.apply(this, arguments);
+//   err.name = this.constructor.name;
+//   return err;
+// }
+
+export class ConfigError extends Error {}
+
+// function ConfigError() {
+//   const err = Error.apply(this, arguments);
+//   err.name = this.constructor.name;
+//   return err;
+// }
+
+export class NotImplementedError extends Error {}
+
+// function NotImplementedError() {
+//   const err = Error.apply(this, arguments);
+//   err.name = this.constructor.name;
+//   return err;
+// }
