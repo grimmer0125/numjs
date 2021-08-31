@@ -7,13 +7,13 @@
     "test": "test"
   },
   "dependencies": {
-    "cwise": "^1.0.8",
-    "lodash": "^4.11.1",
-    "ndarray": "^1.0.18",
-    "ndarray-fft": "^1.0.0",
+    "cwise": "^1.0.10",
+    "lodash": "^4.17.21",
+    "ndarray": "^1.0.19",
+    "ndarray-fft": "^1.0.3",
     "ndarray-gemm": "^1.0.0",
     "ndarray-ops": "^1.2.2",
-    "typedarray-pool": "^1.1.0"
+    "typedarray-pool": "^1.2.0"
   },
   "devDependencies": {
     "@types/ndarray": "^1.0.10",
