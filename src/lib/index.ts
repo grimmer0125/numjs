@@ -258,15 +258,20 @@ function negative(x) {
  *
  * @return {NdArray} Array of evenly spaced values.
  */
-function arange(start, stop, step, dtype) {
+function arange(
+  start,
+  stop?: number | Function | string,
+  step?: number | Function | string,
+  dtype?: Function | string
+) {
   if (arguments.length === 1) {
     return arange(0, start, 1, undefined);
   } else if (arguments.length === 2 && _.isNumber(stop)) {
     return arange(start, stop, 1, undefined);
   } else if (arguments.length === 2) {
-    return arange(0, start, 1, stop);
+    return arange(0, start, 1, stop as Function | string);
   } else if (arguments.length === 3 && !_.isNumber(step)) {
-    return arange(start, stop, 1, step);
+    return arange(start, stop, 1, step as Function | string);
   }
   const result = [];
   let i = 0;
@@ -285,7 +290,7 @@ function arange(start, stop, step, dtype) {
  *
  * @return {NdArray} Array of zeros with the given shape and dtype
  */
-function zeros(shape, dtype) {
+function zeros(shape, dtype?: Function | string) {
   if (_.isNumber(shape) && shape >= 0) {
     shape = [shape];
   }
@@ -306,7 +311,7 @@ function zeros(shape, dtype) {
  *
  * @return {NdArray} Array of ones with the given shape and dtype
  */
-function ones(shape, dtype) {
+function ones(shape, dtype?: Function | string) {
   if (_.isNumber(shape) && shape >= 0) {
     shape = [shape];
   }
