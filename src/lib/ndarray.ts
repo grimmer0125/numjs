@@ -24,13 +24,13 @@ class NdArray {
   selection: ndarray.NdArray;
   inspect: typeof NdArray.prototype.toString;
 
-  constructor() {
-    if (arguments.length === 1) {
-      this.selection = arguments[0];
-    } else if (arguments.length === 0) {
+  constructor(...args: any[]) {
+    if (args.length === 1) {
+      this.selection = args[0];
+    } else if (args.length === 0) {
       throw new errors.ValueError("Required argument 'data' not found");
     } else {
-      this.selection = ndarray.apply(null, arguments);
+      this.selection = ndarray.apply(null, args);
     }
 
     /**
@@ -89,18 +89,18 @@ class NdArray {
     return this.transpose();
   }
 
-  get() {
-    const n = arguments.length;
+  get(...args: number[]) {
+    const n = args.length;
     for (let i = 0; i < n; i++) {
-      if (arguments[i] < 0) {
-        arguments[i] += this.shape[i];
+      if (args[i] < 0) {
+        args[i] += this.shape[i];
       }
     }
-    return this.selection.get.apply(this.selection, arguments);
+    return this.selection.get.apply(this.selection, args);
   }
 
-  set() {
-    return this.selection.set.apply(this.selection, arguments);
+  set(...args: number[]) {
+    return this.selection.set.apply(this.selection, args);
   }
 
   slice() {
@@ -183,8 +183,8 @@ class NdArray {
   //        [  9, 10, 11],
   //        [ 13, 14, 15]])
   */
-  lo() {
-    return new NdArray(this.selection.lo.apply(this.selection, arguments));
+  lo(...args: number[]) {
+    return new NdArray(this.selection.lo.apply(this.selection, args));
   }
 
   /**
@@ -210,12 +210,12 @@ class NdArray {
   //        [ 9, 10]])
 
   */
-  hi() {
-    return new NdArray(this.selection.hi.apply(this.selection, arguments));
+  hi(...args: number[]) {
+    return new NdArray(this.selection.hi.apply(this.selection, args));
   }
 
-  step() {
-    return new NdArray(this.selection.step.apply(this.selection, arguments));
+  step(...args: number[]) {
+    return new NdArray(this.selection.step.apply(this.selection, args));
   }
 
   /**
@@ -241,7 +241,7 @@ class NdArray {
    * @param {Array|number} The new shape should be compatible with the original shape. If an integer, then the result will be a 1-D array of that length. One shape dimension can be -1. In this case, the value is inferred from the length of the array and remaining dimensions.
    * @returns {NdArray} a new view object if possible, a copy otherwise,
    */
-  reshape(shape) {
+  reshape(shape: number | number[]) {
     if (arguments.length === 0) {
       throw new errors.ValueError(
         "function takes at least one argument (0 given)"
@@ -251,20 +251,20 @@ class NdArray {
       shape = [_.shapeSize(this.shape)];
     }
     if (arguments.length === 1 && _.isNumber(shape)) {
-      shape = [shape];
+      shape = [shape as number];
     }
     if (arguments.length > 1) {
       shape = [].slice.call(arguments);
     }
     if (
-      shape.filter(function (s) {
+      (shape as number[]).filter(function (s) {
         return s === -1;
       }).length > 1
     ) {
       throw new errors.ValueError("can only specify one unknown dimension");
     }
     const currentShapeSize = _.shapeSize(shape);
-    shape = shape.map(
+    shape = (shape as number[]).map(
       function (s) {
         return s === -1 ? (-1 * this.size) / currentShapeSize : s;
       }.bind(this)
@@ -338,15 +338,13 @@ class NdArray {
    * @param {...number} [axes]
    * @returns {NfdArray}
    */
-  transpose(axes) {
-    if (arguments.length === 0) {
+  transpose(...axes: number[]) {
+    if (axes.length === 0) {
       const d = this.ndim;
       axes = new Array(d);
       for (let i = 0; i < d; i++) {
         axes[i] = d - i - 1;
       }
-    } else if (arguments.length > 1) {
-      axes = arguments;
     }
     return new NdArray(this.selection.transpose.apply(this.selection, axes));
   }
@@ -408,7 +406,7 @@ class NdArray {
    * @param {boolean} [copy=true]
    * @returns {NdArray}
    */
-  assign(x, copy) {
+  assign(x, copy?: boolean) {
     if (arguments.length === 1) {
       copy = true;
     }
@@ -430,7 +428,7 @@ class NdArray {
    * @param {boolean} [copy=true]
    * @returns {NdArray}
    */
-  add(x, copy) {
+  add(x, copy?: boolean) {
     if (arguments.length === 1) {
       copy = true;
     }
@@ -452,7 +450,7 @@ class NdArray {
    * @param {boolean} [copy=true]
    * @returns {NdArray}
    */
-  subtract(x, copy) {
+  subtract(x, copy?: boolean) {
     if (arguments.length === 1) {
       copy = true;
     }
@@ -474,7 +472,7 @@ class NdArray {
    * @param {boolean} [copy=true]
    * @returns {NdArray}
    */
-  multiply(x, copy) {
+  multiply(x, copy?: boolean) {
     if (arguments.length === 1) {
       copy = true;
     }
@@ -497,7 +495,7 @@ class NdArray {
    * @param {boolean} [copy=true]
    * @returns {NdArray}
    */
-  divide(x, copy) {
+  divide(x, copy?: boolean) {
     if (arguments.length === 1) {
       copy = true;
     }
@@ -520,7 +518,7 @@ class NdArray {
    * @param {boolean} [copy=true] - set to false to modify the array rather than create a new one
    * @returns {NdArray}
    */
-  pow(x, copy) {
+  pow(x, copy?: boolean) {
     if (arguments.length === 1) {
       copy = true;
     }
@@ -541,7 +539,7 @@ class NdArray {
    * @param {boolean} [copy=true] - set to false to modify the array rather than create a new one
    * @returns {NdArray}
    */
-  exp(copy) {
+  exp(copy?: boolean) {
     if (arguments.length === 0) {
       copy = true;
     }
@@ -556,7 +554,7 @@ class NdArray {
    * @param {boolean} [copy=true] - set to false to modify the array rather than create a new one
    * @returns {NdArray}
    */
-  log(copy) {
+  log(copy?: boolean) {
     if (arguments.length === 0) {
       copy = true;
     }
@@ -571,7 +569,7 @@ class NdArray {
    * @param {boolean} [copy=true] - set to false to modify the array rather than create a new one
    * @returns {NdArray}
    */
-  sqrt(copy) {
+  sqrt(copy?: boolean) {
     if (arguments.length === 0) {
       copy = true;
     }
@@ -648,7 +646,7 @@ class NdArray {
    * @param {boolean} [copy=true]
    * @returns {NdArray}
    */
-  mod(x, copy) {
+  mod(x, copy?: boolean) {
     if (arguments.length === 1) {
       copy = true;
     }
@@ -783,7 +781,7 @@ class NdArray {
    * @param {boolean} [copy=true]
    * @returns {NdArray}
    */
-  round(copy) {
+  round(copy?: boolean) {
     if (arguments.length === 0) {
       copy = true;
     }
@@ -1080,8 +1078,8 @@ class NdArray {
     return out;
   }
 
-  static new(arr, dtypes) {
-    return createArray(arr, dtypes);
+  static new(arr, dtype?: Function | string) {
+    return createArray(arr, dtype);
   }
 }
 
@@ -1296,7 +1294,7 @@ const doConvolve5x5 = cwise({
   },
 });
 
-function createArray(arr, dtype) {
+function createArray(arr, dtype?: Function | string) {
   if (arr instanceof NdArray) {
     return arr;
   }

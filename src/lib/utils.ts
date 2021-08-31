@@ -12,7 +12,7 @@ function isFunction(value) {
   return typeof value === "function";
 }
 
-function baseFlatten(array, isDeep, result) {
+function baseFlatten(array, isDeep, result?: number[]) {
   result = result || [];
   let index = -1;
   const length = array.length;
