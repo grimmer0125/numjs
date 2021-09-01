@@ -42,7 +42,9 @@
     "karma-phantomjs-launcher": "^1.0.0",
     "mocha": "^5.2.0",
     "phantomjs-prebuilt": "^2.1.7",
-    "semistandard": "^12.0.1"
+    "semistandard": "^12.0.1",
+    "ts-node": "^10.2.1",
+    "typescript": "^4.4.2"
   },
   "semistandard": {
     "globals": [
