@@ -16,6 +16,8 @@
     "typedarray-pool": "^1.2.0"
   },
   "devDependencies": {
+    "@types/chai": "^4.2.21",
+    "@types/mocha": "^9.0.0",
     "@types/ndarray": "^1.0.10",
     "@types/node": "^16.7.8",
     "browserify-shim": "^3.8.12",
@@ -56,6 +58,7 @@
   },
   "scripts": {
     "test": "grunt test",
+    "test2": "mocha --require ts-node/register test/mocha/*.spec.ts",
     "preversion": "grunt test && git ci dist -m 'bump version' --allow-empty ",
     "postversion": "npm publish && grunt doc"
   },
