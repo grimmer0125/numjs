@@ -173,7 +173,7 @@ function mean(x) {
  * @param {(Array|NdArray|number)} x
  * @returns {number}
  */
-function std(x, options) {
+function std(x, options?: any) {
   return NdArray.new(x).std(options);
 }
 
@@ -330,7 +330,7 @@ function ones(shape, dtype?: Function | string) {
  *
  * @return {NdArray} Array of `undefined` values with the given shape and dtype
  */
-function empty(shape, dtype) {
+function empty(shape, dtype?: Function | string) {
   if (_.isNumber(shape) && shape >= 0) {
     shape = [shape];
   }
@@ -383,7 +383,7 @@ const doSigmoid = cwise({
  * @param {number} [t=1] - stifness parameter
  * @returns {NdArray}
  */
-function sigmoid(x, t) {
+function sigmoid(x, t?: number) {
   x = NdArray.new(x).clone();
   t = t || 1;
   doSigmoid(x.selection, t);
@@ -708,7 +708,7 @@ function diag(x) {
  * @param {(String|Object)}  [dtype=Array]  The type of the output array.
  * @return {Array} n x n array with its main diagonal set to one, and all other elements 0
  */
-function identity(n, dtype) {
+function identity(n, dtype?: Function | string) {
   const arr = zeros([n, n], dtype);
   for (let i = 0; i < n; i++) arr.set(i, i, 1);
   return arr;
@@ -722,7 +722,7 @@ function identity(n, dtype) {
  * @param {number} [axis=0] The axis in the result array along which the input arrays are stacked.
  * @return {Array} The stacked array has one more dimension than the input arrays.
  */
-function stack(arrays, axis) {
+function stack(arrays, axis?: number) {
   axis = axis || 0;
   if (!arrays || arrays.length === 0) {
     throw new errors.ValueError("need at least one array to stack");
@@ -798,22 +798,22 @@ function flip(m, axis) {
  * New in version 0.15.0.
  * @param {Array|NdArray} m array_like
  * @param {number} [k=1] Number of times the array is rotated by 90 degrees.
- * @param {Array|NdArray} [axes=(0,1)] The array is rotated in the plane defined by the axes. Axes must be different.
+ * @param {Array|NdArray} [axes2=(0,1)] The array is rotated in the plane defined by the axes. Axes must be different.
  * @return {NdArray} A rotated view of m.
  */
-function rot90(m, k, axes) {
+function rot90(m, k?: number, axes?: number[]) {
   k = k || 1;
   while (k < 0) {
     k += 4;
   }
   k = k % 4;
   m = NdArray.new(m);
-  axes = NdArray.new(axes || [0, 1]);
-  if (axes.shape.length !== 1 || axes.shape[0] !== 2) {
+  let axes2: any = NdArray.new(axes || [0, 1]);
+  if (axes2.shape.length !== 1 || axes2.shape[0] !== 2) {
     throw new errors.ValueError("len(axes) must be 2");
   }
-  axes = axes.tolist();
-  if (axes[0] === axes[1] || abs(axes[0] - axes[1]) === m.ndim) {
+  axes2 = axes2.tolist();
+  if (axes2[0] === axes2[1] || abs(axes2[0] - axes2[1]) === m.ndim) {
     throw new errors.ValueError("Axes must be different.");
   }
 
@@ -821,16 +821,16 @@ function rot90(m, k, axes) {
     return m;
   }
   if (k === 2) {
-    return flip(flip(m, axes[0]), axes[1]);
+    return flip(flip(m, axes2[0]), axes2[1]);
   }
   const axesList = arange(m.ndim).tolist();
-  const keep = axesList[axes[0]];
-  axesList[axes[0]] = axesList[axes[1]];
-  axesList[axes[1]] = keep;
+  const keep = axesList[axes2[0]];
+  axesList[axes2[0]] = axesList[axes2[1]];
+  axesList[axes2[1]] = keep;
   if (k === 1) {
-    return transpose(flip(m, axes[1]), axesList);
+    return transpose(flip(m, axes2[1]), axesList);
   } else {
-    return flip(transpose(m, axesList), axes[1]);
+    return flip(transpose(m, axesList), axes2[1]);
   }
 }
 
