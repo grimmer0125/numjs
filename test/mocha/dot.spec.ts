@@ -1,13 +1,13 @@
 /* eslint-env mocha */
 'use strict';
 
-var expect = require('expect.js');
+import { expect } from 'chai';
 
-var nj = require('../../src');
+import nj from "../../src"
 
 describe('dot', function () {
   describe('on vectors', function () {
-    var v3, v12;
+    let v3, v12;
 
     beforeEach(function () {
       v3 = nj.arange(3); v12 = nj.arange(12);
@@ -19,13 +19,13 @@ describe('dot', function () {
     });
 
     it('should throw an error lengths are different', function () {
-      expect(function () { nj.dot([v3, v12]); }).to.throwException();
+      expect(function () { nj.dot(v3, v12); }).to.throw();
     });
   });
 
   it('should work on matrix', function () {
-    var a = nj.arange(12).reshape([4, 3]);
-    var b = nj.arange(12).reshape([3, 4]);
+    const a = nj.arange(12).reshape([4, 3]);
+    const b = nj.arange(12).reshape([3, 4]);
     expect(nj.dot(a, b).tolist()).to.eql([
       [20, 23, 26, 29],
       [56, 68, 80, 92],
@@ -51,24 +51,24 @@ describe('dot', function () {
   });
 
   it('should be able to multiply a vector with a matrix', function () {
-    var a = nj.arange(2);
-    var b = nj.arange(6).reshape([2, 3]);
+    const a = nj.arange(2);
+    const b = nj.arange(6).reshape([2, 3]);
     expect(nj.dot(a, b).tolist())
       .to.eql([3, 4, 5]);
     expect(nj.dot(b.T, a).tolist())
       .to.eql([3, 4, 5]);
   });
   it('should be fast on vectors even if they are very large', function () {
-    var N = 100000;
-    var a = nj.ones([N]);
+    const N = 100000;
+    const a = nj.ones([N]);
     expect(a.dot(a).tolist()).to.eql([N]);
   });
   it('should be fast on V.M even if they are very large', function () {
-    var n = 1000;
-    var m = 1000;
-    var V = nj.ones([n]);
-    var M = nj.ones([n, m]);
-    var VdotM = nj.ones([m]).multiply(n, false);
+    const n = 1000;
+    const m = 1000;
+    const V = nj.ones([n]);
+    const M = nj.ones([n, m]);
+    const VdotM = nj.ones([m]).multiply(n, false);
     expect(V.dot(M).tolist())
       .to.eql(VdotM.tolist());
   });

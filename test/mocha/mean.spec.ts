@@ -1,9 +1,9 @@
 /* eslint-env mocha */
 'use strict';
 
-var expect = require('expect.js');
+import { expect } from 'chai';
 
-var nj = require('../../src');
+import nj from "../../src";
 
 describe('mean', function () {
   it('should work on vectors', function () {

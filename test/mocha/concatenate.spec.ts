@@ -1,13 +1,14 @@
 /* eslint-env mocha */
 'use strict';
 
-var expect = require('expect.js');
+import { expect } from 'chai';
 
-var nj = require('../../src');
+import nj from "../../src";
+import { ValueError } from '../../src/lib/errors';
 
 describe('concat', function () {
   describe('with numbers', function () {
-    var c;
+    let c;
     beforeEach(function () {
       c = nj.concatenate([1, 0]);
     });
@@ -26,19 +27,17 @@ describe('concat', function () {
   });
 
   it('should raise an error when trying to concat array with different dims', function () {
-    var a = nj.arange(12).reshape([4, 3]);
-    var b = nj.arange(4).add(1);
+    const a = nj.arange(12).reshape([4, 3]);
+    const b = nj.arange(4).add(1);
     expect(function () {
       nj.concatenate([a, b]);
-    }).to.throwException(function (e) {
-      expect(e.toString()).to.equal('ValueError: all the input arrays must have same number of dimensions');
-    });
+    }).to.throw(ValueError,'all the input arrays must have same number of dimensions');
   });
 
   it('should concatenate multidimensional arrays along the last axis', function () {
-    var a = nj.arange(12).reshape([4, 3]);
-    var b = nj.arange(4).add(1).reshape([4, 1]);
-    var c = nj.arange(4 * 3 * 2).reshape([4, 3, 2]); // (4,3,2)
+    const a = nj.arange(12).reshape([4, 3]);
+    const b = nj.arange(4).add(1).reshape([4, 1]);
+    const c = nj.arange(4 * 3 * 2).reshape([4, 3, 2]); // (4,3,2)
 
     expect(nj.concatenate([a, b]).tolist())
       .to.eql([

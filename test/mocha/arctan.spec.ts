@@ -1,13 +1,12 @@
 /* eslint-env mocha */
 'use strict';
 
-var expect = require('expect.js');
-
-var nj = require('../../src');
+import { expect } from 'chai';
+import nj from "../../src";
 
 describe('arctan', function () {
   it('should work on vectors', function () {
-    var x = nj.array([-1, 0, 1]);
+    const x = nj.array([-1, 0, 1]);
     expect(nj.arctan(x).tolist())
       .to.eql([ -Math.PI / 4, 0, Math.PI / 4 ]);
   });

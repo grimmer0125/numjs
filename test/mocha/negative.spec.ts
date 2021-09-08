@@ -1,15 +1,15 @@
 /* eslint-env mocha */
 'use strict';
 
-var expect = require('expect.js');
+import { expect } from 'chai';
 
-var nj = require('../../src');
+import nj from "../../src";
 
 describe('negative', function () {
   it('should numerical negative, element-wise.', function () {
     expect(nj.arange(3).negative().tolist())
-      .to.eql([0, -1, -2]);
+      .to.eql([-0, -1, -2]);
     expect(nj.negative(nj.arange(3)).tolist())
-      .to.eql([0, -1, -2]);
+      .to.eql([-0, -1, -2]);
   });
 });

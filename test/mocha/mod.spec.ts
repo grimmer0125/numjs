@@ -1,9 +1,9 @@
 /* eslint-env mocha */
 'use strict';
 
-const expect = require('expect.js');
+import { expect } from 'chai';
 
-const nj = require('../../src');
+import nj from "../../src";
 
 describe('mod', function () {
   [{

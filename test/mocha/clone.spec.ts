@@ -1,12 +1,11 @@
 /* eslint-env mocha */
 'use strict';
 
-var expect = require('expect.js');
-
-var nj = require('../../src');
+import { expect } from 'chai';
+import nj from "../../src";
 
 describe('clone', function () {
-  var x, c;
+  let x, c;
   beforeEach(function () {
     x = nj.arange(3, 'uint8');
     c = x.clone();

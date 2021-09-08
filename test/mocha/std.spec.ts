@@ -1,9 +1,9 @@
 /* eslint-env mocha */
 'use strict';
 
-var expect = require('expect.js');
+import { expect } from 'chai';
 
-var nj = require('../../src');
+import nj from "../../src";
 
 describe('std', function () {
   it('should work on vectors', function () {
@@ -19,13 +19,13 @@ describe('std', function () {
         this.array = [3,3,3,2,4,4,3,3,3,3,4,3,3,5,3,4,2,3,4,4,3,2,3,4,3,3,3,3,3,3,2,1,4,3,4,3,3,4,4,4,2,3,4,3,2,4,3];
       });
       it('should default to using the sample variance', function() {
-        var expectation = 0.752842809061879;
+        const expectation = 0.752842809061879;
         expect(nj.array(this.array).std()).to.equal(expectation);
         expect(nj.std(this.array)).to.equal(expectation);
       })
       it('should accomodate using the population variance', function() {
-        var expectation = 0.7609818867801011;
-        var options = { ddof: 1 };
+        const expectation = 0.7609818867801011;
+        const options = { ddof: 1 };
         expect(nj.array(this.array).std(options)).to.equal(expectation);
         expect(nj.std(this.array, options)).to.equal(expectation);
       })

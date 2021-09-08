@@ -1,21 +1,21 @@
 /* eslint-env mocha */
 'use strict';
 
-var expect = require('expect.js');
+import { expect } from 'chai';
 
-var nj = require('../../src');
+import nj from "../../src"
 
 describe('softmax', function () {
   it('should work on vectors', function () {
-    var x = nj.zeros(3);
-    var expected = [1 / 3, 1 / 3, 1 / 3];
+    const x = nj.zeros(3);
+    const expected = [1 / 3, 1 / 3, 1 / 3];
     expect(nj.softmax(x).tolist())
       .to.eql(expected);
   });
 
   it('should work on matrix', function () {
-    var x = nj.zeros(4).reshape([2, 2]);
-    var expected = [[1 / 4, 1 / 4], [1 / 4, 1 / 4]];
+    const x = nj.zeros(4).reshape([2, 2]);
+    const expected = [[1 / 4, 1 / 4], [1 / 4, 1 / 4]];
     expect(nj.softmax(x).tolist())
       .to.eql(expected);
   });
