@@ -1,13 +1,13 @@
 /* eslint-env mocha */
 'use strict';
 
-var expect = require('expect.js');
+import { expect } from 'chai';
 
-var nj = require('../../src');
+import nj from "../../src";
 
 describe('get', function () {
   describe('on 1d array', function () {
-    var a;
+    let a;
     beforeEach(function () {
       a = nj.arange(3);
     });
@@ -22,7 +22,7 @@ describe('get', function () {
     });
   });
   describe('on 2d array', function () {
-    var a;
+    let a;
     beforeEach(function () {
       a = nj.arange(3 * 3).reshape(3, 3);
     });

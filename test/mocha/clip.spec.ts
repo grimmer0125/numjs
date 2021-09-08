@@ -1,13 +1,12 @@
 /* eslint-env mocha */
 'use strict';
 
-var expect = require('expect.js');
-
-var nj = require('../../src');
+import { expect } from 'chai';
+import nj from "../../src";
 
 describe('clip', function () {
   it('should work on vectors', function () {
-    var x = nj.array([-1, 0, 1]);
+    const x = nj.array([-1, 0, 1]);
     expect(nj.clip(x, 0, Number.POSITIVE_INFINITY).tolist())
       .to.eql([0, 0, 1]);
     expect(nj.clip(x, Number.NEGATIVE_INFINITY, 0).tolist())

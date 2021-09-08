@@ -1,9 +1,10 @@
 /* eslint-env mocha */
 'use strict';
 
-var expect = require('expect.js');
+import { expect } from 'chai';
 
-var nj = require('../../src');
+import nj from "../../src";
+import { ValueError}  from "../../src/lib/errors"
 
 describe('utils', function () {
   it('broadcast', function () {
@@ -15,33 +16,31 @@ describe('utils', function () {
   });
 
   describe('iteraxis', function () {
-    var x;
+    let x;
     beforeEach(function () {
       x = nj.arange(12).reshape([4, 3]);
     });
     it('should raise an error if axis NOT valid', function () {
       expect(function () {
         x.iteraxis(2, function (xi) {});
-      }).to.throwException(function (e) {
-        expect(e.toString()).to.equal('ValueError: invalid axis');
-      });
+      }).to.throw(ValueError, 'invalid axis');
     });
     it('can iterate over rows', function () {
-      var y = [];
+      const y = [];
       x.iteraxis(0, function (xr, i) {
         y[i] = xr.tolist();
       });
       expect(x.tolist()).to.eql(y);
     });
     it('can iterate over columns', function () {
-      var y = [];
+      const y = [];
       x.iteraxis(1, function (xc, i) {
         y[i] = xc.tolist();
       });
       expect(x.transpose().tolist()).to.eql(y);
     });
     it('can iterate over the last axis', function () {
-      var y = [];
+      const y = [];
       x.iteraxis(-1, function (xc, i) {
         y[i] = xc.tolist();
       });

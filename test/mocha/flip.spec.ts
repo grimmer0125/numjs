@@ -1,14 +1,14 @@
 /* eslint-env mocha */
 'use strict';
 
-var expect = require('expect.js');
+import { expect } from 'chai';
 
-var nj = require('../../src');
+import nj from "../../src";
 
 describe('flip', function () {
 
   it('should work with ndarray', function () {
-    var m = nj.arange(8).reshape([2,2,2]);
+    const m = nj.arange(8).reshape([2,2,2]);
     expect(nj.flip(m, 0).tolist()).to.eql([
       [[4, 5],
        [6, 7]],

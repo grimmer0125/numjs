@@ -1,9 +1,9 @@
 /* eslint-env mocha */
 'use strict';
 
-var expect = require('expect.js');
+import { expect } from 'chai';
 
-var nj = require('../../src');
+import nj from "../../src";
 
 describe('exp', function () {
   it('should work on scalars', function () {
@@ -11,7 +11,7 @@ describe('exp', function () {
       .to.eql([1]);
   });
   it('should work on vectors', function () {
-    var x = nj.arange(3);
+    const x = nj.arange(3);
     expect(nj.exp(x).tolist())
       .to.eql([1, Math.exp(1), Math.exp(2)]);
   });

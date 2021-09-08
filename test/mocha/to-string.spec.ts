@@ -1,9 +1,9 @@
 /* eslint-env mocha */
 'use strict';
 
-var expect = require('expect.js');
+import { expect } from 'chai';
 
-var nj = require('../../src');
+import nj from "../../src";
 
 describe('toString', function () {
   it('should properly format 1d array', function () {
@@ -11,7 +11,7 @@ describe('toString', function () {
       .to.eql('array([ 0, 1, 2])');
   });
   it('should properly format 2d array', function () {
-    var arr = nj.arange(12).reshape(4, 3);
+    const arr = nj.arange(12).reshape(4, 3);
     expect(arr.toString())
       .to.eql('' +
       'array([[  0,  1,  2],\n' +
@@ -21,7 +21,7 @@ describe('toString', function () {
       '');
   });
   it('should properly format 3d arrays', function () {
-    var a0 = nj.arange(12).reshape(1, 4, 3);
+    const a0 = nj.arange(12).reshape(1, 4, 3);
     expect(a0.toString())
       .to.eql('' +
       'array([[[  0,  1,  2],\n' +
@@ -61,7 +61,7 @@ describe('toString', function () {
       '       [ 90, 91, 92, ..., 97, 98, 99]])');
   });
   describe('with custom printThreshold', function () {
-    var def;
+    let def;
     before(function () {
       def = nj.config.printThreshold;
       nj.config.printThreshold = 5;

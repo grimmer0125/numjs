@@ -1,23 +1,22 @@
 /* eslint-env mocha */
 'use strict';
 
-var expect = require('expect.js');
-
-var nj = require('../../src');
+import { expect } from 'chai';
+import nj from "../../src";
 
 describe('arange', function () {
   it('should work if only stop given', function () {
-    var arr = nj.arange(3);
+    const arr = nj.arange(3);
     expect(arr.tolist()).to.eql([0, 1, 2]);
     expect(arr.shape).to.eql([3]);
   });
   it('should work if both start and stop are given', function () {
-    var arr = nj.arange(3, 7);
+    const arr = nj.arange(3, 7);
     expect(arr.tolist()).to.eql([3, 4, 5, 6]);
     expect(arr.shape).to.eql([4]);
   });
   it('should work if start, stop and step are given', function () {
-    var arr = nj.arange(3, 7, 2);
+    const arr = nj.arange(3, 7, 2);
     expect(arr.tolist()).to.eql([3, 5]);
     expect(arr.shape).to.eql([2]);
   });
