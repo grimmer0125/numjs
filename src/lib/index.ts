@@ -258,21 +258,30 @@ function negative(x) {
  *
  * @return {NdArray} Array of evenly spaced values.
  */
+function arange(stop:number):NdArray
+function arange(start:number, stop:number):NdArray
+function arange(stop:number, dtype:string | Function):NdArray
+function arange(start:number, stop:number, step:number):NdArray
+function arange(start:number, stop:number, dtype:string | Function):NdArray
+function arange(start:number, stop:number, step:number, dtype:string | Function):NdArray
 function arange(
-  start,
-  stop?: number | string | Function,
-  step?: number | string | Function,
-  dtype?: string | Function
+  ...args:any[]
 ): NdArray {
   if (arguments.length === 1) {
-    return arange(0, start, 1, undefined);
-  } else if (arguments.length === 2 && _.isNumber(stop)) {
-    return arange(start, stop, 1, undefined);
+    return arange(0, arguments[0], 1, undefined);
+  } else if (arguments.length === 2 && _.isNumber(arguments[1])) {
+    return arange(arguments[0], arguments[1], 1, undefined);
   } else if (arguments.length === 2) {
-    return arange(0, start, 1, stop as string | Function);
-  } else if (arguments.length === 3 && !_.isNumber(step)) {
-    return arange(start, stop, 1, step as string | Function);
+    return arange(0, arguments[0], 1, arguments[1] as string | Function);
+  } else if (arguments.length === 3 && !_.isNumber(arguments[2])) {
+    return arange(arguments[0], arguments[1], 1, arguments[2] as string | Function);
   }
+
+  let start: number = arguments[0];
+  const stop: number = arguments[1];
+  const step:number = arguments[2];
+  const dtype:string | Function = arguments[3];
+
   const result = [];
   let i = 0;
   while (start < stop) {
