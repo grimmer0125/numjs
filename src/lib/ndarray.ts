@@ -103,7 +103,7 @@ class NdArray {
     return this.selection.set.apply(this.selection, args);
   }
 
-  slice(...args: any[]) {
+  slice(...args: Array<number|number[]>) {
     const d = this.ndim;
     const hi = new Array(d);
     const lo = new Array(d);
@@ -119,19 +119,19 @@ class NdArray {
         continue;
       }
       if (_.isNumber(arg)) {
-        lo[i] = arg < 0 ? arg + tShape[i] : arg;
+        lo[i] = arg < 0 ? (arg as number) + tShape[i] : arg;
         hi[i] = null;
         step[i] = 1;
-      } else if (arg.length === 4 && arg[1] === null && arg[2] === null) {
+      } else if ((arg as number[]).length === 4 && arg[1] === null && arg[2] === null) {
         // pattern: a[start::step]
-        let s = arg[0] < 0 ? arg[0] + tShape[i] : arg[0];
+        const s = arg[0] < 0 ? arg[0] + tShape[i] : arg[0];
         lo[i] = s;
         hi[i] = null;
         step[i] = arg[3] || 1;
       } else {
         // pattern start:end:step
-        let start = arg[0] < 0 ? arg[0] + tShape[i] : arg[0];
-        let end = arg[1] < 0 ? arg[1] + tShape[i] : arg[1];
+        const start = arg[0] < 0 ? arg[0] + tShape[i] : arg[0];
+        const end = arg[1] < 0 ? arg[1] + tShape[i] : arg[1];
         lo[i] = end ? start : 0;
         hi[i] = end ? end - start : start;
         step[i] = arg[2] || 1;
