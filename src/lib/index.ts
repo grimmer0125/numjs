@@ -260,18 +260,18 @@ function negative(x) {
  */
 function arange(
   start,
-  stop?: number | Function | string,
-  step?: number | Function | string,
-  dtype?: Function | string
+  stop?: number | string | Function,
+  step?: number | string | Function,
+  dtype?: string | Function
 ) {
   if (arguments.length === 1) {
     return arange(0, start, 1, undefined);
   } else if (arguments.length === 2 && _.isNumber(stop)) {
     return arange(start, stop, 1, undefined);
   } else if (arguments.length === 2) {
-    return arange(0, start, 1, stop as Function | string);
+    return arange(0, start, 1, stop as string | Function);
   } else if (arguments.length === 3 && !_.isNumber(step)) {
-    return arange(start, stop, 1, step as Function | string);
+    return arange(start, stop, 1, step as string | Function);
   }
   const result = [];
   let i = 0;
@@ -290,7 +290,7 @@ function arange(
  *
  * @return {NdArray} Array of zeros with the given shape and dtype
  */
-function zeros(shape, dtype?: Function | string) {
+function zeros(shape, dtype?: string | Function ) {
   if (_.isNumber(shape) && shape >= 0) {
     shape = [shape];
   }
@@ -311,7 +311,7 @@ function zeros(shape, dtype?: Function | string) {
  *
  * @return {NdArray} Array of ones with the given shape and dtype
  */
-function ones(shape, dtype?: Function | string) {
+function ones(shape, dtype?: string | Function) {
   if (_.isNumber(shape) && shape >= 0) {
     shape = [shape];
   }
@@ -330,7 +330,7 @@ function ones(shape, dtype?: Function | string) {
  *
  * @return {NdArray} Array of `undefined` values with the given shape and dtype
  */
-function empty(shape, dtype?: Function | string) {
+function empty(shape, dtype?: string | Function) {
   if (_.isNumber(shape) && shape >= 0) {
     shape = [shape];
   }
@@ -708,7 +708,7 @@ function diag(x) {
  * @param {(String|Object)}  [dtype=Array]  The type of the output array.
  * @return {Array} n x n array with its main diagonal set to one, and all other elements 0
  */
-function identity(n, dtype?: Function | string) {
+function identity(n, dtype?: string | Function) {
   const arr = zeros([n, n], dtype);
   for (let i = 0; i < n; i++) arr.set(i, i, 1);
   return arr;
@@ -801,7 +801,7 @@ function flip(m, axis) {
  * @param {Array|NdArray} [axes2=(0,1)] The array is rotated in the plane defined by the axes. Axes must be different.
  * @return {NdArray} A rotated view of m.
  */
-function rot90(m, k?: number, axes?: number[]) {
+function rot90(m, k?: number, axes?: number[] | NdArray) {
   k = k || 1;
   while (k < 0) {
     k += 4;
