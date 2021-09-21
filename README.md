@@ -1,18 +1,16 @@
-[![Build Status](https://travis-ci.org/nicolaspanel/numjs.png)](https://travis-ci.org/nicolaspanel/numjs) [![npm version](https://badge.fury.io/js/numjs.svg)](https://badge.fury.io/js/numjs) [![Bower version](https://badge.fury.io/bo/numjs.svg)](https://badge.fury.io/bo/numjs) [![Built with Grunt](https://cdn.gruntjs.com/builtwith.svg)](http://gruntjs.com/)
-
-__NumJs__ is a npm/bower package for scientific computing with JavaScript. It contains among other things:
+__NumJs__ is a npm ~~/bower~~ package for scientific computing with JavaScript. It contains among other things:
  - a powerful N-dimensional array object
  - linear algebra function
  - fast Fourier transform
- - tools for basic image processing
+ - ~~tools for basic image processing~~
 
 Besides its obvious scientific uses, __NumJs__ can also be used as an efficient multi-dimensional container of generic data.
 
-It works both in node.js and in the browser (with or without [browserify](http://browserify.org/))
+It works both in node.js and in the browser ~~(with or without [browserify](http://browserify.org/))~~
 
 __NumJs__ is licensed under the [MIT license](https://github.com/nicolaspanel/numjs/blob/master/LICENSE), enabling reuse with almost no restrictions.
 
-__[See this jsfiddle](https://jsfiddle.net/nicolaspanel/047gwg0q/)__ for a concrete example of how to use the library to manipulate images in the browser.
+~~__[See this jsfiddle](https://jsfiddle.net/nicolaspanel/047gwg0q/)__ for a concrete example of how to use the library to manipulate images in the browser.~~
 
 ## Installation
 
@@ -23,19 +21,12 @@ npm install numjs
 ```
 
 ```js
-var nj = require('numjs');
-...
-```
+const nj = require('numjs');
 
-### on the browser
-```sh
-bower install numjs
-```
+// or
 
-```html
-<script src="bower_packages/numjs/dist/numjs.min.js"></script>
-<!-- or include it directly from a CDN -->
-<script src="https://cdn.jsdelivr.net/gh/nicolaspanel/numjs@0.15.1/dist/numjs.min.js"></script>
+const nj from "numjs";
+
 ```
 
 ## Basics
@@ -43,10 +34,10 @@ bower install numjs
 ### Array Creation
 
 ```js
-> var a = nj.array([2,3,4]);
+> const a = nj.array([2,3,4]);
 > a
 array([ 2, 3, 4])
-> var b = nj.array([[1,2,3], [4,5,6]]);
+> const b = nj.array([[1,2,3], [4,5,6]]);
 > b
 array([[ 1, 2, 3],
        [ 4, 5, 6]])
@@ -55,7 +46,7 @@ array([[ 1, 2, 3],
 __Note__: Default data container is Javascript `Array` object. If needed, you can also use typed array such as `Uint8Array`:
 
 ```js
-> var a = nj.uint8([1,2,3]);
+> const a = nj.uint8([1,2,3]);
 > a
 array([ 1, 2, 3], dtype=uint8)
 ```
@@ -144,18 +135,18 @@ When you print an array, __NumJs__ displays it in a similar way to nested lists,
 One-dimensional arrays are then printed as rows, bidimensionals as matrices and tridimensionals as lists of matrices.
 
 ```js
-> var a = nj.arange(6);                 // 1d array
+> const a = nj.arange(6);                 // 1d array
 > console.log(a);
 array([ 0, 1, 2, 3, 4, 5])
 >
-> var b = nj.arange(12).reshape(4,3);   // 2d array
+> const b = nj.arange(12).reshape(4,3);   // 2d array
 > console.log(b);
 array([[  0,  1,  2],
        [  3,  4,  5],
        [  6,  7,  8],
        [  9, 10, 11]])
 >
-> var c = nj.arange(24).reshape(2,3,4); // 3d array
+> const c = nj.arange(24).reshape(2,3,4); // 3d array
 > console.log(c);
 array([[[  0,  1,  2,  3],
         [  4,  5,  6,  7],
@@ -197,14 +188,14 @@ array([[    0,    1,    2,    3, ...,   96,   97,   98,   99],
 
 Single element indexing  uses `get` and `set` methods. It is 0-based, and accepts negative indices for indexing from the end of the array:
 ```js
-> var a = nj.array([0,1,2]);
+> const a = nj.array([0,1,2]);
 > a.get(1)
 1
 >
 > a.get(-1)
 2
 >
-> var b = nj.arange(3*3).reshape(3,3);
+> const b = nj.arange(3*3).reshape(3,3);
 > b
 array([[  0,  1,  2],
        [  3,  4,  5],
@@ -228,7 +219,7 @@ array([[ 1, 1, 2],
 It is possible to slice and stride arrays to extract arrays of the same number of dimensions, but of different sizes than the original. The slicing and striding works exactly the same way it does in NumPy:
 
 ```js
-> var a = nj.arange(5);
+> const a = nj.arange(5);
 > a
 array([  0,  1,  2,  3,  4])
 >
@@ -253,7 +244,7 @@ array([ 3, 2, 1])
 > a.slice([null,null,-1]) // same as a[::-1]
 array([ 4, 3, 2, 1, 0])
 >
-> var b = nj.arange(5*5).reshape(5,5);
+> const b = nj.arange(5*5).reshape(5,5);
 > b
 array([[  0,  1,  2,  3,  4],
        [  5,  6,  7,  8,  9],
@@ -436,7 +427,7 @@ array([[  0,  1,  2,  3],
 [ 3, 4 ]
 ```
 
-The shape of an array can be changed with various commands:
+The shape of an array can be changed with constious commands:
 ```js
 > a.flatten();
 array([  0,  1,  2, ...,  9, 10, 11])
@@ -611,7 +602,7 @@ array([ 0, 0, 1, 2, 1, 0, 0])
 > nj.convolve(x, [-1,0,1])
 array([-1,-2, 0, 2, 1])
 >
-> var a = nj.arange(25).reshape(5,5)
+> const a = nj.arange(25).reshape(5,5)
 > a
 array([[  0,  1,  2,  3,  4],
        [  5,  6,  7,  8,  9],
@@ -660,7 +651,7 @@ array([0, 1, 2, 3, 4, 0, 1])
 ```
 
 
-## Images manipulation
+## Images manipulation (drop support currently)
 __NumJs__’s comes with powerful functions for image processing. Theses function are located in `nj.images` module.
 
 The different color bands/channels are stored using the `NdArray` object such that a grey-image is `[H,W]`, an RGB-image is `[H,W,3]` and an RGBA-image is `[H,W,4]`.
@@ -671,7 +662,7 @@ Example:
 ```js
 > nj.config.printThreshold = 28;
 >
-> var img = nj.images.data.digit;  // WARN: this is a property, not a function. See also `nj.images.data.moon`, `nj.images.data.lenna` and `nj.images.data.node`
+> const img = nj.images.data.digit;  // WARN: this is a property, not a function. See also `nj.images.data.moon`, `nj.images.data.lenna` and `nj.images.data.node`
 >
 > img
 array([[   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0],
@@ -702,7 +693,7 @@ array([[   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,  
        [   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0],
        [   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0],
        [   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0]], dtype=uint8)
-> var resized = nj.images.resize(img, 14, 12)
+> const resized = nj.images.resize(img, 14, 12)
 >
 > resized.shape
 [ 14, 12 ]
