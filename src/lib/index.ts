@@ -263,7 +263,7 @@ function arange(
   stop?: number | string | Function,
   step?: number | string | Function,
   dtype?: string | Function
-) {
+): NdArray {
   if (arguments.length === 1) {
     return arange(0, start, 1, undefined);
   } else if (arguments.length === 2 && _.isNumber(stop)) {

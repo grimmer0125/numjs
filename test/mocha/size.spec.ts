@@ -10,6 +10,6 @@ describe('size', function () {
     expect(nj.arange(3).size).to.equal(3);
   });
   it('should not be writableable', function () {
-    expect(function () { nj.arange(3).size = 3; }).to.throw();
+    expect(function () { (nj.arange(3) as any).size = 3; }).to.throw();
   });
 });
