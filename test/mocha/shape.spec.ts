@@ -11,7 +11,7 @@ describe('shape', function () {
       .to.eql([3]);
   });
   it('should not be writableable', function () {
-    expect(function () { nj.arange(4).shape = [2, 2]; }).to.throw();
+    expect(function () { (nj.arange(4) as any).shape = [2, 2]; }).to.throw();
   });
 
   it('should be correct if array empty', function () {
