@@ -242,9 +242,9 @@ class NdArray {
    * @param {Array|number} The new shape should be compatible with the original shape. If an integer, then the result will be a 1-D array of that length. One shape dimension can be -1. In this case, the value is inferred from the length of the array and remaining dimensions.
    * @returns {NdArray} a new view object if possible, a copy otherwise,
    */
-  reshape(...shape:number[])
-  reshape(shape: number[])  
-  reshape(...args:any[]) {
+  reshape(...shape:number[]): NdArray
+  reshape(shape: number[]): NdArray  
+  reshape(...args:any[]): NdArray {
     if (arguments.length === 0) {
       throw new errors.ValueError(
         "function takes at least one argument (0 given)"
@@ -347,9 +347,9 @@ class NdArray {
    * @param {...number} [axes]
    * @returns {NfdArray}
    */
-  transpose(...axes:number[])
-  transpose(axes?: number[])
-  transpose(...args:any[]) {
+  transpose(...axes:number[]):NdArray
+  transpose(axes?: number[]):NdArray
+  transpose(...args:any[]):NdArray {
     let axes:any
     if (args.length === 0) {
       const d = this.ndim;
@@ -371,7 +371,7 @@ class NdArray {
    * @param {(Array|NdArray)} x
    * @returns {NdArray}
    */
-  dot(x) {
+  dot(x): NdArray {
     x = x instanceof NdArray ? x : createArray(x, this.dtype);
     const tShape = this.shape;
     const xShape = x.shape;
@@ -599,7 +599,7 @@ class NdArray {
    *
    * @returns {Number}
    */
-  max() {
+  max(): number {
     if (this.selection.size === 0) {
       return null;
     }
@@ -611,7 +611,7 @@ class NdArray {
    *
    * @returns {Number}
    */
-  min() {
+  min():number {
     if (this.selection.size === 0) {
       return null;
     }
@@ -623,7 +623,7 @@ class NdArray {
    *
    * @returns {number}
    */
-  sum() {
+  sum():number {
     return ops.sum(this.selection);
   }
 
@@ -776,7 +776,7 @@ class NdArray {
    * @param {(Array|NdArray)} array
    * @returns {boolean}
    */
-  equal(array) {
+  equal(array):boolean {
     array = createArray(array);
     if (this.size !== array.size || this.ndim !== array.ndim) {
       return false;
