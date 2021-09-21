@@ -85,7 +85,7 @@ function subtract(a, b) {
  * @param {(Array|NdArray)} array2
  * @returns {boolean}
  */
-function equal(array1, array2) {
+function equal(array1, array2): boolean {
   return NdArray.new(array1).equal(array2);
 }
 
@@ -183,7 +183,7 @@ function std(x, options?: any) {
  * @param {(Array|NdArray|number)} x
  * @returns {Number}
  */
-function min(x) {
+function min(x):number {
   return NdArray.new(x).min();
 }
 
@@ -193,7 +193,7 @@ function min(x) {
  * @param {(Array|NdArray|number)} x
  * @returns {Number}
  */
-function max(x) {
+function max(x):number {
   return NdArray.new(x).max();
 }
 
@@ -383,7 +383,7 @@ const doSigmoid = cwise({
  * @param {number} [t=1] - stifness parameter
  * @returns {NdArray}
  */
-function sigmoid(x, t?: number) {
+function sigmoid(x, t?: number):NdArray {
   x = NdArray.new(x).clone();
   t = t || 1;
   doSigmoid(x.selection, t);
@@ -546,7 +546,7 @@ function arctan(x) {
  * @param {(Array|NdArray)} b
  * @returns {NdArray}
  */
-function dot(a, b) {
+function dot(a, b): NdArray {
   return NdArray.new(a).dot(b);
 }
 
@@ -650,7 +650,7 @@ function fftconvolve(a, b) {
   return NdArray.new(a).fftconvolve(b);
 }
 
-function fft(x) {
+function fft(x): NdArray {
   x = x instanceof NdArray ? x.clone() : NdArray.new(x);
   const xShape = x.shape;
   const d = xShape.length;
@@ -671,7 +671,7 @@ function fft(x) {
   return x;
 }
 
-function ifft(x) {
+function ifft(x):NdArray {
   x = x instanceof NdArray ? x.clone() : NdArray.new(x);
   const xShape = x.shape;
   const d = xShape.length;
@@ -720,9 +720,9 @@ function identity(n, dtype?: string | Function) {
  * For example, if axis=0 it will be the first dimension and if axis=-1 it will be the last dimension.
  * @param {Array} sequence of array_like
  * @param {number} [axis=0] The axis in the result array along which the input arrays are stacked.
- * @return {Array} The stacked array has one more dimension than the input arrays.
+ * @return {NdArray} The stacked array has one more dimension than the input arrays.
  */
-function stack(arrays, axis?: number) {
+function stack(arrays, axis?: number): NdArray {
   axis = axis || 0;
   if (!arrays || arrays.length === 0) {
     throw new errors.ValueError("need at least one array to stack");
@@ -776,7 +776,7 @@ function stack(arrays, axis?: number) {
  * @param {number} axis Axis in array, which entries are reversed.
  * @return {NdArray} A view of `m` with the entries of axis reversed.  Since a view is returned, this operation is done in constant time.
  */
-function flip(m, axis) {
+function flip(m, axis):NdArray {
   m = NdArray.new(m);
   const indexer = ones(m.ndim).tolist();
   let cleanaxis = axis;
@@ -801,7 +801,7 @@ function flip(m, axis) {
  * @param {Array|NdArray} [axes2=(0,1)] The array is rotated in the plane defined by the axes. Axes must be different.
  * @return {NdArray} A rotated view of m.
  */
-function rot90(m, k?: number, axes?: number[] | NdArray) {
+function rot90(m, k?: number, axes?: number[] | NdArray): NdArray {
   k = k || 1;
   while (k < 0) {
     k += 4;
