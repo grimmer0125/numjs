@@ -241,7 +241,7 @@ class NdArray {
    * @param {Array|number} The new shape should be compatible with the original shape. If an integer, then the result will be a 1-D array of that length. One shape dimension can be -1. In this case, the value is inferred from the length of the array and remaining dimensions.
    * @returns {NdArray} a new view object if possible, a copy otherwise,
    */
-  reshape(shape: number | number[], ...theArgs) {
+  reshape(shape: number[] | number, ...otherArgs) {
     if (arguments.length === 0) {
       throw new errors.ValueError(
         "function takes at least one argument (0 given)"
@@ -338,7 +338,7 @@ class NdArray {
    * @param {...number} [axes]
    * @returns {NfdArray}
    */
-  transpose(axes?: number | number[], ...theArgs) {
+  transpose(axes?: number | number[], ...otherArgs) {
     if (arguments.length === 0) {
       const d = this.ndim;
       axes = new Array(d);
@@ -619,7 +619,7 @@ class NdArray {
    * @param {object} {ddof:0}
    * @returns {number}
    */
-  std(options?: any) {
+  std( options?: {ddof?: number}) {
     options = _.defaults(options, { ddof: 0 });
     const squares = this.clone();
     ops.powseq(squares.selection, 2);
@@ -1080,7 +1080,7 @@ class NdArray {
     return out;
   }
 
-  static new(arr, dtype?: Function | string) {
+  static new(arr, dtype?: string | Function) {
     return createArray(arr, dtype);
   }
 }
