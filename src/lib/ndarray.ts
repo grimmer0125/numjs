@@ -236,22 +236,31 @@ class NdArray {
     return new NdArray(arr, [this.size]);
   }
 
+
   /**
    * Gives a new shape to the array without changing its data.
    * @param {Array|number} The new shape should be compatible with the original shape. If an integer, then the result will be a 1-D array of that length. One shape dimension can be -1. In this case, the value is inferred from the length of the array and remaining dimensions.
    * @returns {NdArray} a new view object if possible, a copy otherwise,
    */
-  reshape(shape: number[] | number, ...otherArgs) {
+  reshape(...shape:number[])
+  reshape(shape: number[])  
+  reshape(...args:any[]) {
     if (arguments.length === 0) {
       throw new errors.ValueError(
         "function takes at least one argument (0 given)"
       );
     }
-    if (arguments.length === 1 && _.isNumber(shape) && shape === -1) {
+    let shape: number[];
+    if (arguments.length === 1 && _.isNumber(arguments[0]) && arguments[0] === -1) {
       shape = [_.shapeSize(this.shape)];
     }
-    if (arguments.length === 1 && _.isNumber(shape)) {
-      shape = [shape as number];
+    if (arguments.length === 1) {
+      if  (_.isNumber(arguments[0])) {
+        shape = [arguments[0] as number];
+      } else {
+        // grimmer refactor note: original logic does not check if it is an array   
+        shape = arguments[0]
+      }
     }
     if (arguments.length > 1) {
       shape = [].slice.call(arguments);
@@ -264,7 +273,7 @@ class NdArray {
       throw new errors.ValueError("can only specify one unknown dimension");
     }
     const currentShapeSize = _.shapeSize(shape);
-    shape = (shape as number[]).map(
+    shape = shape.map(
       function (s) {
         return s === -1 ? (-1 * this.size) / currentShapeSize : s;
       }.bind(this)
@@ -338,15 +347,20 @@ class NdArray {
    * @param {...number} [axes]
    * @returns {NfdArray}
    */
-  transpose(axes?: number | number[], ...otherArgs) {
-    if (arguments.length === 0) {
+  transpose(...axes:number[])
+  transpose(axes?: number[])
+  transpose(...args:any[]) {
+    let axes:any
+    if (args.length === 0) {
       const d = this.ndim;
       axes = new Array(d);
       for (let i = 0; i < d; i++) {
         axes[i] = d - i - 1;
       }
-    } else if (arguments.length > 1) {
-      axes = arguments as unknown as number[];
+    } else if (args.length > 1) {
+      axes = args as unknown as number[];
+    } else {
+      axes = args[0]
     }
     return new NdArray(this.selection.transpose.apply(this.selection, axes));
   }
