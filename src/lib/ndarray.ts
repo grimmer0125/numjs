@@ -12,6 +12,9 @@ import CONF from "./config";
 import * as errors from "./errors";
 import _ from "./utils";
 
+interface ArbitraryDimensionArray<T> extends Array<T | ArbitraryDimensionArray<T>> {
+}
+
 /**
  * Multidimensional, homogeneous array of fixed-size items
  *
@@ -89,7 +92,7 @@ class NdArray {
     return this.transpose();
   }
 
-  get(...args: number[]) {
+  get(...args: number[]):number {
     const n = args.length;
     for (let i = 0; i < n; i++) {
       if (args[i] < 0) {
@@ -99,7 +102,7 @@ class NdArray {
     return this.selection.get.apply(this.selection, args);
   }
 
-  set(...args: number[]) {
+  set(...args: number[]):number {
     return this.selection.set.apply(this.selection, args);
   }
 
@@ -444,7 +447,7 @@ class NdArray {
    * @param {boolean} [copy=true]
    * @returns {NdArray}
    */
-  add(x, copy?: boolean) {
+  add(x: NdArray | number[] | number, copy?: boolean) {
     if (arguments.length === 1) {
       copy = true;
     }
@@ -683,7 +686,7 @@ class NdArray {
    *
    * @returns {Array}
    */
-  tolist() {
+  tolist(): ArbitraryDimensionArray<number> {
     return unpackArray(this.selection);
   }
 
@@ -1094,7 +1097,7 @@ class NdArray {
     return out;
   }
 
-  static new(arr, dtype?: string | Function) {
+  static new(arr: NdArray | number[] | number, dtype?: string | Function) {
     return createArray(arr, dtype);
   }
 }
@@ -1310,7 +1313,7 @@ const doConvolve5x5 = cwise({
   },
 });
 
-function createArray(arr, dtype?: Function | string) {
+function createArray(arr:NdArray | number[] | number, dtype?: Function | string) {
   if (arr instanceof NdArray) {
     return arr;
   }
