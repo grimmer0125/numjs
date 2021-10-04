@@ -822,7 +822,7 @@ function rot90(m, k?: number, axes?: number[] | NdArray): NdArray {
     throw new errors.ValueError("len(axes) must be 2");
   }
   axes2 = axes2.tolist();
-  if (axes2[0] === axes2[1] || abs(axes2[0] - axes2[1]) === m.ndim) {
+  if (axes2[0] === axes2[1] || abs(axes2[0] - axes2[1]).ndim === m.ndim) {
     throw new errors.ValueError("Axes must be different.");
   }
 
