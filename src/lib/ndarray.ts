@@ -7,6 +7,8 @@ const gemm = require("ndarray-gemm");
 const ndFFT = require("ndarray-fft");
 const ndPool = require("typedarray-pool");
 
+const util = require('util');
+
 import ndarray from "ndarray";
 import CONF from "./config";
 import * as errors from "./errors";
@@ -25,7 +27,6 @@ interface ArbitraryDimensionArray<T> extends Array<T | ArbitraryDimensionArray<T
  */
 class NdArray {
   selection: ndarray.NdArray;
-  inspect: typeof NdArray.prototype.toString;
 
   constructor(data: ndarray.NdArray);
   constructor(data: number[] | ndarray.TypedArray, shape?: number[], stride?: number[], offset?: number);
@@ -37,13 +38,6 @@ class NdArray {
     } else {
       this.selection = ndarray.apply(null, args);
     }
-
-    /**
-     * Stringify the array to make it readable in the console, by a human.
-     *
-     * @returns {string}
-     */
-    this.inspect = this.toString;
   }
 
   /**
@@ -695,6 +689,15 @@ class NdArray {
   valueOf() {
     return this.tolist();
   }
+
+  /**
+   * Stringify the array to make it readable in the console, by a human.
+   *
+   */  
+  [util.inspect.custom] (){
+    console.log(this.toString());
+  }
+
   /**
    * Stringify the array to make it readable by a human.
    *
