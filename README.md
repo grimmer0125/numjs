@@ -6,7 +6,7 @@ __NumJs__ is a npm ~~/bower~~ package for scientific computing with JavaScript. 
 
 Besides its obvious scientific uses, __NumJs__ can also be used as an efficient multi-dimensional container of generic data.
 
-It works both in node.js and in the browser ~~(with or without [browserify](http://browserify.org/))~~
+It works both in node.js and in the browser ~~(with or without [browserify](https://browserify.org/))~~
 
 __NumJs__ is licensed under the [MIT license](https://github.com/nicolaspanel/numjs/blob/master/LICENSE), enabling reuse with almost no restrictions.
 
@@ -511,10 +511,10 @@ array([[  0,  1,  2,  3],
 > a = nj.array([1, 2, 3])
 > b = nj.array([2, 3, 4])
 
-> np.stack([a, b])
+> nj.stack([a, b])
 array([[1, 2, 3],
        [2, 3, 4]])
-> np.stack([a, b], -1)
+> nj.stack([a, b], -1)
 array([[1, 2],
        [2, 3],
        [3, 4]])
@@ -719,10 +719,10 @@ See also [this jsfiddle](https://jsfiddle.net/nicolaspanel/047gwg0q/) for more d
 
 
 ## More ?
-See documentation on [numjs globals](http://nicolaspanel.github.io/numjs/global.html) and
-[NdArray methods](http://nicolaspanel.github.io/numjs/NdArray.html).
+See documentation on [numjs globals](https://nicolaspanel.github.io/numjs/global.html) and
+[NdArray methods](https://nicolaspanel.github.io/numjs/NdArray.html).
 
 
 
 ## Credits
-__NumJs__ is built on top of [ndarray](http://scijs.net/packages/#scijs/ndarray) and uses many [scijs packages](http://scijs.net/packages/)
+__NumJs__ is built on top of [ndarray](https://scijs.net/packages/#scijs/ndarray) and uses many [scijs packages](https://scijs.net/packages/)
