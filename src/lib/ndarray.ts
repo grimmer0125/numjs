@@ -27,6 +27,8 @@ class NdArray {
   selection: ndarray.NdArray;
   inspect: typeof NdArray.prototype.toString;
 
+  constructor(data: ndarray.NdArray);
+  constructor(data: number[] | ndarray.TypedArray, shape?: number[], stride?: number[], offset?: number);
   constructor(...args: any[]) {
     if (args.length === 1) {
       this.selection = args[0];
@@ -166,7 +168,7 @@ class NdArray {
   arr.pick(null, 1)
   // array([  1,  5,  9, 13])
   */
-  pick(axis) {
+  pick(...axis: Array<number | null>) {
     return new NdArray(this.selection.pick.apply(this.selection, arguments));
   }
 
@@ -374,7 +376,7 @@ class NdArray {
    * @param {(Array|NdArray)} x
    * @returns {NdArray}
    */
-  dot(x): NdArray {
+  dot(x:number[]|NdArray): NdArray {
     x = x instanceof NdArray ? x : createArray(x, this.dtype);
     const tShape = this.shape;
     const xShape = x.shape;
@@ -425,7 +427,7 @@ class NdArray {
    * @param {boolean} [copy=true]
    * @returns {NdArray}
    */
-  assign(x, copy?: boolean) {
+  assign(x:NdArray|number[]|number, copy?: boolean) {
     if (arguments.length === 1) {
       copy = true;
     }
@@ -469,7 +471,7 @@ class NdArray {
    * @param {boolean} [copy=true]
    * @returns {NdArray}
    */
-  subtract(x, copy?: boolean) {
+  subtract(x:NdArray|number[]|number, copy?: boolean) {
     if (arguments.length === 1) {
       copy = true;
     }
@@ -491,7 +493,7 @@ class NdArray {
    * @param {boolean} [copy=true]
    * @returns {NdArray}
    */
-  multiply(x, copy?: boolean) {
+  multiply(x:NdArray|number[]|number, copy?: boolean) {
     if (arguments.length === 1) {
       copy = true;
     }
@@ -514,7 +516,7 @@ class NdArray {
    * @param {boolean} [copy=true]
    * @returns {NdArray}
    */
-  divide(x, copy?: boolean) {
+  divide(x:NdArray|number[]|number, copy?: boolean) {
     if (arguments.length === 1) {
       copy = true;
     }
@@ -537,7 +539,7 @@ class NdArray {
    * @param {boolean} [copy=true] - set to false to modify the array rather than create a new one
    * @returns {NdArray}
    */
-  pow(x, copy?: boolean) {
+  pow(x:NdArray|number[]|number, copy?: boolean) {
     if (arguments.length === 1) {
       copy = true;
     }
@@ -636,7 +638,7 @@ class NdArray {
    * @param {object} {ddof:0}
    * @returns {number}
    */
-  std( options?: {ddof?: number}) {
+  std(options?: {ddof?: number}) {
     options = _.defaults(options, { ddof: 0 });
     const squares = this.clone();
     ops.powseq(squares.selection, 2);
@@ -779,7 +781,7 @@ class NdArray {
    * @param {(Array|NdArray)} array
    * @returns {boolean}
    */
-  equal(array):boolean {
+  equal(array:number[]|NdArray):boolean {
     array = createArray(array);
     if (this.size !== array.size || this.ndim !== array.ndim) {
       return false;
@@ -849,7 +851,7 @@ class NdArray {
     );
   }
 
-  iteraxis(axis, cb) {
+  iteraxis(axis:number, cb:(xi: NdArray, i:number ) => void) {
     const shape = this.shape;
     if (axis === -1) {
       axis = shape.length - 1;
@@ -877,7 +879,7 @@ class NdArray {
    *
    * @param {Array|NdArray} filter
    */
-  convolve(filter) {
+  convolve(filter:number[]|NdArray) {
     filter = NdArray.new(filter);
     const ndim = this.ndim;
     if (ndim !== filter.ndim) {
@@ -1018,7 +1020,7 @@ class NdArray {
     }
   }
 
-  fftconvolve(filter) {
+  fftconvolve(filter:number[]|NdArray) {
     filter = NdArray.new(filter);
 
     if (this.ndim !== filter.ndim) {
@@ -1320,9 +1322,9 @@ function createArray(arr:NdArray | number[] | number, dtype?: Function | string)
   const T = _.getType(dtype);
   if (_.isNumber(arr)) {
     if (T !== Array) {
-      return new NdArray(new T([arr]), [1]);
+      return new NdArray(new T([arr as number]), [1]);
     } else {
-      return new NdArray([arr], [1]);
+      return new NdArray([arr as number], [1]);
     }
   }
   const shape = _.getShape(arr);
@@ -1332,7 +1334,7 @@ function createArray(arr:NdArray | number[] | number, dtype?: Function | string)
   if (!(arr instanceof T)) {
     arr = new T(arr);
   }
-  return new NdArray(arr, shape);
+  return new NdArray(arr as number[], shape);
 }
 // NdArray.new = createArray;
 
