@@ -9,7 +9,7 @@ import ndarray from "ndarray";
 
 import CONF from "./config";
 import DTYPES from "./dtypes";
-import NdArray from "./ndarray";
+import NdArray, {ArbDimNumArray} from "./ndarray";
 import _ from "./utils";
 import * as errors from "./errors";
 
@@ -42,7 +42,7 @@ function broadcast(shape1:number[], shape2:number[]) {
  * @param {(NdArray|Array|number)} b
  * @returns {NdArray}
  */
-function add(a:NdArray|number[]|number, b:NdArray|number[]|number) {
+function add(a:NdArray|ArbDimNumArray|number, b:NdArray|ArbDimNumArray|number) {
   return NdArray.new(a).add(b);
 }
 
@@ -53,7 +53,7 @@ function add(a:NdArray|number[]|number, b:NdArray|number[]|number) {
  * @param {(Array|NdArray|number)} b
  * @returns {NdArray}
  */
-function multiply(a:number[]|NdArray, b:number[]|NdArray|number) {
+function multiply(a:ArbDimNumArray|NdArray, b:ArbDimNumArray|NdArray|number) {
   return NdArray.new(a).multiply(b);
 }
 
@@ -64,7 +64,7 @@ function multiply(a:number[]|NdArray, b:number[]|NdArray|number) {
  * @param {(Array|NdArray|number)} b
  * @returns {NdArray}
  */
-function divide(a:number[]|NdArray, b:number[]|NdArray|number) {
+function divide(a:ArbDimNumArray|NdArray, b:ArbDimNumArray|NdArray|number) {
   return NdArray.new(a).divide(b);
 }
 
@@ -75,7 +75,7 @@ function divide(a:number[]|NdArray, b:number[]|NdArray|number) {
  * @param {(NdArray|Array|number)} b
  * @returns {NdArray}
  */
-function subtract(a:number[] | NdArray | number, b:number[] | NdArray | number) {
+function subtract(a:ArbDimNumArray | NdArray | number, b:ArbDimNumArray | NdArray | number) {
   return NdArray.new(a).subtract(b);
 }
 
@@ -85,7 +85,7 @@ function subtract(a:number[] | NdArray | number, b:number[] | NdArray | number) 
  * @param {(Array|NdArray)} array2
  * @returns {boolean}
  */
-function equal(array1:number[]|NdArray, array2:number[]|NdArray): boolean {
+function equal(array1:ArbDimNumArray|NdArray, array2:ArbDimNumArray|NdArray): boolean {
   return NdArray.new(array1).equal(array2);
 }
 
@@ -95,7 +95,7 @@ function equal(array1:number[]|NdArray, array2:number[]|NdArray): boolean {
  * @param {(Array|NdArray)} array
  * @returns {NdArray}
  */
-function flatten(array: number[] | NdArray) {
+function flatten(array: ArbDimNumArray | NdArray) {
   return NdArray.new(array).flatten();
 }
 
@@ -105,7 +105,7 @@ function flatten(array: number[] | NdArray) {
  * @param {Array} shape - The new shape should be compatible with the original shape. If an integer, then the result will be a 1-D array of that length
  * @returns {NdArray}
  */
-function reshape(array: number[] | NdArray, shape: number[] | number) {
+function reshape(array: ArbDimNumArray | NdArray, shape: number[] | number) {
   // TypeScript is not smart enought on parameters detection on overloading
   // workaround way
   if (typeof shape == "number") {
@@ -120,7 +120,7 @@ function reshape(array: number[] | NdArray, shape: number[] | number) {
  * @param {(Array|NdArray|number)} x
  * @returns {NdArray}
  */
-function exp(x: number[] | NdArray | number) {
+function exp(x: ArbDimNumArray | NdArray | number) {
   return NdArray.new(x).exp();
 }
 
@@ -129,7 +129,7 @@ function exp(x: number[] | NdArray | number) {
  * @param {(Array|NdArray|number)} x
  * @returns {NdArray}
  */
-function log(x:number[] | NdArray | number) {
+function log(x:ArbDimNumArray | NdArray | number) {
   return NdArray.new(x).log();
 }
 
@@ -138,7 +138,7 @@ function log(x:number[] | NdArray | number) {
  * @param {(Array|NdArray|number)} x
  * @returns {NdArray}
  */
-function sqrt(x:number[] | NdArray | number) {
+function sqrt(x:ArbDimNumArray | NdArray | number) {
   return NdArray.new(x).sqrt();
 }
 
@@ -149,7 +149,7 @@ function sqrt(x:number[] | NdArray | number) {
  * @param {(Array|NdArray|number)} x2
  * @returns {NdArray}
  */
-function power(x1:number[] | NdArray | number, x2:number[] | NdArray | number) {
+function power(x1:ArbDimNumArray | NdArray | number, x2:ArbDimNumArray | NdArray | number) {
   return NdArray.new(x1).pow(x2);
 }
 
@@ -159,7 +159,7 @@ function power(x1:number[] | NdArray | number, x2:number[] | NdArray | number) {
  * @param {(Array|NdArray|number)} x
  * @returns {number}
  */
-function sum(x: number[]|NdArray|number) {
+function sum(x: ArbDimNumArray|NdArray|number) {
   return NdArray.new(x).sum();
 }
 
@@ -169,7 +169,7 @@ function sum(x: number[]|NdArray|number) {
  * @param {(Array|NdArray|number)} x
  * @returns {number}
  */
-function mean(x: number[]|NdArray|number) {
+function mean(x: ArbDimNumArray|NdArray|number) {
   return NdArray.new(x).mean();
 }
 
@@ -179,7 +179,7 @@ function mean(x: number[]|NdArray|number) {
  * @param {(Array|NdArray|number)} x
  * @returns {number}
  */
-function std(x: number[]|NdArray|number, options?: {ddof?: number}) {
+function std(x: ArbDimNumArray|NdArray|number, options?: {ddof?: number}) {
   return NdArray.new(x).std(options);
 }
 
@@ -189,7 +189,7 @@ function std(x: number[]|NdArray|number, options?: {ddof?: number}) {
  * @param {(Array|NdArray|number)} x
  * @returns {Number}
  */
-function min(x: number[]|NdArray|number):number {
+function min(x: ArbDimNumArray|NdArray|number):number {
   return NdArray.new(x).min();
 }
 
@@ -199,7 +199,7 @@ function min(x: number[]|NdArray|number):number {
  * @param {(Array|NdArray|number)} x
  * @returns {Number}
  */
-function max(x: number[]|NdArray|number):number {
+function max(x: ArbDimNumArray|NdArray|number):number {
   return NdArray.new(x).max();
 }
 
@@ -211,7 +211,7 @@ function max(x: number[]|NdArray|number):number {
  * @param {(NdArray|Array|number)} x2
  * @returns {NdArray}
  */
-function mod(x1:NdArray | number[] | number, x2:NdArray | number[] | number) {
+function mod(x1:NdArray | ArbDimNumArray | number, x2:NdArray | ArbDimNumArray | number) {
   return NdArray.new(x1).mod(x2);
 }
 
@@ -240,7 +240,7 @@ function mod(x1:NdArray | number[] | number, x2:NdArray | number[] | number) {
 
  */
 
-function transpose(x: NdArray | number[] | number, axes?:number[]) {
+function transpose(x: NdArray | ArbDimNumArray | number, axes?:number[]) {
   return NdArray.new(x).transpose(axes);
 }
 
@@ -250,7 +250,7 @@ function transpose(x: NdArray | number[] | number, axes?:number[]) {
  * @param {(Array|NdArray|number)} x
  * @returns {NdArray}
  */
-function negative(x:number[] | NdArray | number) {
+function negative(x:ArbDimNumArray | NdArray | number) {
   return NdArray.new(x).negative();
 }
 
@@ -381,7 +381,7 @@ function random(...args:any[]):NdArray{
  * @param {(Array|NdArray|number)} x
  * @returns {NdArray}
  */
-function softmax(x:number[] | NdArray | number) {
+function softmax(x:ArbDimNumArray | NdArray | number) {
   const e = NdArray.new(x).exp();
   const se = e.sum(); // scalar
   ops.divseq(e.selection, se);
@@ -401,7 +401,7 @@ const doSigmoid = cwise({
  * @param {number} [t=1] - stifness parameter
  * @returns {NdArray}
  */
-function sigmoid(x:number[]| NdArray | number, t?: number):NdArray {
+function sigmoid(x:ArbDimNumArray| NdArray | number, t?: number):NdArray {
   x = NdArray.new(x).clone();
   t = t || 1;
   doSigmoid(x.selection, t);
@@ -423,7 +423,7 @@ const doClip = cwise({
  * @param {number} [max=1]
  * @returns {NdArray}
  */
-function clip(x: number[]| NdArray|number, min?:number, max?:number) {
+function clip(x: ArbDimNumArray| NdArray|number, min?:number, max?:number) {
   if (arguments.length === 1) {
     min = 0;
     max = 1;
@@ -442,7 +442,7 @@ const doLeakyRelu = cwise({
   },
 });
 
-function leakyRelu(x:NdArray|number[]|number, alpha?:number) {
+function leakyRelu(x:NdArray|ArbDimNumArray|number, alpha?:number) {
   alpha = alpha || 1e-3;
   const s = x instanceof NdArray ? x.clone() : NdArray.new(x);
   doLeakyRelu(s.selection, alpha);
@@ -462,7 +462,7 @@ const doTanh = cwise({
  * @param {(Array|NdArray|number)} x
  * @returns {NdArray}
  */
-function tanh(x:number[] | NdArray | number) {
+function tanh(x:ArbDimNumArray | NdArray | number) {
   const s = x instanceof NdArray ? x.clone() : NdArray.new(x);
   doTanh(s.selection);
   return s;
@@ -474,7 +474,7 @@ function tanh(x:number[] | NdArray | number) {
  * @param {(Array|NdArray|number)} x
  * @returns {NdArray}
  */
-function abs(x:number[] | NdArray | number) {
+function abs(x:ArbDimNumArray | NdArray | number) {
   const s = x instanceof NdArray ? x.clone() : NdArray.new(x);
   ops.abseq(s.selection);
   return s;
@@ -486,7 +486,7 @@ function abs(x:number[] | NdArray | number) {
  * @param {(Array|NdArray|number)} x
  * @returns {NdArray}
  */
-function cos(x:number[] | NdArray | number) {
+function cos(x:ArbDimNumArray | NdArray | number) {
   const s = x instanceof NdArray ? x.clone() : NdArray.new(x);
   ops.coseq(s.selection);
   return s;
@@ -498,7 +498,7 @@ function cos(x:number[] | NdArray | number) {
  * @param {(Array|NdArray|number)} x
  * @returns {NdArray}
  */
-function arccos(x:number[] | NdArray | number) {
+function arccos(x:ArbDimNumArray | NdArray | number) {
   const s = x instanceof NdArray ? x.clone() : NdArray.new(x);
   ops.acoseq(s.selection);
   return s;
@@ -510,7 +510,7 @@ function arccos(x:number[] | NdArray | number) {
  * @param {(Array|NdArray|number)} x
  * @returns {NdArray}
  */
-function sin(x:number[] | NdArray | number) {
+function sin(x:ArbDimNumArray | NdArray | number) {
   const s = x instanceof NdArray ? x.clone() : NdArray.new(x);
   ops.sineq(s.selection);
   return s;
@@ -522,7 +522,7 @@ function sin(x:number[] | NdArray | number) {
  * @param {(Array|NdArray|number)} x
  * @returns {NdArray}
  */
-function arcsin(x:number[] | NdArray | number) {
+function arcsin(x:ArbDimNumArray | NdArray | number) {
   const s = x instanceof NdArray ? x.clone() : NdArray.new(x);
   ops.asineq(s.selection);
   return s;
@@ -534,7 +534,7 @@ function arcsin(x:number[] | NdArray | number) {
  * @param {(Array|NdArray|number)} x
  * @returns {NdArray}
  */
-function tan(x:number[] | NdArray | number) {
+function tan(x:ArbDimNumArray | NdArray | number) {
   const s = x instanceof NdArray ? x.clone() : NdArray.new(x);
   ops.taneq(s.selection);
   return s;
@@ -546,7 +546,7 @@ function tan(x:number[] | NdArray | number) {
  * @param {(Array|NdArray|number)} x
  * @returns {NdArray}
  */
-function arctan(x:number[] | NdArray | number) {
+function arctan(x:ArbDimNumArray | NdArray | number) {
   const s = x instanceof NdArray ? x.clone() : NdArray.new(x);
   ops.ataneq(s.selection);
   return s;
@@ -564,7 +564,7 @@ function arctan(x:number[] | NdArray | number) {
  * @param {(Array|NdArray)} b
  * @returns {NdArray}
  */
-function dot(a:number[]|NdArray, b:number[]|NdArray): NdArray {
+function dot(a:ArbDimNumArray|NdArray, b:ArbDimNumArray|NdArray): NdArray {
   return NdArray.new(a).dot(b);
 }
 
@@ -574,8 +574,8 @@ function dot(a:number[]|NdArray, b:number[]|NdArray): NdArray {
  * @param {...(Array|NdArray)} arrays
  * @returns {NdArray}
  */
-function concatenate(...arrays: Array<number | number[] | NdArray>)
-function concatenate(arrays: Array<number | number[] | NdArray>)   
+function concatenate(...arrays: Array<number | ArbDimNumArray | NdArray>)
+function concatenate(arrays: Array<number | ArbDimNumArray | NdArray>)   
 function concatenate(...args: any[]) {   
   let arrays; 
   if (args.length > 1) {
@@ -643,7 +643,7 @@ function concatenate(...args: any[]) {
  * @param {(Array|NdArray)} x
  * @returns {NdArray}
  */
-function round(x:number[]|NdArray) {
+function round(x:ArbDimNumArray|NdArray) {
   return NdArray.new(x).round();
 }
 
@@ -656,7 +656,7 @@ function round(x:number[]|NdArray) {
  * @param {Array|NdArray} a
  * @param {Array|NdArray} b
  */
-function convolve(a:number[] | NdArray, b:number[] | NdArray) {
+function convolve(a:ArbDimNumArray | NdArray, b:ArbDimNumArray | NdArray) {
   return NdArray.new(a).convolve(b);
 }
 
@@ -669,11 +669,11 @@ function convolve(a:number[] | NdArray, b:number[] | NdArray) {
  * @param {Array|NdArray} a
  * @param {Array|NdArray} b
  */
-function fftconvolve(a:number[]|NdArray, b:number[]|NdArray) {
+function fftconvolve(a:ArbDimNumArray|NdArray, b:ArbDimNumArray|NdArray) {
   return NdArray.new(a).fftconvolve(b);
 }
 
-function fft(x:number[] | NdArray): NdArray {
+function fft(x:ArbDimNumArray | NdArray): NdArray {
   x = x instanceof NdArray ? x.clone() : NdArray.new(x);
   const xShape = x.shape;
   const d = xShape.length;
@@ -694,7 +694,7 @@ function fft(x:number[] | NdArray): NdArray {
   return x;
 }
 
-function ifft(x:number[] | NdArray):NdArray {
+function ifft(x:ArbDimNumArray | NdArray):NdArray {
   x = x instanceof NdArray ? x.clone() : NdArray.new(x);
   const xShape = x.shape;
   const d = xShape.length;
@@ -721,7 +721,7 @@ function ifft(x:number[] | NdArray):NdArray {
  * @param {Array|NdArray} x
  * @returns {NdArray} a view a of the original array when possible, a new array otherwise
  */
-function diag(x:number[]| NdArray) {
+function diag(x:ArbDimNumArray| NdArray) {
   return NdArray.new(x).diag();
 }
 
@@ -745,7 +745,7 @@ function identity(n:number, dtype?: string | Function) {
  * @param {number} [axis=0] The axis in the result array along which the input arrays are stacked.
  * @return {NdArray} The stacked array has one more dimension than the input arrays.
  */
-function stack(arrays:Array<NdArray|number[]|number>, axis?: number): NdArray {
+function stack(arrays:Array<NdArray|ArbDimNumArray|number>, axis?: number): NdArray {
   axis = axis || 0;
   if (!arrays || arrays.length === 0) {
     throw new errors.ValueError("need at least one array to stack");
@@ -799,7 +799,7 @@ function stack(arrays:Array<NdArray|number[]|number>, axis?: number): NdArray {
  * @param {number} axis Axis in array, which entries are reversed.
  * @return {NdArray} A view of `m` with the entries of axis reversed.  Since a view is returned, this operation is done in constant time.
  */
-function flip(m: number[] | NdArray, axis:number):NdArray {
+function flip(m: ArbDimNumArray | NdArray, axis:number):NdArray {
   m = NdArray.new(m);
   const indexer = ones(m.ndim).tolist();
   let cleanaxis = axis;
@@ -824,7 +824,7 @@ function flip(m: number[] | NdArray, axis:number):NdArray {
  * @param {Array|NdArray} [axes2=(0,1)] The array is rotated in the plane defined by the axes. Axes must be different.
  * @return {NdArray} A rotated view of m.
  */
-function rot90(m:number[] | NdArray, k?: number, axes?: number[] | NdArray): NdArray {
+function rot90(m:ArbDimNumArray | NdArray, k?: number, axes?: number[] | NdArray): NdArray {
   k = k || 1;
   while (k < 0) {
     k += 4;

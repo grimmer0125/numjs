@@ -14,8 +14,10 @@ import CONF from "./config";
 import * as errors from "./errors";
 import _ from "./utils";
 
-interface ArbitraryDimensionArray<T> extends Array<T | ArbitraryDimensionArray<T>> {
+interface ArbitraryDimArray<T> extends Array<T | ArbitraryDimArray<T>> {
 }
+
+export type ArbDimNumArray = ArbitraryDimArray<number>
 
 /**
  * Multidimensional, homogeneous array of fixed-size items
@@ -29,7 +31,7 @@ class NdArray {
   selection: ndarray.NdArray;
 
   constructor(data: ndarray.NdArray);
-  constructor(data: number[] | ndarray.TypedArray, shape?: number[], stride?: number[], offset?: number);
+  constructor(data: ArbDimNumArray | ndarray.TypedArray, shape?: number[], stride?: number[], offset?: number);
   constructor(...args: any[]) {
     if (args.length === 1) {
       this.selection = args[0];
@@ -370,7 +372,7 @@ class NdArray {
    * @param {(Array|NdArray)} x
    * @returns {NdArray}
    */
-  dot(x:number[]|NdArray): NdArray {
+  dot(x:ArbDimNumArray|NdArray): NdArray {
     x = x instanceof NdArray ? x : createArray(x, this.dtype);
     const tShape = this.shape;
     const xShape = x.shape;
@@ -421,7 +423,7 @@ class NdArray {
    * @param {boolean} [copy=true]
    * @returns {NdArray}
    */
-  assign(x:NdArray|number[]|number, copy?: boolean) {
+  assign(x:NdArray|ArbDimNumArray|number, copy?: boolean) {
     if (arguments.length === 1) {
       copy = true;
     }
@@ -443,7 +445,7 @@ class NdArray {
    * @param {boolean} [copy=true]
    * @returns {NdArray}
    */
-  add(x: NdArray | number[] | number, copy?: boolean) {
+  add(x: NdArray | ArbDimNumArray | number, copy?: boolean) {
     if (arguments.length === 1) {
       copy = true;
     }
@@ -465,7 +467,7 @@ class NdArray {
    * @param {boolean} [copy=true]
    * @returns {NdArray}
    */
-  subtract(x:NdArray|number[]|number, copy?: boolean) {
+  subtract(x:NdArray|ArbDimNumArray|number, copy?: boolean) {
     if (arguments.length === 1) {
       copy = true;
     }
@@ -487,7 +489,7 @@ class NdArray {
    * @param {boolean} [copy=true]
    * @returns {NdArray}
    */
-  multiply(x:NdArray|number[]|number, copy?: boolean) {
+  multiply(x:NdArray|ArbDimNumArray|number, copy?: boolean) {
     if (arguments.length === 1) {
       copy = true;
     }
@@ -510,7 +512,7 @@ class NdArray {
    * @param {boolean} [copy=true]
    * @returns {NdArray}
    */
-  divide(x:NdArray|number[]|number, copy?: boolean) {
+  divide(x:NdArray|ArbDimNumArray|number, copy?: boolean) {
     if (arguments.length === 1) {
       copy = true;
     }
@@ -533,7 +535,7 @@ class NdArray {
    * @param {boolean} [copy=true] - set to false to modify the array rather than create a new one
    * @returns {NdArray}
    */
-  pow(x:NdArray|number[]|number, copy?: boolean) {
+  pow(x:NdArray|ArbDimNumArray|number, copy?: boolean) {
     if (arguments.length === 1) {
       copy = true;
     }
@@ -661,7 +663,7 @@ class NdArray {
    * @param {boolean} [copy=true]
    * @returns {NdArray}
    */
-  mod(x, copy?: boolean) {
+  mod(x:NdArray|ArbDimNumArray|number, copy?: boolean) {
     if (arguments.length === 1) {
       copy = true;
     }
@@ -682,7 +684,7 @@ class NdArray {
    *
    * @returns {Array}
    */
-  tolist(): ArbitraryDimensionArray<number> {
+  tolist(): ArbDimNumArray {
     return unpackArray(this.selection);
   }
 
@@ -784,7 +786,7 @@ class NdArray {
    * @param {(Array|NdArray)} array
    * @returns {boolean}
    */
-  equal(array:number[]|NdArray):boolean {
+  equal(array:ArbDimNumArray|NdArray):boolean {
     array = createArray(array);
     if (this.size !== array.size || this.ndim !== array.ndim) {
       return false;
@@ -882,7 +884,7 @@ class NdArray {
    *
    * @param {Array|NdArray} filter
    */
-  convolve(filter:number[]|NdArray) {
+  convolve(filter:ArbDimNumArray|NdArray) {
     filter = NdArray.new(filter);
     const ndim = this.ndim;
     if (ndim !== filter.ndim) {
@@ -1023,7 +1025,7 @@ class NdArray {
     }
   }
 
-  fftconvolve(filter:number[]|NdArray) {
+  fftconvolve(filter:ArbDimNumArray|NdArray) {
     filter = NdArray.new(filter);
 
     if (this.ndim !== filter.ndim) {
@@ -1102,7 +1104,7 @@ class NdArray {
     return out;
   }
 
-  static new(arr: NdArray | number[] | number, dtype?: string | Function) {
+  static new(arr: NdArray | ArbDimNumArray | number, dtype?: string | Function) {
     return createArray(arr, dtype);
   }
 }
@@ -1318,7 +1320,7 @@ const doConvolve5x5 = cwise({
   },
 });
 
-function createArray(arr:NdArray | number[] | number, dtype?: Function | string) {
+function createArray(arr:NdArray | ArbDimNumArray | number, dtype?: Function | string) {
   if (arr instanceof NdArray) {
     return arr;
   }
@@ -1337,7 +1339,7 @@ function createArray(arr:NdArray | number[] | number, dtype?: Function | string)
   if (!(arr instanceof T)) {
     arr = new T(arr);
   }
-  return new NdArray(arr as number[], shape);
+  return new NdArray(arr as ArbDimNumArray, shape);
 }
 // NdArray.new = createArray;
 
