@@ -311,7 +311,7 @@ function zeros(shape:number| number[], dtype?: string | Function ) {
   }
   const s = _.shapeSize(shape);
   const T = _.getType(dtype);
-  const arr = new NdArray(new T(s), shape);
+  const arr = new NdArray(new T(s), shape as number[]);
   if (arr.dtype === "array") {
     ops.assigns(arr.selection, 0);
   }
@@ -332,7 +332,7 @@ function ones(shape:number[] | number, dtype?: string | Function) {
   }
   const s = _.shapeSize(shape);
   const T = _.getType(dtype);
-  const arr = new NdArray(new T(s), shape);
+  const arr = new NdArray(new T(s), shape as number[]);
   ops.assigns(arr.selection, 1);
   return arr;
 }
@@ -351,7 +351,7 @@ function empty(shape: number[] | number, dtype?: string | Function) {
   }
   const s = _.shapeSize(shape);
   const T = _.getType(dtype);
-  return new NdArray(new T(s), shape);
+  return new NdArray(new T(s), shape as number[]);
 }
 
 /**
