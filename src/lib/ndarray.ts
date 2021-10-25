@@ -7,17 +7,16 @@ const gemm = require("ndarray-gemm");
 const ndFFT = require("ndarray-fft");
 const ndPool = require("typedarray-pool");
 
-const util = require('util');
+const util = require("util");
 
 import ndarray from "ndarray";
 import CONF from "./config";
 import * as errors from "./errors";
 import _ from "./utils";
 
-interface ArbitraryDimArray<T> extends Array<T | ArbitraryDimArray<T>> {
-}
+interface ArbitraryDimArray<T> extends Array<T | ArbitraryDimArray<T>> {}
 
-export type ArbDimNumArray = ArbitraryDimArray<number>
+export type ArbDimNumArray = ArbitraryDimArray<number>;
 
 /**
  * Multidimensional, homogeneous array of fixed-size items
@@ -31,7 +30,12 @@ class NdArray {
   selection: ndarray.NdArray;
 
   constructor(data: ndarray.NdArray);
-  constructor(data: ArbDimNumArray | ndarray.TypedArray, shape?: number[], stride?: number[], offset?: number);
+  constructor(
+    data: ArbDimNumArray | ndarray.TypedArray,
+    shape?: number[],
+    stride?: number[],
+    offset?: number
+  );
   constructor(...args: any[]) {
     if (args.length === 1) {
       this.selection = args[0];
@@ -90,7 +94,7 @@ class NdArray {
     return this.transpose();
   }
 
-  get(...args: number[]):number {
+  get(...args: number[]): number {
     const n = args.length;
     for (let i = 0; i < n; i++) {
       if (args[i] < 0) {
@@ -100,11 +104,11 @@ class NdArray {
     return this.selection.get.apply(this.selection, args);
   }
 
-  set(...args: number[]):number {
+  set(...args: number[]): number {
     return this.selection.set.apply(this.selection, args);
   }
 
-  slice(...args: Array<number|number[]>) {
+  slice(...args: Array<number | number[]>) {
     const d = this.ndim;
     const hi = new Array(d);
     const lo = new Array(d);
@@ -123,7 +127,11 @@ class NdArray {
         lo[i] = arg < 0 ? (arg as number) + tShape[i] : arg;
         hi[i] = null;
         step[i] = 1;
-      } else if ((arg as number[]).length === 4 && arg[1] === null && arg[2] === null) {
+      } else if (
+        (arg as number[]).length === 4 &&
+        arg[1] === null &&
+        arg[2] === null
+      ) {
         // pattern: a[start::step]
         const s = arg[0] < 0 ? arg[0] + tShape[i] : arg[0];
         lo[i] = s;
@@ -237,30 +245,33 @@ class NdArray {
     return new NdArray(arr, [this.size]);
   }
 
-
   /**
    * Gives a new shape to the array without changing its data.
    * @param {Array|number} The new shape should be compatible with the original shape. If an integer, then the result will be a 1-D array of that length. One shape dimension can be -1. In this case, the value is inferred from the length of the array and remaining dimensions.
    * @returns {NdArray} a new view object if possible, a copy otherwise,
    */
-  reshape(...shape:number[]): NdArray
-  reshape(shape: number[]): NdArray  
-  reshape(...args:any[]): NdArray {
+  reshape(...shape: number[]): NdArray;
+  reshape(shape: number[]): NdArray;
+  reshape(...args: any[]): NdArray {
     if (arguments.length === 0) {
       throw new errors.ValueError(
         "function takes at least one argument (0 given)"
       );
     }
     let shape: number[];
-    if (arguments.length === 1 && _.isNumber(arguments[0]) && arguments[0] === -1) {
+    if (
+      arguments.length === 1 &&
+      _.isNumber(arguments[0]) &&
+      arguments[0] === -1
+    ) {
       shape = [_.shapeSize(this.shape)];
     }
     if (arguments.length === 1) {
-      if  (_.isNumber(arguments[0])) {
+      if (_.isNumber(arguments[0])) {
         shape = [arguments[0] as number];
       } else {
-        // grimmer refactor note: original logic does not check if it is an array   
-        shape = arguments[0]
+        // grimmer refactor note: original logic does not check if it is an array
+        shape = arguments[0];
       }
     }
     if (arguments.length > 1) {
@@ -348,10 +359,10 @@ class NdArray {
    * @param {...number} [axes]
    * @returns {NfdArray}
    */
-  transpose(...axes:number[]):NdArray
-  transpose(axes?: number[]):NdArray
-  transpose(...args:any[]):NdArray {
-    let axes:any
+  transpose(...axes: number[]): NdArray;
+  transpose(axes?: number[]): NdArray;
+  transpose(...args: any[]): NdArray {
+    let axes: any;
     if (args.length === 0) {
       const d = this.ndim;
       axes = new Array(d);
@@ -361,7 +372,7 @@ class NdArray {
     } else if (args.length > 1) {
       axes = args as unknown as number[];
     } else {
-      axes = args[0]
+      axes = args[0];
     }
     return new NdArray(this.selection.transpose.apply(this.selection, axes));
   }
@@ -372,7 +383,7 @@ class NdArray {
    * @param {(Array|NdArray)} x
    * @returns {NdArray}
    */
-  dot(x:ArbDimNumArray|NdArray): NdArray {
+  dot(x: ArbDimNumArray | NdArray): NdArray {
     x = x instanceof NdArray ? x : createArray(x, this.dtype);
     const tShape = this.shape;
     const xShape = x.shape;
@@ -423,7 +434,7 @@ class NdArray {
    * @param {boolean} [copy=true]
    * @returns {NdArray}
    */
-  assign(x:NdArray|ArbDimNumArray|number, copy?: boolean) {
+  assign(x: NdArray | ArbDimNumArray | number, copy?: boolean) {
     if (arguments.length === 1) {
       copy = true;
     }
@@ -467,7 +478,7 @@ class NdArray {
    * @param {boolean} [copy=true]
    * @returns {NdArray}
    */
-  subtract(x:NdArray|ArbDimNumArray|number, copy?: boolean) {
+  subtract(x: NdArray | ArbDimNumArray | number, copy?: boolean) {
     if (arguments.length === 1) {
       copy = true;
     }
@@ -489,7 +500,7 @@ class NdArray {
    * @param {boolean} [copy=true]
    * @returns {NdArray}
    */
-  multiply(x:NdArray|ArbDimNumArray|number, copy?: boolean) {
+  multiply(x: NdArray | ArbDimNumArray | number, copy?: boolean) {
     if (arguments.length === 1) {
       copy = true;
     }
@@ -512,7 +523,7 @@ class NdArray {
    * @param {boolean} [copy=true]
    * @returns {NdArray}
    */
-  divide(x:NdArray|ArbDimNumArray|number, copy?: boolean) {
+  divide(x: NdArray | ArbDimNumArray | number, copy?: boolean) {
     if (arguments.length === 1) {
       copy = true;
     }
@@ -535,7 +546,7 @@ class NdArray {
    * @param {boolean} [copy=true] - set to false to modify the array rather than create a new one
    * @returns {NdArray}
    */
-  pow(x:NdArray|ArbDimNumArray|number, copy?: boolean) {
+  pow(x: NdArray | ArbDimNumArray | number, copy?: boolean) {
     if (arguments.length === 1) {
       copy = true;
     }
@@ -612,7 +623,7 @@ class NdArray {
    *
    * @returns {Number}
    */
-  min():number {
+  min(): number {
     if (this.selection.size === 0) {
       return null;
     }
@@ -624,7 +635,7 @@ class NdArray {
    *
    * @returns {number}
    */
-  sum():number {
+  sum(): number {
     return ops.sum(this.selection);
   }
 
@@ -634,7 +645,7 @@ class NdArray {
    * @param {object} {ddof:0}
    * @returns {number}
    */
-  std(options?: {ddof?: number}) {
+  std(options?: { ddof?: number }) {
     options = _.defaults(options, { ddof: 0 });
     const squares = this.clone();
     ops.powseq(squares.selection, 2);
@@ -663,7 +674,7 @@ class NdArray {
    * @param {boolean} [copy=true]
    * @returns {NdArray}
    */
-  mod(x:NdArray|ArbDimNumArray|number, copy?: boolean) {
+  mod(x: NdArray | ArbDimNumArray | number, copy?: boolean) {
     if (arguments.length === 1) {
       copy = true;
     }
@@ -695,8 +706,8 @@ class NdArray {
   /**
    * Stringify the array to make it readable in the console, by a human.
    *
-   */  
-  [util.inspect.custom] (){
+   */
+  [util.inspect.custom]() {
     console.log(this.toString());
   }
 
@@ -786,7 +797,7 @@ class NdArray {
    * @param {(Array|NdArray)} array
    * @returns {boolean}
    */
-  equal(array:ArbDimNumArray|NdArray):boolean {
+  equal(array: ArbDimNumArray | NdArray): boolean {
     array = createArray(array);
     if (this.size !== array.size || this.ndim !== array.ndim) {
       return false;
@@ -856,7 +867,7 @@ class NdArray {
     );
   }
 
-  iteraxis(axis:number, cb:(xi: NdArray, i:number ) => void) {
+  iteraxis(axis: number, cb: (xi: NdArray, i: number) => void) {
     const shape = this.shape;
     if (axis === -1) {
       axis = shape.length - 1;
@@ -884,7 +895,7 @@ class NdArray {
    *
    * @param {Array|NdArray} filter
    */
-  convolve(filter:ArbDimNumArray|NdArray) {
+  convolve(filter: ArbDimNumArray | NdArray) {
     filter = NdArray.new(filter);
     const ndim = this.ndim;
     if (ndim !== filter.ndim) {
@@ -1025,7 +1036,7 @@ class NdArray {
     }
   }
 
-  fftconvolve(filter:ArbDimNumArray|NdArray) {
+  fftconvolve(filter: ArbDimNumArray | NdArray) {
     filter = NdArray.new(filter);
 
     if (this.ndim !== filter.ndim) {
@@ -1104,7 +1115,10 @@ class NdArray {
     return out;
   }
 
-  static new(arr: NdArray | ArbDimNumArray | number, dtype?: string | Function) {
+  static new(
+    arr: NdArray | ArbDimNumArray | number,
+    dtype?: string | Function
+  ) {
     return createArray(arr, dtype);
   }
 }
@@ -1320,7 +1334,10 @@ const doConvolve5x5 = cwise({
   },
 });
 
-function createArray(arr:NdArray | ArbDimNumArray | number, dtype?: string | Function) {
+function createArray(
+  arr: NdArray | ArbDimNumArray | number,
+  dtype?: string | Function
+) {
   if (arr instanceof NdArray) {
     return arr;
   }
