@@ -1320,7 +1320,7 @@ const doConvolve5x5 = cwise({
   },
 });
 
-function createArray(arr:NdArray | ArbDimNumArray | number, dtype?: Function | string) {
+function createArray(arr:NdArray | ArbDimNumArray | number, dtype?: string | Function) {
   if (arr instanceof NdArray) {
     return arr;
   }

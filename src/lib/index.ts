@@ -260,7 +260,7 @@ function negative(x:ArbDimNumArray | NdArray | number) {
  * @param {int} [start=0] - Start of interval. The interval includes this value.
  * @param {int} stop - End of interval. The interval does not include this value.
  * @param {int} [step=1] - Spacing between values. The default step size is 1. If step is specified, start must also be given.
- * @param {(String|Object)} [dtype=Array] The type of the output array.
+ * @param {(String|Function)} [dtype=Array] The type of the output array. Either string (e.g. 'uint8') or a Constructor function (e.g. Uint8Array).
  *
  * @return {NdArray} Array of evenly spaced values.
  */
@@ -301,7 +301,7 @@ function arange(
  * Return a new array of given shape and type, filled with zeros.
  *
  * @param {(Array|int)} shape - Shape of the new array, e.g., [2, 3] or 2.
- * @param {(String|Object)}  [dtype=Array]  The type of the output array.
+ * @param {(String|Function)}  [dtype=Array]  The type of the output array. E.g., 'uint8' or Uint8Array.
  *
  * @return {NdArray} Array of zeros with the given shape and dtype
  */
@@ -322,7 +322,7 @@ function zeros(shape:number| number[], dtype?: string | Function ) {
  * Return a new array of given shape and type, filled with ones.
  *
  * @param {(Array|int)} shape - Shape of the new array, e.g., [2, 3] or 2.
- * @param {(String|Object)}  [dtype=Array] - The type of the output array.
+ * @param {(String|Function)}  [dtype=Array] - The type of the output array. E.g., 'uint8' or Uint8Array.
  *
  * @return {NdArray} Array of ones with the given shape and dtype
  */
@@ -341,7 +341,7 @@ function ones(shape:number[] | number, dtype?: string | Function) {
  * Return a new array of given shape and type, filled with `undefined` values.
  *
  * @param {(Array|int)} shape - Shape of the new array, e.g., [2, 3] or 2.
- * @param {(String|Object)}  [dtype=Array] - The type of the output array.
+ * @param {(String|Function)}  [dtype=Array] - The type of the output array. E.g., 'uint8' or Uint8Array.
  *
  * @return {NdArray} Array of `undefined` values with the given shape and dtype
  */
@@ -728,7 +728,7 @@ function diag(x:ArbDimNumArray| NdArray) {
 /**
  * The identity array is a square array with ones on the main diagonal.
  * @param {number} Number of rows (and columns) in n x n output.
- * @param {(String|Object)}  [dtype=Array]  The type of the output array.
+ * @param {(String|Function)}  [dtype=Array]  The type of the output array. E.g., 'uint8' or Uint8Array.
  * @return {Array} n x n array with its main diagonal set to one, and all other elements 0
  */
 function identity(n:number, dtype?: string | Function) {
