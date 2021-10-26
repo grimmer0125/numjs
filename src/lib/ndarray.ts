@@ -1123,6 +1123,7 @@ class NdArray {
   }
 }
 
+/* istanbul ignore next */
 const doConjMuleq = cwise({
   args: ["array", "array", "array", "array"],
   body: function (xi, yi, ui, vi) {
@@ -1136,6 +1137,7 @@ const doConjMuleq = cwise({
   },
 });
 
+/* istanbul ignore next */
 const doConvolve3x3 = cwise({
   args: [
     "array", // c
@@ -1193,6 +1195,7 @@ const doConvolve3x3 = cwise({
   },
 });
 
+/* istanbul ignore next */
 const doConvolve5x5 = cwise({
   args: [
     "index",
@@ -1381,6 +1384,7 @@ function initNativeArray(shape, i) {
   return result;
 }
 
+/* istanbul ignore next */
 const doUnpack = cwise({
   args: ["array", "scalar", "index"],
   body: function unpackCwise(arr, a, idx) {

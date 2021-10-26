@@ -420,6 +420,7 @@ function softmax(x: ArbDimNumArray | NdArray | number) {
   return e;
 }
 
+/* istanbul ignore next */
 const doSigmoid = cwise({
   args: ["array", "scalar"],
   body: function sigmoidCwise(a, t) {
@@ -440,6 +441,7 @@ function sigmoid(x: ArbDimNumArray | NdArray | number, t?: number): NdArray {
   return x;
 }
 
+/* istanbul ignore next */
 const doClip = cwise({
   args: ["array", "scalar", "scalar"],
   body: function clipCwise(a, min, max) {
@@ -485,6 +487,7 @@ function leakyRelu(x: NdArray | ArbDimNumArray | number, alpha?: number) {
   return s;
 }
 
+/* istanbul ignore next */
 const doTanh = cwise({
   args: ["array"],
   body: function tanhCwise(xi) {
