@@ -21,12 +21,10 @@ npm install numjs
 ```
 
 ```js
-const nj = require('numjs');
-
+// recommended for TypeScript user
+const nj from "numjs"; 
 // or
-
-const nj from "numjs";
-
+const nj = require('numjs').default;
 ```
 
 ## Basics
