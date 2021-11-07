@@ -672,10 +672,10 @@ array([0, 1, 2, 3, 4, 0, 1])
 ```
 
 ## Documentation
-- [numjs globals](https://nicolaspanel.github.io/numjs/global.html)
-- [NdArray methods](https://nicolaspanel.github.io/numjs/NdArray.html)
-- [TypeDoc](https://grimmer0125.github.io/numjs/)
-
-
+- [numjs globals](https://nicolaspanel.github.io/numjs/global.html) from the forked project
+    - [TypeDoc ver.](https://grimmer0125.github.io/numjs/modules/)
+    modules/index.html#default
+- [NdArray](https://nicolaspanel.github.io/numjs/NdArray.html) from the forked project
+    - [TypeDoc ver.](https://grimmer0125.github.io/numjs/classes/lib_ndarray.default.html
 ## Credits
 __NumJs__ is built on top of [ndarray](https://scijs.net/packages/#scijs/ndarray) and uses many [scijs packages](https://scijs.net/packages/)
