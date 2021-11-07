@@ -13,7 +13,7 @@ import CONF from "./config";
 import * as errors from "./errors";
 import _ from "./utils";
 
-interface ArbitraryDimArray<T> extends Array<T | ArbitraryDimArray<T>> {}
+export interface ArbitraryDimArray<T> extends Array<T | ArbitraryDimArray<T>> {}
 
 export type ArbDimNumArray = ArbitraryDimArray<number>;
 
@@ -25,7 +25,7 @@ export type ArbDimNumArray = ArbitraryDimArray<number>;
  * data-type object (dtype), one of which is associated with each NdArray.
  * @constructor
  */
-class NdArray {
+export class NdArray {
   selection: ndarray.NdArray;
 
   constructor(data: ndarray.NdArray);
@@ -1405,5 +1405,3 @@ function unpackArray(arr) {
 function formatNumber(v) {
   return String(Number((v || 0).toFixed(CONF.nFloatingValues)));
 }
-
-export default NdArray;

@@ -8,7 +8,7 @@ import ndarray from "ndarray";
 
 import CONF from "./config";
 import DTYPES from "./dtypes";
-import NdArray, { ArbDimNumArray } from "./ndarray";
+import { NdArray, ArbDimNumArray } from "./ndarray";
 import _ from "./utils";
 import * as errors from "./errors";
 
@@ -119,10 +119,7 @@ function flatten(array: ArbDimNumArray | NdArray) {
  * @param {Array|number} shape - The new shape should be compatible with the original shape. If an integer, then the result will be a 1-D array of that length
  * @returns {NdArray}
  */
-export function reshape(
-  array: ArbDimNumArray | NdArray,
-  shape: number[] | number
-) {
+function reshape(array: ArbDimNumArray | NdArray, shape: number[] | number) {
   // TypeScript is not smart enought on parameters detection on overloading
   // workaround way
   if (typeof shape == "number") {
