@@ -1,4 +1,4 @@
-# NumJs
+# @d4c/numjs
 
 [![npm version](https://img.shields.io/npm/v/%40d4c/numjs.svg)](https://www.npmjs.com/package/@d4c/numjs)
 
