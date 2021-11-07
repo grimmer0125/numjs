@@ -773,7 +773,7 @@ function diag(x: ArbDimNumArray | NdArray) {
  * The identity array is a square array with ones on the main diagonal.
  * @param {number} Number of rows (and columns) in n x n output.
  * @param {(String|Function)}  [dtype=Array]  The type of the output array. E.g., 'uint8' or Uint8Array.
- * @return {Array} n x n array with its main diagonal set to one, and all other elements 0
+ * @return {NdArray} n x n array with its main diagonal set to one, and all other elements 0
  */
 function identity(n: number, dtype?: string | Function) {
   const arr = zeros([n, n], dtype);
