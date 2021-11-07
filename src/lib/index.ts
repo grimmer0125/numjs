@@ -120,7 +120,10 @@ function flatten(array: ArbDimNumArray | NdArray) {
  * @param {Array} shape - The new shape should be compatible with the original shape. If an integer, then the result will be a 1-D array of that length
  * @returns {NdArray}
  */
-function reshape(array: ArbDimNumArray | NdArray, shape: number[] | number) {
+export function reshape(
+  array: ArbDimNumArray | NdArray,
+  shape: number[] | number
+) {
   // TypeScript is not smart enought on parameters detection on overloading
   // workaround way
   if (typeof shape == "number") {
@@ -988,3 +991,5 @@ export default {
     return NdArray.new(array, "float64");
   },
 };
+
+// export default kk;
