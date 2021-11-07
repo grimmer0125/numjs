@@ -707,7 +707,7 @@ class NdArray {
    *
    */
   [util.inspect.custom]() {
-    console.log(this.toString());
+    return this.toString();
   }
 
   /**
