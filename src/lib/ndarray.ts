@@ -1,6 +1,5 @@
 "use strict";
 
-// const ndarray = require("ndarray");
 const cwise = require("cwise");
 const ops = require("ndarray-ops");
 const gemm = require("ndarray-gemm");
