@@ -1,33 +1,54 @@
-__NumJs__ is a npm ~~/bower~~ package for scientific computing with JavaScript. It contains among other things:
+# NumJs
+
+This project is a fork of https://github.com/nicolaspanel/numjs and does below modifications 
+- Remove the feature of images manipulation
+- Add TypeScript typings and `.d.ts` is out of box, JavaScript is supported, too. Also, it includes 
+    - ES6 build (ES2015) with CommonJS module for main build in package.json.
+    - ES6 build (ES2015) with ES6 module for module build. Some tools will follow the module field in package.json, like Rollup, Webpack, or Parcel. It is good to let build tools can tree-shake your module build to import only the code they need.
+- Refactor internal code via ES6 syntax and does not change the core algorithm code.
+
+You can check the [changelog](https://github.com/grimmer0125/numjs/blob/master/CHANGELOG.md).
+
+## Features
+
+__NumJs__ is a npm package for scientific computing with JavaScript. It contains among other things:
  - a powerful N-dimensional array object
  - linear algebra function
  - fast Fourier transform
- - ~~tools for basic image processing~~
 
 Besides its obvious scientific uses, __NumJs__ can also be used as an efficient multi-dimensional container of generic data.
 
-It works both in node.js and in the browser ~~(with or without [browserify](https://browserify.org/))~~
+It works both in node.js and in the browser.
 
-__NumJs__ is licensed under the [MIT license](https://github.com/nicolaspanel/numjs/blob/master/LICENSE), enabling reuse with almost no restrictions.
+__NumJs__ is licensed under the [MIT license](https://github.com/grimmer0125/numjs/blob/master/LICENSE), enabling reuse with almost no restrictions.
 
-~~__[See this jsfiddle](https://jsfiddle.net/nicolaspanel/047gwg0q/)__ for a concrete example of how to use the library to manipulate images in the browser.~~
+__[See this jsfiddle](https://jsfiddle.net/nicolaspanel/047gwg0q/)__ for a concrete example of how to use the library to manipulate images in the browser.
 
 ## Installation
 
-### on node.js
-
 ```sh
-npm install numjs
+npm install numjs 
+# or 
+yarn add numjs
 ```
 
+then either using ES6 import: 
+
 ```js
-// recommended for TypeScript user
 const nj from "numjs"; 
-// or
-const nj = require('numjs').default;
+```
+or CommonJS import:
+
+```js
+// TypeScript users will not get typings when using require
+const nj = require('numjs').default; 
 ```
 
 ## Basics
+
+### How to print NumJs content
+
+Use `nj.array([2,3,4]` as an example. In Node.js, `console.log(nj.array([2,3,4])` will print beautified content, `array([ 2, 3, 4])`. In browser or using debugger in Node.js, please use `console.log(nj.array([2,3,4].toString())` to get its beautified content. `toString()` is working in browser/Node.js.
 
 ### Array Creation
 
@@ -648,78 +669,10 @@ array([[[1, 3],
 array([0, 1, 2, 3, 4, 0, 1])
 ```
 
-
-## Images manipulation (drop support currently)
-__NumJs__’s comes with powerful functions for image processing. Theses function are located in `nj.images` module.
-
-The different color bands/channels are stored using the `NdArray` object such that a grey-image is `[H,W]`, an RGB-image is `[H,W,3]` and an RGBA-image is `[H,W,4]`.
-
-Use `nj.images.read`, `nj.images.write` and `nj.images.resize` functions to (respectively) read, write or resize images.
-
-Example:
-```js
-> nj.config.printThreshold = 28;
->
-> const img = nj.images.data.digit;  // WARN: this is a property, not a function. See also `nj.images.data.moon`, `nj.images.data.lenna` and `nj.images.data.node`
->
-> img
-array([[   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0],
-       [   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0],
-       [   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0],
-       [   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0],
-       [   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0],
-       [   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   3,  18,  18,  18, 126, 136, 175,  26, 166, 255, 247, 127,   0,   0,   0,   0],
-       [   0,   0,   0,   0,   0,   0,   0,   0,  30,  36,  94, 154, 170, 253, 253, 253, 253, 253, 225, 172, 253, 242, 195,  64,   0,   0,   0,   0],
-       [   0,   0,   0,   0,   0,   0,   0,  49, 238, 253, 253, 253, 253, 253, 253, 253, 253, 251,  93,  82,  82,  56,  39,   0,   0,   0,   0,   0],
-       [   0,   0,   0,   0,   0,   0,   0,  18, 219, 253, 253, 253, 253, 253, 198, 182, 247, 241,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0],
-       [   0,   0,   0,   0,   0,   0,   0,   0,  80, 156, 107, 253, 253, 205,  11,   0,  43, 154,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0],
-       [   0,   0,   0,   0,   0,   0,   0,   0,   0,  14,   1, 154, 253,  90,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0],
-       [   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0, 139, 253, 190,   2,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0],
-       [   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,  11, 190, 253,  70,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0],
-       [   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,  35, 241, 225, 160, 108,   1,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0],
-       [   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,  81, 240, 253, 253, 119,  25,   0,   0,   0,   0,   0,   0,   0,   0,   0],
-       [   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,  45, 186, 253, 253, 150,  27,   0,   0,   0,   0,   0,   0,   0,   0],
-       [   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,  16,  93, 252, 253, 187,   0,   0,   0,   0,   0,   0,   0,   0],
-       [   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0, 249, 253, 249,  64,   0,   0,   0,   0,   0,   0,   0],
-       [   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,  46, 130, 183, 253, 253, 207,   2,   0,   0,   0,   0,   0,   0,   0],
-       [   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,  39, 148, 229, 253, 253, 253, 250, 182,   0,   0,   0,   0,   0,   0,   0,   0],
-       [   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,  24, 114, 221, 253, 253, 253, 253, 201,  78,   0,   0,   0,   0,   0,   0,   0,   0,   0],
-       [   0,   0,   0,   0,   0,   0,   0,   0,  23,  66, 213, 253, 253, 253, 253, 198,  81,   2,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0],
-       [   0,   0,   0,   0,   0,   0,  18, 171, 219, 253, 253, 253, 253, 195,  80,   9,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0],
-       [   0,   0,   0,   0,  55, 172, 226, 253, 253, 253, 253, 244, 133,  11,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0],
-       [   0,   0,   0,   0, 136, 253, 253, 253, 212, 135, 132,  16,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0],
-       [   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0],
-       [   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0],
-       [   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0]], dtype=uint8)
-> const resized = nj.images.resize(img, 14, 12)
->
-> resized.shape
-[ 14, 12 ]
->
-> resized
-array([[   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0],
-       [   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0],
-       [   0,   0,   0,   0,   0,   6,   9,  66,  51, 106,  94,   0],
-       [   0,   0,  13, 140, 189, 233, 253, 253, 143, 159,  75,   0],
-       [   0,   0,   5, 178, 217, 241,  98, 172,   0,   0,   0,   0],
-       [   0,   0,   0,   4,  74, 197,   1,   0,   0,   0,   0,   0],
-       [   0,   0,   0,   0,   3, 180, 114,  28,   0,   0,   0,   0],
-       [   0,   0,   0,   0,   0,  21, 182, 220,  51,   0,   0,   0],
-       [   0,   0,   0,   0,   0,   0,   4, 149, 236,  16,   0,   0],
-       [   0,   0,   0,   0,   0,  47, 165, 236, 224,   1,   0,   0],
-       [   0,   0,   0,  23, 152, 245, 240, 135,  20,   0,   0,   0],
-       [   0,  57, 167, 245, 251, 148,  23,   0,   0,   0,   0,   0],
-       [   0,  98, 127,  87,  37,   0,   0,   0,   0,   0,   0,   0],
-       [   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0]], dtype=uint8)
-```
-
-See also [this jsfiddle](https://jsfiddle.net/nicolaspanel/047gwg0q/) for more details on what is possible from the browser.
-
-
-## More ?
-See documentation on [numjs globals](https://nicolaspanel.github.io/numjs/global.html) and
-[NdArray methods](https://nicolaspanel.github.io/numjs/NdArray.html).
-
+## Documentation
+- [numjs globals](https://nicolaspanel.github.io/numjs/global.html)
+- [NdArray methods](https://nicolaspanel.github.io/numjs/NdArray.html)
+- [TypeDoc](https://grimmer0125.github.io/numjs/)
 
 
 ## Credits
