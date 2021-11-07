@@ -1,6 +1,6 @@
 # Changelog
 
-### [0.17.0](https://github.com/grimmer0125/d4c-queue/compare/v0.16.0.1...v0.17.0) (2021-10-03)
+### [0.17.0](https://github.com/grimmer0125/numjs/compare/v0.16.0.1...v0.17.0) (2021-10-03)
 
 - Remove image manipulation which may cause mac m1 installation failure, also it may be not needed in some use cases. 
 - Add TypeScript and typing for parameters and return value.
