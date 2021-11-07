@@ -37,7 +37,7 @@ yarn add @d4c/numjs
 then either using ES6 import: 
 
 ```js
-const nj from "@d4c/numjs"; 
+import nj from "@d4c/numjs"; 
 ```
 or CommonJS import:
 
