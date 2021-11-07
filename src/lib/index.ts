@@ -615,7 +615,7 @@ function dot(
 /**
  * Join given arrays along the last axis.
  *
- * @param {...(Array|NdArray)} arrays
+ * @param {...(number|ArbDimNumArray|NdArray)} arrays
  * @returns {NdArray}
  */
 function concatenate(...arrays: Array<number | ArbDimNumArray | NdArray>);
@@ -785,7 +785,7 @@ function identity(n: number, dtype?: string | Function) {
  * Join a sequence of arrays along a new axis.
  * The axis parameter specifies the index of the new axis in the dimensions of the result.
  * For example, if axis=0 it will be the first dimension and if axis=-1 it will be the last dimension.
- * @param {Array} sequence of array_like
+ * @param {Array<NdArray|ArbDimNumArray|number>} sequence of array_like
  * @param {number} [axis=0] The axis in the result array along which the input arrays are stacked.
  * @return {NdArray} The stacked array has one more dimension than the input arrays.
  */
