@@ -246,7 +246,7 @@ class NdArray {
 
   /**
    * Gives a new shape to the array without changing its data.
-   * @param {Array|number} The new shape should be compatible with the original shape. If an integer, then the result will be a 1-D array of that length. One shape dimension can be -1. In this case, the value is inferred from the length of the array and remaining dimensions.
+   * @param {number|Array|...number} The new shape should be compatible with the original shape. If an integer, then the result will be a 1-D array of that length. One shape dimension can be -1. In this case, the value is inferred from the length of the array and remaining dimensions.
    * @returns {NdArray} a new view object if possible, a copy otherwise,
    */
   reshape(...shape: number[]): NdArray;
@@ -355,8 +355,8 @@ class NdArray {
   /**
    * Permute the dimensions of the array.
    *
-   * @param {...number} [axes]
-   * @returns {NfdArray}
+   * @param {Array<number>|...number} [axes]
+   * @returns {NdArray}
    */
   transpose(...axes: number[]): NdArray;
   transpose(axes?: number[]): NdArray;

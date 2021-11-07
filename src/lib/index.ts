@@ -116,7 +116,7 @@ function flatten(array: ArbDimNumArray | NdArray) {
 /**
  * Gives a new shape to an array without changing its data.
  * @param {(ArbDimNumArray|NdArray)} array
- * @param {Array} shape - The new shape should be compatible with the original shape. If an integer, then the result will be a 1-D array of that length
+ * @param {Array|number} shape - The new shape should be compatible with the original shape. If an integer, then the result will be a 1-D array of that length
  * @returns {NdArray}
  */
 export function reshape(
@@ -615,7 +615,7 @@ function dot(
 /**
  * Join given arrays along the last axis.
  *
- * @param {...(number|ArbDimNumArray|NdArray)} arrays
+ * @param {Array<number|ArbDimNumArray|NdArray>|...(number|ArbDimNumArray|NdArray)} arrays
  * @returns {NdArray}
  */
 function concatenate(...arrays: Array<number | ArbDimNumArray | NdArray>);
