@@ -379,7 +379,7 @@ class NdArray {
   /**
    * Dot product of two arrays.
    *
-   * @param {(Array|NdArray)} x
+   * @param {(ArbDimNumArray|NdArray)} x
    * @returns {NdArray}
    */
   dot(x: ArbDimNumArray | NdArray): NdArray {
@@ -429,7 +429,7 @@ class NdArray {
   /**
    * Assign `x` to the array, element-wise.
    *
-   * @param {(NdArray|Array|number)} x
+   * @param {(NdArray|ArbDimNumArray|number)} x
    * @param {boolean} [copy=true]
    * @returns {NdArray}
    */
@@ -451,7 +451,7 @@ class NdArray {
   /**
    * Add `x` to the array, element-wise.
    *
-   * @param {(NdArray|Array|number)} x
+   * @param {(NdArray|ArbDimNumArray|number)} x
    * @param {boolean} [copy=true]
    * @returns {NdArray}
    */
@@ -473,7 +473,7 @@ class NdArray {
   /**
    * Subtract `x` to the array, element-wise.
    *
-   * @param {(NdArray|Array|number)} x
+   * @param {(NdArray|ArbDimNumArray|number)} x
    * @param {boolean} [copy=true]
    * @returns {NdArray}
    */
@@ -495,7 +495,7 @@ class NdArray {
   /**
    * Multiply array by `x`, element-wise.
    *
-   * @param {(NdArray|Array|number)} x
+   * @param {(NdArray|ArbDimNumArray|number)} x
    * @param {boolean} [copy=true]
    * @returns {NdArray}
    */
@@ -518,7 +518,7 @@ class NdArray {
   /**
    * Divide array by `x`, element-wise.
    *
-   * @param {(NdArray|Array|number)} x
+   * @param {(NdArray|ArbDimNumArray|number)} x
    * @param {boolean} [copy=true]
    * @returns {NdArray}
    */
@@ -541,7 +541,7 @@ class NdArray {
   /**
    * Raise array elements to powers from given array, element-wise.
    *
-   * @param {(NdArray|Array|number)} x
+   * @param {(NdArray|ArbDimNumArray|number)} x
    * @param {boolean} [copy=true] - set to false to modify the array rather than create a new one
    * @returns {NdArray}
    */
@@ -669,7 +669,7 @@ class NdArray {
   /**
    * Return element-wise remainder of division.
    *
-   * @param {(NdArray|Array|number)} x
+   * @param {(NdArray|ArbDimNumArray|number)} x
    * @param {boolean} [copy=true]
    * @returns {NdArray}
    */
@@ -692,7 +692,7 @@ class NdArray {
   /**
    * Converts {NdArray} to a native JavaScript {Array}
    *
-   * @returns {Array}
+   * @returns {ArbDimNumArray}
    */
   tolist(): ArbDimNumArray {
     return unpackArray(this.selection);
@@ -793,7 +793,7 @@ class NdArray {
 
   /**
    * Return true if two arrays have the same shape and elements, false otherwise.
-   * @param {(Array|NdArray)} array
+   * @param {(ArbDimNumArray|NdArray)} array
    * @returns {boolean}
    */
   equal(array: ArbDimNumArray | NdArray): boolean {
@@ -892,7 +892,7 @@ class NdArray {
    * @note: The convolution product is only given for points where the signals overlap completely. Values outside the signal boundary have no effect. This behaviour is known as the 'valid' mode.
    * @note: Use optimized code for 3x3, 3x3x1, 5x5, 5x5x1 filters, FFT otherwise.
    *
-   * @param {Array|NdArray} filter
+   * @param {ArbDimNumArray|NdArray} filter
    */
   convolve(filter: ArbDimNumArray | NdArray) {
     filter = NdArray.new(filter);

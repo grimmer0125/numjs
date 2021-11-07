@@ -37,8 +37,8 @@ function broadcast(shape1: number[], shape2: number[]) {
 /**
  * Add arguments, element-wise.
  *
- * @param {(NdArray|Array|number)} a
- * @param {(NdArray|Array|number)} b
+ * @param {(NdArray|ArbDimNumArray|number)} a
+ * @param {(NdArray|ArbDimNumArray|number)} b
  * @returns {NdArray}
  */
 function add(
@@ -51,8 +51,8 @@ function add(
 /**
  * Multiply arguments, element-wise.
  *
- * @param {(Array|NdArray)} a
- * @param {(Array|NdArray|number)} b
+ * @param {(ArbDimNumArray|NdArray)} a
+ * @param {(ArbDimNumArray|NdArray|number)} b
  * @returns {NdArray}
  */
 function multiply(
@@ -65,8 +65,8 @@ function multiply(
 /**
  * Divide `a` by `b`, element-wise.
  *
- * @param {(Array|NdArray)} a
- * @param {(Array|NdArray|number)} b
+ * @param {(ArbDimNumArray|NdArray)} a
+ * @param {(ArbDimNumArray|NdArray|number)} b
  * @returns {NdArray}
  */
 function divide(
@@ -79,8 +79,8 @@ function divide(
 /**
  * Subtract second argument from the first, element-wise.
  *
- * @param {(NdArray|Array|number)} a
- * @param {(NdArray|Array|number)} b
+ * @param {(ArbDimNumArray|NdArray|number)} a
+ * @param {(ArbDimNumArray|NdArray|number)} b
  * @returns {NdArray}
  */
 function subtract(
@@ -92,8 +92,8 @@ function subtract(
 
 /**
  * Return true if two arrays have the same shape and elements, false otherwise.
- * @param {(Array|NdArray)} array1
- * @param {(Array|NdArray)} array2
+ * @param {(ArbDimNumArray|NdArray)} array1
+ * @param {(ArbDimNumArray|NdArray)} array2
  * @returns {boolean}
  */
 function equal(
@@ -106,7 +106,7 @@ function equal(
 /**
  * Return a copy of the array collapsed into one dimension using row-major order (C-style)
 
- * @param {(Array|NdArray)} array
+ * @param {(ArbDimNumArray|NdArray)} array
  * @returns {NdArray}
  */
 function flatten(array: ArbDimNumArray | NdArray) {
@@ -115,7 +115,7 @@ function flatten(array: ArbDimNumArray | NdArray) {
 
 /**
  * Gives a new shape to an array without changing its data.
- * @param {(Array|NdArray)} array
+ * @param {(ArbDimNumArray|NdArray)} array
  * @param {Array} shape - The new shape should be compatible with the original shape. If an integer, then the result will be a 1-D array of that length
  * @returns {NdArray}
  */
@@ -134,7 +134,7 @@ export function reshape(
 
 /**
  * Calculate the exponential of all elements in the input array, element-wise.
- * @param {(Array|NdArray|number)} x
+ * @param {(ArbDimNumArray|NdArray|number)} x
  * @returns {NdArray}
  */
 function exp(x: ArbDimNumArray | NdArray | number) {
@@ -143,7 +143,7 @@ function exp(x: ArbDimNumArray | NdArray | number) {
 
 /**
  * Calculate the natural logarithm of all elements in the input array, element-wise.
- * @param {(Array|NdArray|number)} x
+ * @param {(ArbDimNumArray|NdArray|number)} x
  * @returns {NdArray}
  */
 function log(x: ArbDimNumArray | NdArray | number) {
@@ -152,7 +152,7 @@ function log(x: ArbDimNumArray | NdArray | number) {
 
 /**
  * Calculate the positive square-root of all elements in the input array, element-wise.
- * @param {(Array|NdArray|number)} x
+ * @param {(ArbDimNumArray|NdArray|number)} x
  * @returns {NdArray}
  */
 function sqrt(x: ArbDimNumArray | NdArray | number) {
@@ -162,8 +162,8 @@ function sqrt(x: ArbDimNumArray | NdArray | number) {
 /**
  * Raise first array elements to powers from second array, element-wise.
  *
- * @param {(Array|NdArray|number)} x1
- * @param {(Array|NdArray|number)} x2
+ * @param {(ArbDimNumArray|NdArray|number)} x1
+ * @param {(ArbDimNumArray|NdArray|number)} x2
  * @returns {NdArray}
  */
 function power(
@@ -176,7 +176,7 @@ function power(
 /**
  * Return the sum of input array elements.
  *
- * @param {(Array|NdArray|number)} x
+ * @param {(ArbDimNumArray|NdArray|number)} x
  * @returns {number}
  */
 function sum(x: ArbDimNumArray | NdArray | number) {
@@ -186,7 +186,7 @@ function sum(x: ArbDimNumArray | NdArray | number) {
 /**
  * Return the arithmetic mean of input array elements.
  *
- * @param {(Array|NdArray|number)} x
+ * @param {(ArbDimNumArray|NdArray|number)} x
  * @returns {number}
  */
 function mean(x: ArbDimNumArray | NdArray | number) {
@@ -196,7 +196,7 @@ function mean(x: ArbDimNumArray | NdArray | number) {
 /**
  * Returns the standard deviation, a measure of the spread of a distribution, of the input array elements.
  *
- * @param {(Array|NdArray|number)} x
+ * @param {(ArbDimNumArray|NdArray|number)} x
  * @returns {number}
  */
 function std(
@@ -209,7 +209,7 @@ function std(
 /**
  * Return the minimum value of the array
  *
- * @param {(Array|NdArray|number)} x
+ * @param {(ArbDimNumArray|NdArray|number)} x
  * @returns {Number}
  */
 function min(x: ArbDimNumArray | NdArray | number): number {
@@ -219,7 +219,7 @@ function min(x: ArbDimNumArray | NdArray | number): number {
 /**
  * Return the maximum value of the array
  *
- * @param {(Array|NdArray|number)} x
+ * @param {(ArbDimNumArray|NdArray|number)} x
  * @returns {Number}
  */
 function max(x: ArbDimNumArray | NdArray | number): number {
@@ -230,8 +230,8 @@ function max(x: ArbDimNumArray | NdArray | number): number {
  * Return element-wise remainder of division.
  * Computes the remainder complementary to the `floor` function. It is equivalent to the Javascript modulus operator``x1 % x2`` and has the same sign as the divisor x2.
  *
- * @param {(NdArray|Array|number)} x1
- * @param {(NdArray|Array|number)} x2
+ * @param {(NdArray|ArbDimNumArray|number)} x1
+ * @param {(NdArray|ArbDimNumArray|number)} x2
  * @returns {NdArray}
  */
 function mod(
@@ -273,7 +273,7 @@ function transpose(x: NdArray | ArbDimNumArray | number, axes?: number[]) {
 /**
  * Return the inverse of the input array, element-wise.
  *
- * @param {(Array|NdArray|number)} x
+ * @param {(ArbDimNumArray|NdArray|number)} x
  * @returns {NdArray}
  */
 function negative(x: ArbDimNumArray | NdArray | number) {
@@ -412,7 +412,7 @@ function random(...args: any[]): NdArray {
 
 /**
  * Return the softmax, or normalized exponential, of the input array, element-wise.
- * @param {(Array|NdArray|number)} x
+ * @param {(ArbDimNumArray|NdArray|number)} x
  * @returns {NdArray}
  */
 function softmax(x: ArbDimNumArray | NdArray | number) {
@@ -432,7 +432,7 @@ const doSigmoid = cwise({
 
 /**
  * Return the sigmoid of the input array, element-wise.
- * @param {(Array|NdArray|number)} x
+ * @param {(ArbDimNumArray|NdArray|number)} x
  * @param {number} [t=1] - stifness parameter
  * @returns {NdArray}
  */
@@ -454,7 +454,7 @@ const doClip = cwise({
 /**
  * Clip (limit) the values in an array between min and max, element-wise.
  *
- * @param {(Array|NdArray|number)} x
+ * @param {(ArbDimNumArray|NdArray|number)} x
  * @param {number} [min=0]
  * @param {number} [max=1]
  * @returns {NdArray}
@@ -500,7 +500,7 @@ const doTanh = cwise({
 /**
  * Return hyperbolic tangent of the input array, element-wise.
  *
- * @param {(Array|NdArray|number)} x
+ * @param {(ArbDimNumArray|NdArray|number)} x
  * @returns {NdArray}
  */
 function tanh(x: ArbDimNumArray | NdArray | number) {
@@ -512,7 +512,7 @@ function tanh(x: ArbDimNumArray | NdArray | number) {
 /**
  * Return absolute value of the input array, element-wise.
  *
- * @param {(Array|NdArray|number)} x
+ * @param {(ArbDimNumArray|NdArray|number)} x
  * @returns {NdArray}
  */
 function abs(x: ArbDimNumArray | NdArray | number) {
@@ -524,7 +524,7 @@ function abs(x: ArbDimNumArray | NdArray | number) {
 /**
  * Return trigonometric cosine of the input array, element-wise.
  *
- * @param {(Array|NdArray|number)} x
+ * @param {(ArbDimNumArray|NdArray|number)} x
  * @returns {NdArray}
  */
 function cos(x: ArbDimNumArray | NdArray | number) {
@@ -536,7 +536,7 @@ function cos(x: ArbDimNumArray | NdArray | number) {
 /**
  * Return trigonometric inverse cosine of the input array, element-wise.
  *
- * @param {(Array|NdArray|number)} x
+ * @param {(ArbDimNumArray|NdArray|number)} x
  * @returns {NdArray}
  */
 function arccos(x: ArbDimNumArray | NdArray | number) {
@@ -548,7 +548,7 @@ function arccos(x: ArbDimNumArray | NdArray | number) {
 /**
  * Return trigonometric sine of the input array, element-wise.
  *
- * @param {(Array|NdArray|number)} x
+ * @param {(ArbDimNumArray|NdArray|number)} x
  * @returns {NdArray}
  */
 function sin(x: ArbDimNumArray | NdArray | number) {
@@ -560,7 +560,7 @@ function sin(x: ArbDimNumArray | NdArray | number) {
 /**
  * Return trigonometric inverse sine of the input array, element-wise.
  *
- * @param {(Array|NdArray|number)} x
+ * @param {(ArbDimNumArray|NdArray|number)} x
  * @returns {NdArray}
  */
 function arcsin(x: ArbDimNumArray | NdArray | number) {
@@ -572,7 +572,7 @@ function arcsin(x: ArbDimNumArray | NdArray | number) {
 /**
  * Return trigonometric tangent of the input array, element-wise.
  *
- * @param {(Array|NdArray|number)} x
+ * @param {(ArbDimNumArray|NdArray|number)} x
  * @returns {NdArray}
  */
 function tan(x: ArbDimNumArray | NdArray | number) {
@@ -584,7 +584,7 @@ function tan(x: ArbDimNumArray | NdArray | number) {
 /**
  * Return trigonometric inverse tangent of the input array, element-wise.
  *
- * @param {(Array|NdArray|number)} x
+ * @param {(ArbDimNumArray|NdArray|number)} x
  * @returns {NdArray}
  */
 function arctan(x: ArbDimNumArray | NdArray | number) {
@@ -601,8 +601,8 @@ function arctan(x: ArbDimNumArray | NdArray | number) {
  *  - vector dot vector
  *  - matrix dot vector
  *  - vector dot matrix
- * @param {(Array|NdArray)} a
- * @param {(Array|NdArray)} b
+ * @param {(ArbDimNumArray|NdArray)} a
+ * @param {(ArbDimNumArray|NdArray)} b
  * @returns {NdArray}
  */
 function dot(
@@ -684,7 +684,7 @@ function concatenate(...args: any[]) {
 /**
  * Round an array to the to the nearest integer.
  *
- * @param {(Array|NdArray)} x
+ * @param {(ArbDimNumArray|NdArray)} x
  * @returns {NdArray}
  */
 function round(x: ArbDimNumArray | NdArray) {
@@ -697,8 +697,8 @@ function round(x: ArbDimNumArray | NdArray) {
  * @note: Arrays must have the same dimensions and a must be greater than b.
  * @note: The convolution product is only given for points where the signals overlap completely. Values outside the signal boundary have no effect. This behaviour is known as the 'valid' mode.
  *
- * @param {Array|NdArray} a
- * @param {Array|NdArray} b
+ * @param {ArbDimNumArray|NdArray} a
+ * @param {ArbDimNumArray|NdArray} b
  */
 function convolve(a: ArbDimNumArray | NdArray, b: ArbDimNumArray | NdArray) {
   return NdArray.new(a).convolve(b);
@@ -710,8 +710,8 @@ function convolve(a: ArbDimNumArray | NdArray, b: ArbDimNumArray | NdArray) {
  * @note: Arrays must have the same dimensions and a must be greater than b.
  * @note: The convolution product is only given for points where the signals overlap completely. Values outside the signal boundary have no effect. This behaviour is known as the 'valid' mode.
  *
- * @param {Array|NdArray} a
- * @param {Array|NdArray} b
+ * @param {ArbDimNumArray|NdArray} a
+ * @param {ArbDimNumArray|NdArray} b
  */
 function fftconvolve(a: ArbDimNumArray | NdArray, b: ArbDimNumArray | NdArray) {
   return NdArray.new(a).fftconvolve(b);
@@ -762,7 +762,7 @@ function ifft(x: ArbDimNumArray | NdArray): NdArray {
 /**
  * Extract a diagonal or construct a diagonal array.
  *
- * @param {Array|NdArray} x
+ * @param {ArbDimNumArray|NdArray} x
  * @returns {NdArray} a view a of the original array when possible, a new array otherwise
  */
 function diag(x: ArbDimNumArray | NdArray) {
@@ -842,7 +842,7 @@ function stack(
  * Reverse the order of elements in an array along the given axis.
  * The shape of the array is preserved, but the elements are reordered.
  * New in version 0.15.0.
- * @param {Array|NdArray} m Input array.
+ * @param {ArbDimNumArray|NdArray} m Input array.
  * @param {number} axis Axis in array, which entries are reversed.
  * @return {NdArray} A view of `m` with the entries of axis reversed.  Since a view is returned, this operation is done in constant time.
  */
@@ -866,7 +866,7 @@ function flip(m: ArbDimNumArray | NdArray, axis: number): NdArray {
  * Rotate an array by 90 degrees in the plane specified by axes.
  * Rotation direction is from the first towards the second axis.
  * New in version 0.15.0.
- * @param {Array|NdArray} m array_like
+ * @param {ArbDimNumArray|NdArray} m array_like
  * @param {number} [k=1] Number of times the array is rotated by 90 degrees.
  * @param {Array|NdArray} [axes2=(0,1)] The array is rotated in the plane defined by the axes. Axes must be different.
  * @return {NdArray} A rotated view of m.
