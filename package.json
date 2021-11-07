@@ -72,7 +72,8 @@
     "computing",
     "stride",
     "shape",
-    "numpy"
+    "numpy",
+    "typescript"
   ],
   "files": [
     "build/main",
