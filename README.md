@@ -1,5 +1,7 @@
 # NumJs
 
+[![npm version](https://img.shields.io/npm/v/%40d4c/numjs.svg)](https://www.npmjs.com/package/@d4c/numjs)
+
 This project is a fork of https://github.com/nicolaspanel/numjs and does below modifications 
 - Remove the feature of images manipulation
 - Add TypeScript typings and `.d.ts` is out of box, JavaScript is supported, too. Also, it includes 
@@ -27,21 +29,21 @@ __[See this jsfiddle](https://jsfiddle.net/nicolaspanel/047gwg0q/)__ for a concr
 ## Installation
 
 ```sh
-npm install numjs 
+npm install @d4c/numjs 
 # or 
-yarn add numjs
+yarn add @d4c/numjs
 ```
 
 then either using ES6 import: 
 
 ```js
-const nj from "numjs"; 
+const nj from "@d4c/numjs"; 
 ```
 or CommonJS import:
 
 ```js
 // TypeScript users will not get typings when using require
-const nj = require('numjs').default; 
+const nj = require('@d4c/numjs').default; 
 ```
 
 ## Basics
