@@ -5,6 +5,8 @@
   "main": "build/main/index.js",
   "typings": "build/main/index.d.ts",
   "module": "build/module/index.js",
+  "repository": "https://github.com/grimmer0125/numjs",
+  "homepage": "https://grimmer0125.github.io/numjs",
   "license": "MIT",
   "dependencies": {
     "cwise": "^1.0.10",
@@ -49,10 +51,6 @@
   "engines": {
     "node": ">=12"
   },
-  "repository": {
-    "type": "git",
-    "url": "git://github.com/nicolaspanel/numjs.git"
-  },
   "keywords": [
     "ndarray",
     "array",
@@ -73,7 +71,10 @@
     "stride",
     "shape",
     "numpy",
-    "typescript"
+    "javascript",
+    "typescript",
+    "node",
+    "browser"
   ],
   "files": [
     "build/main",
