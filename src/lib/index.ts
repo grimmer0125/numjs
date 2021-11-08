@@ -987,5 +987,3 @@ export default {
     return NdArray.new(array, "float64");
   },
 };
-
-// export default kk;
