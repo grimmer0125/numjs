@@ -673,6 +673,6 @@ array([0, 1, 2, 3, 4, 0, 1])
 
 ## Documentation
 - [numjs globals (nj) doc](https://grimmer0125.github.io/numjs/modules/)
-    - [Original project doc]((https://nicolaspanel.github.io/numjs/global.html))
+    - [Original project doc](https://nicolaspanel.github.io/numjs/global.html)
 - [NdArray doc](https://grimmer0125.github.io/numjs/classes/ndarray.NdArray.html)
     - [Original project doc](https://nicolaspanel.github.io/numjs/NdArray.html)
