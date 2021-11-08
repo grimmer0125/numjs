@@ -2,8 +2,10 @@
 
 [![npm version](https://img.shields.io/npm/v/%40d4c/numjs.svg)](https://www.npmjs.com/package/@d4c/numjs) ![example workflow](https://github.com/grimmer0125/numjs/actions/workflows/node.js.yml/badge.svg)
 
+__NumJs__ is built on top of [ndarray](https://scijs.net/packages/#scijs/ndarray) and uses many [scijs packages](https://scijs.net/packages/). `ndarray` is imported as `nj.ndarray`, and any `NdArray` instance's property `selection` is also a `ndarray` object.
+
 This project is forked from https://github.com/nicolaspanel/numjs and does below modifications 
-- Remove the feature of images manipulation
+- Remove the feature of images manipulation. You could consider [ndarray-pixels](https://github.com/donmccurdy/ndarray-pixels) if you need this feature. 
 - Add TypeScript typings and `.d.ts` is out of box, JavaScript is supported, too. Also, it includes 
     - ES6 build (ES2015) with CommonJS module for main build in package.json.
     - ES6 build (ES2015) with ES6 module for module build. Some tools will follow the module field in package.json, like Rollup, Webpack, or Parcel. It is good to let build tools can tree-shake this module build to import only the code they need.
@@ -14,7 +16,7 @@ You can check the [changelog](https://github.com/grimmer0125/numjs/blob/master/C
 ## Features
 
 __NumJs__ is a npm package for scientific computing with JavaScript. It contains among other things:
- - a powerful N-dimensional array object
+ - a powerful N-dimensional array object, `NdArray`
  - linear algebra function
  - fast Fourier transform
 
@@ -60,7 +62,7 @@ array([[ 1, 2, 3],
        [ 4, 5, 6]])
 ```
 
-__Note__: Default data container is Javascript `Array` object. If needed, you can also use typed array such as `Uint8Array`:
+__Note__: Default data container is JavaScript `Array` object. If needed, you can also use typed array such as `Uint8Array`:
 
 ```js
 > const a = nj.uint8([1,2,3]);
@@ -670,9 +672,7 @@ array([0, 1, 2, 3, 4, 0, 1])
 ```
 
 ## Documentation
-- [numjs globals](https://nicolaspanel.github.io/numjs/global.html) from the original project
-    - [TypeDoc ver.](https://grimmer0125.github.io/numjs/modules/)
-- [NdArray](https://nicolaspanel.github.io/numjs/NdArray.html) from the original project
-    - [TypeDoc ver.](https://grimmer0125.github.io/numjs/classes/ndarray.NdArray.html)
-## Credits
-__NumJs__ is built on top of [ndarray](https://scijs.net/packages/#scijs/ndarray) and uses many [scijs packages](https://scijs.net/packages/)
+- [numjs globals (nj) doc](https://grimmer0125.github.io/numjs/modules/)
+    - [Original project doc]((https://nicolaspanel.github.io/numjs/global.html))
+- [NdArray doc](https://grimmer0125.github.io/numjs/classes/ndarray.NdArray.html)
+    - [Original project doc](https://nicolaspanel.github.io/numjs/NdArray.html)
