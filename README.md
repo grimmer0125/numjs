@@ -39,7 +39,7 @@ then either using ES6 import:
 ```js
 import nj from "@d4c/numjs"; 
 ```
-or CommonJS import:
+or CommonJS require:
 
 ```js
 // TypeScript users will not get typings when using require
@@ -47,10 +47,6 @@ const nj = require('@d4c/numjs').default;
 ```
 
 ## Basics
-
-### How to print NumJs content
-
-Use `nj.array([2,3,4]` as an example. In Node.js, `console.log(nj.array([2,3,4])` will print beautified content, `array([ 2, 3, 4])`. In browser or using debugger in Node.js, please use `console.log(nj.array([2,3,4].toString())` to get its beautified content. `toString()` is working in browser/Node.js.
 
 ### Array Creation
 
@@ -148,7 +144,9 @@ array([[  1,  1,  2,  3,  4],
 
 ### Printing arrays
 
-When you print an array, __NumJs__ displays it in a similar way to nested lists, but with the following layout:
+Use `nj.array([2,3,4]` as an example. In Node.js, `console.log(nj.array([2,3,4])` will print beautified content, `array([ 2, 3, 4])`. In browser or using debugger in Node.js, please use `console.log(nj.array([2,3,4].toString())` to print its beautified content. `toString()` is working in browser/Node.js.
+
+When you print the beautified content of an array, __NumJs__ displays it in a similar way to nested lists, but with the following layout:
  - the last axis is printed from left to right,
  - the second-to-last is printed from top to bottom,
  - the rest are also printed from top to bottom, with each slice separated from the next by an empty line.
