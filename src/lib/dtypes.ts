@@ -9,5 +9,6 @@ export default {
   uint32: Uint32Array,
   float32: Float32Array,
   float64: Float64Array,
+  uint8_clamped: Uint8ClampedArray,
   array: Array,
 };

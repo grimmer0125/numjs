@@ -1,3 +1,10 @@
+/**
+ * This is `nj` module page. Below References, Namespaces, Properties, Functions all are the default exported module `nj` properties.
+ * For example, ater import `nj` via `import nj from "@d4c/numjs";` or `const nj = require('@d4c/numjs').default;`,
+ * you can use `nj.array` to use create a `NdArray`.
+ *
+ * @packageDocumentation
+ */
 "use strict";
 
 const cwise = require("cwise");
@@ -7,7 +14,7 @@ const ndFFT = require("ndarray-fft");
 export { default as config } from "./config";
 export { default as dtypes } from "./dtypes";
 export { default as ndarray } from "ndarray";
-import { NdArray, ArbDimNumArray } from "./ndarray";
+import { NdArray, ArbDimNumArray, ArrayLikeConstructor } from "./ndarray";
 export { NdArray };
 import * as errors from "./errors";
 export { errors };
@@ -203,7 +210,7 @@ export function mean(x: ArbDimNumArray | NdArray | number) {
  */
 export function std(
   x: ArbDimNumArray | NdArray | number,
-  options?: { ddof?: number }
+  options?: { ddof: number }
 ) {
   return NdArray.new(x).std(options);
 }
@@ -247,26 +254,8 @@ export function mod(
  * Permute the dimensions of the input array according to the given axes.
  *
  * @param {(Array|NdArray|number)} x
- * @param {(number|...number)} [axes]
+ * @param {(number[])} [axes]
  * @returns {NdArray}
- * @example
- * ```typescript
- * arr = nj.arange(6).reshape(1,2,3)
- * // array([[[ 0, 1, 2],
- * //         [ 3, 4, 5]]])
- *
- * arr.T
- * // array([[[ 0],
- * //         [ 3]],
- * //        [[ 1],
- * //         [ 4]],
- * //        [[ 2],
- * //         [ 5]]])
- *
- * arr.transpose(1,0,2)
- * // array([[[ 0, 1, 2]],
- * //        [[ 3, 4, 5]]])
- * ```
  */
 export function transpose(
   x: NdArray | ArbDimNumArray | number,
@@ -288,48 +277,56 @@ export function negative(x: ArbDimNumArray | NdArray | number) {
 /**
  * Return evenly spaced values within a given interval.
  *
- * @param {int} [start=0] - Start of interval. The interval includes this value.
+ * @param {int} start - Default 0. Start of interval. The interval includes this value.
  * @param {int} stop - End of interval. The interval does not include this value.
- * @param {int} [step=1] - Spacing between values. The default step size is 1. If step is specified, start must also be given.
- * @param {(String|Function)} [dtype=Array] The type of the output array. Either string (e.g. 'uint8') or a Constructor function (e.g. Uint8Array).
+ * @param {int} step - Default 1. Spacing between values. The default step size is 1. If step is specified, start must also be given.
+ * @param dtype Defaut is "array". The type of the output array. Either string (e.g. 'uint8') or a Constructor function (e.g. Uint8Array).
  *
  * @return {NdArray} Array of evenly spaced values.
  */
-export function arange(stop: number): NdArray;
-export function arange(start: number, stop: number): NdArray;
-export function arange(stop: number, dtype: string | Function): NdArray;
-export function arange(start: number, stop: number, step: number): NdArray;
-export function arange(
-  start: number,
-  stop: number,
-  dtype: string | Function
-): NdArray;
 export function arange(
   start: number,
   stop: number,
   step: number,
-  dtype: string | Function
+  dtype: string | ArrayLikeConstructor
 ): NdArray;
+export function arange(start: number, stop: number, step: number): NdArray;
+export function arange(
+  start: number,
+  stop: number,
+  dtype: string | ArrayLikeConstructor
+): NdArray;
+export function arange(start: number, stop: number): NdArray;
+export function arange(
+  stop: number,
+  dtype: string | ArrayLikeConstructor
+): NdArray;
+export function arange(stop: number): NdArray;
 export function arange(...args: any[]): NdArray {
   if (arguments.length === 1) {
     return arange(0, arguments[0], 1, undefined);
   } else if (arguments.length === 2 && _.isNumber(arguments[1])) {
     return arange(arguments[0], arguments[1], 1, undefined);
   } else if (arguments.length === 2) {
-    return arange(0, arguments[0], 1, arguments[1] as string | Function);
+    return arange(
+      0,
+      arguments[0],
+      1,
+      arguments[1] as string | ArrayLikeConstructor
+    );
   } else if (arguments.length === 3 && !_.isNumber(arguments[2])) {
     return arange(
       arguments[0],
       arguments[1],
       1,
-      arguments[2] as string | Function
+      arguments[2] as string | ArrayLikeConstructor
     );
   }
 
   let start: number = arguments[0];
   const stop: number = arguments[1];
   const step: number = arguments[2];
-  const dtype: string | Function = arguments[3];
+  const dtype: string | ArrayLikeConstructor = arguments[3];
 
   const result = [];
   let i = 0;
@@ -344,11 +341,14 @@ export function arange(...args: any[]): NdArray {
  * Return a new array of given shape and type, filled with zeros.
  *
  * @param {(Array|int)} shape - Shape of the new array, e.g., [2, 3] or 2.
- * @param {(String|Function)}  [dtype=Array]  The type of the output array. E.g., 'uint8' or Uint8Array.
+ * @param dtype Defaut is "array". The type of the output array. E.g., 'uint8' or Uint8Array.
  *
  * @return {NdArray} Array of zeros with the given shape and dtype
  */
-export function zeros(shape: number | number[], dtype?: string | Function) {
+export function zeros(
+  shape: number | number[],
+  dtype?: string | ArrayLikeConstructor
+) {
   if (_.isNumber(shape) && shape >= 0) {
     shape = [shape as number];
   }
@@ -365,11 +365,14 @@ export function zeros(shape: number | number[], dtype?: string | Function) {
  * Return a new array of given shape and type, filled with ones.
  *
  * @param {(Array|int)} shape - Shape of the new array, e.g., [2, 3] or 2.
- * @param {(String|Function)}  [dtype=Array] - The type of the output array. E.g., 'uint8' or Uint8Array.
+ * @param {(String|ArrayLikeConstructor)}  dtype - Defaut is "array". The type of the output array. E.g., 'uint8' or Uint8Array.
  *
  * @return {NdArray} Array of ones with the given shape and dtype
  */
-export function ones(shape: number[] | number, dtype?: string | Function) {
+export function ones(
+  shape: number[] | number,
+  dtype?: string | ArrayLikeConstructor
+) {
   if (_.isNumber(shape) && shape >= 0) {
     shape = [shape as number];
   }
@@ -384,11 +387,14 @@ export function ones(shape: number[] | number, dtype?: string | Function) {
  * Return a new array of given shape and type, filled with `undefined` values.
  *
  * @param {(Array|int)} shape - Shape of the new array, e.g., [2, 3] or 2.
- * @param {(String|Function)}  [dtype=Array] - The type of the output array. E.g., 'uint8' or Uint8Array.
+ * @param dtype - Defaut is "array". The type of the output array. E.g., 'uint8' or Uint8Array.
  *
  * @return {NdArray} Array of `undefined` values with the given shape and dtype
  */
-export function empty(shape: number[] | number, dtype?: string | Function) {
+export function empty(
+  shape: number[] | number,
+  dtype?: string | ArrayLikeConstructor
+) {
   if (_.isNumber(shape) && shape >= 0) {
     shape = [shape as number];
   }
@@ -442,13 +448,10 @@ const doSigmoid = cwise({
 /**
  * Return the sigmoid of the input array, element-wise.
  * @param {(ArbDimNumArray|NdArray|number)} x
- * @param {number} [t=1] - stifness parameter
+ * @param t - stifness parameter
  * @returns {NdArray}
  */
-export function sigmoid(
-  x: ArbDimNumArray | NdArray | number,
-  t?: number
-): NdArray {
+export function sigmoid(x: ArbDimNumArray | NdArray | number, t = 1): NdArray {
   x = NdArray.new(x).clone();
   t = t || 1;
   doSigmoid(x.selection, t);
@@ -471,11 +474,7 @@ const doClip = cwise({
  * @param {number} [max=1]
  * @returns {NdArray}
  */
-export function clip(
-  x: ArbDimNumArray | NdArray | number,
-  min?: number,
-  max?: number
-) {
+export function clip(x: ArbDimNumArray | NdArray | number, min = 0, max = 1) {
   if (arguments.length === 1) {
     min = 0;
     max = 1;
@@ -635,9 +634,11 @@ export function dot(
  */
 export function concatenate(
   ...arrays: Array<number | ArbDimNumArray | NdArray>
-);
-export function concatenate(arrays: Array<number | ArbDimNumArray | NdArray>);
-export function concatenate(...args: any[]) {
+): NdArray;
+export function concatenate(
+  arrays: Array<number | ArbDimNumArray | NdArray>
+): NdArray;
+export function concatenate(...args: any[]): NdArray {
   let arrays;
   if (args.length > 1) {
     arrays = [].slice.call(args);
@@ -794,11 +795,11 @@ export function diag(x: ArbDimNumArray | NdArray) {
 
 /**
  * The identity array is a square array with ones on the main diagonal.
- * @param {number} Number of rows (and columns) in n x n output.
- * @param {(String|Function)}  [dtype=Array]  The type of the output array. E.g., 'uint8' or Uint8Array.
+ * @param {number} n number of rows (and columns) in n x n output.
+ * @param dtype Defaut is "array". The type of the output array. E.g., 'uint8' or Uint8Array.
  * @return {NdArray} n x n array with its main diagonal set to one, and all other elements 0
  */
-export function identity(n: number, dtype?: string | Function) {
+export function identity(n: number, dtype?: string | ArrayLikeConstructor) {
   const arr = zeros([n, n], dtype);
   for (let i = 0; i < n; i++) arr.set(i, i, 1);
   return arr;
@@ -808,13 +809,13 @@ export function identity(n: number, dtype?: string | Function) {
  * Join a sequence of arrays along a new axis.
  * The axis parameter specifies the index of the new axis in the dimensions of the result.
  * For example, if axis=0 it will be the first dimension and if axis=-1 it will be the last dimension.
- * @param {Array<NdArray|ArbDimNumArray|number>} sequence of array_like
- * @param {number} [axis=0] The axis in the result array along which the input arrays are stacked.
+ * @param {Array<NdArray|ArbDimNumArray|number>} arrays Sequence of array_like
+ * @param axis The axis in the result array along which the input arrays are stacked.
  * @return {NdArray} The stacked array has one more dimension than the input arrays.
  */
 export function stack(
   arrays: Array<NdArray | ArbDimNumArray | number>,
-  axis?: number
+  axis = 0
 ): NdArray {
   axis = axis || 0;
   if (!arrays || arrays.length === 0) {
@@ -890,14 +891,14 @@ export function flip(m: ArbDimNumArray | NdArray, axis: number): NdArray {
  * Rotation direction is from the first towards the second axis.
  * New in version 0.15.0.
  * @param {ArbDimNumArray|NdArray} m array_like
- * @param {number} [k=1] Number of times the array is rotated by 90 degrees.
- * @param {Array|NdArray} [axes2=(0,1)] The array is rotated in the plane defined by the axes. Axes must be different.
+ * @param {number} k Number of times the array is rotated by 90 degrees.
+ * @param {Array|NdArray} axes Default [0, 1]. The array is rotated in the plane defined by the axes. Axes must be different.
  * @return {NdArray} A rotated view of m.
  */
 export function rot90(
   m: ArbDimNumArray | NdArray,
-  k?: number,
-  axes?: number[] | NdArray
+  k = 1,
+  axes: number[] | NdArray = [0, 1]
 ): NdArray {
   k = k || 1;
   while (k < 0) {
@@ -931,6 +932,9 @@ export function rot90(
   }
 }
 
+/**
+ * @param dtype Defaut is "array". The type of the output array. E.g., 'uint8' or Uint8Array.
+ */
 export const array = NdArray.new;
 export const remainder = mod;
 export function int8(array) {
@@ -956,4 +960,7 @@ export function float32(array: number[] | number) {
 }
 export function float64(array: number[] | number) {
   return NdArray.new(array, "float64");
+}
+export function uint8_clamped(array: number[] | number) {
+  return NdArray.new(array, "uint8_clamped");
 }

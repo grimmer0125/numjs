@@ -16,7 +16,17 @@ import _ from "./utils";
 export interface ArbitraryDimArray<T> extends Array<T | ArbitraryDimArray<T>> {}
 
 export type ArbDimNumArray = ArbitraryDimArray<number>;
-
+export type ArrayLikeConstructor =
+  | ArrayConstructor
+  | Int8ArrayConstructor
+  | Uint8ArrayConstructor
+  | Int16ArrayConstructor
+  | Uint16ArrayConstructor
+  | Int32ArrayConstructor
+  | Uint32ArrayConstructor
+  | Float32ArrayConstructor
+  | Float64ArrayConstructor
+  | Uint8ClampedArrayConstructor;
 /**
  * Multidimensional, homogeneous array of fixed-size items
  *
@@ -74,6 +84,9 @@ export class NdArray {
     return this.selection.shape.length;
   }
 
+  /**
+   * Data-type of the array’s elements.
+   */
   get dtype() {
     return this.selection.dtype;
   }
@@ -89,6 +102,13 @@ export class NdArray {
     }
   }
 
+  /**
+   * Permute the dimensions of the array.
+   *
+   * @property {String}
+   * @name NdArray#T
+   * @readonly
+   */
   get T() {
     return this.transpose();
   }
@@ -154,8 +174,7 @@ export class NdArray {
 
   /**
    * Return a subarray by fixing a particular axis
-   *
-   * @param {...(number|null)} axis
+   * @param axis a array whose element could be `null` or `number`
    * @returns {NdArray}
    *
    * @example
@@ -173,7 +192,7 @@ export class NdArray {
    * // array([  1,  5,  9, 13])
    * ```
    **/
-  pick(...axis: Array<number | null>) {
+  pick(...axis: number[]) {
     return new NdArray(this.selection.pick.apply(this.selection, arguments));
   }
 
@@ -250,7 +269,7 @@ export class NdArray {
 
   /**
    * Gives a new shape to the array without changing its data.
-   * @param {number|Array|...number} The new shape should be compatible with the original shape. If an integer, then the result will be a 1-D array of that length. One shape dimension can be -1. In this case, the value is inferred from the length of the array and remaining dimensions.
+   * @param {number|Array|...number} shape - The new shape should be compatible with the original shape. If an integer, then the result will be a 1-D array of that length. One shape dimension can be -1. In this case, the value is inferred from the length of the array and remaining dimensions.
    * @returns {NdArray} a new view object if possible, a copy otherwise,
    */
   reshape(...shape: number[]): NdArray;
@@ -361,6 +380,25 @@ export class NdArray {
    *
    * @param {Array<number>|...number} [axes]
    * @returns {NdArray}
+   *
+   * @example
+   * ```typescript
+   * arr = nj.arange(6).reshape(1,2,3)
+   * // array([[[ 0, 1, 2],
+   * //         [ 3, 4, 5]]])
+   *
+   * arr.T
+   * // array([[[ 0],
+   * //         [ 3]],
+   * //        [[ 1],
+   * //         [ 4]],
+   * //        [[ 2],
+   * //         [ 5]]])
+   *
+   * arr.transpose(1,0,2)
+   * // array([[[ 0, 1, 2]],
+   * //        [[ 3, 4, 5]]])
+   * ```
    */
   transpose(...axes: number[]): NdArray;
   transpose(axes?: number[]): NdArray;
@@ -437,7 +475,7 @@ export class NdArray {
    * @param {boolean} [copy=true]
    * @returns {NdArray}
    */
-  assign(x: NdArray | ArbDimNumArray | number, copy?: boolean) {
+  assign(x: NdArray | ArbDimNumArray | number, copy = true) {
     if (arguments.length === 1) {
       copy = true;
     }
@@ -459,7 +497,7 @@ export class NdArray {
    * @param {boolean} [copy=true]
    * @returns {NdArray}
    */
-  add(x: NdArray | ArbDimNumArray | number, copy?: boolean) {
+  add(x: NdArray | ArbDimNumArray | number, copy = true) {
     if (arguments.length === 1) {
       copy = true;
     }
@@ -481,7 +519,7 @@ export class NdArray {
    * @param {boolean} [copy=true]
    * @returns {NdArray}
    */
-  subtract(x: NdArray | ArbDimNumArray | number, copy?: boolean) {
+  subtract(x: NdArray | ArbDimNumArray | number, copy = true) {
     if (arguments.length === 1) {
       copy = true;
     }
@@ -503,7 +541,7 @@ export class NdArray {
    * @param {boolean} [copy=true]
    * @returns {NdArray}
    */
-  multiply(x: NdArray | ArbDimNumArray | number, copy?: boolean) {
+  multiply(x: NdArray | ArbDimNumArray | number, copy = true) {
     if (arguments.length === 1) {
       copy = true;
     }
@@ -526,7 +564,7 @@ export class NdArray {
    * @param {boolean} [copy=true]
    * @returns {NdArray}
    */
-  divide(x: NdArray | ArbDimNumArray | number, copy?: boolean) {
+  divide(x: NdArray | ArbDimNumArray | number, copy = true) {
     if (arguments.length === 1) {
       copy = true;
     }
@@ -546,10 +584,10 @@ export class NdArray {
    * Raise array elements to powers from given array, element-wise.
    *
    * @param {(NdArray|ArbDimNumArray|number)} x
-   * @param {boolean} [copy=true] - set to false to modify the array rather than create a new one
+   * @param {boolean} copy - set to false to modify the array rather than create a new one
    * @returns {NdArray}
    */
-  pow(x: NdArray | ArbDimNumArray | number, copy?: boolean) {
+  pow(x: NdArray | ArbDimNumArray | number, copy = true) {
     if (arguments.length === 1) {
       copy = true;
     }
@@ -567,10 +605,10 @@ export class NdArray {
   /**
    * Calculate the exponential of all elements in the array, element-wise.
    *
-   * @param {boolean} [copy=true] - set to false to modify the array rather than create a new one
+   * @param {boolean} copy - set to false to modify the array rather than create a new one
    * @returns {NdArray}
    */
-  exp(copy?: boolean) {
+  exp(copy = true) {
     if (arguments.length === 0) {
       copy = true;
     }
@@ -582,10 +620,10 @@ export class NdArray {
   /**
    * Calculate the natural logarithm of all elements in the array, element-wise.
    *
-   * @param {boolean} [copy=true] - set to false to modify the array rather than create a new one
+   * @param {boolean} copy - set to false to modify the array rather than create a new one
    * @returns {NdArray}
    */
-  log(copy?: boolean) {
+  log(copy = true) {
     if (arguments.length === 0) {
       copy = true;
     }
@@ -597,10 +635,9 @@ export class NdArray {
   /**
    * Calculate the positive square-root of all elements in the array, element-wise.
    *
-   * @param {boolean} [copy=true] - set to false to modify the array rather than create a new one
-   * @returns {NdArray}
+   * @param copy set to false to modify the array rather than create a new one
    */
-  sqrt(copy?: boolean) {
+  sqrt(copy = true) {
     if (arguments.length === 0) {
       copy = true;
     }
@@ -645,10 +682,10 @@ export class NdArray {
   /**
    * Returns the standard deviation, a measure of the spread of a distribution, of the array elements.
    *
-   * @param {object} {ddof:0}
+   * @param {object} options default {ddof:0}
    * @returns {number}
    */
-  std(options?: { ddof?: number }) {
+  std(options?: { ddof: number }) {
     options = _.defaults(options, { ddof: 0 });
     const squares = this.clone();
     ops.powseq(squares.selection, 2);
@@ -677,7 +714,7 @@ export class NdArray {
    * @param {boolean} [copy=true]
    * @returns {NdArray}
    */
-  mod(x: NdArray | ArbDimNumArray | number, copy?: boolean) {
+  mod(x: NdArray | ArbDimNumArray | number, copy = true) {
     if (arguments.length === 1) {
       copy = true;
     }
@@ -821,7 +858,7 @@ export class NdArray {
    * @param {boolean} [copy=true]
    * @returns {NdArray}
    */
-  round(copy?: boolean) {
+  round(copy = true) {
     if (arguments.length === 0) {
       copy = true;
     }
@@ -1120,7 +1157,7 @@ export class NdArray {
 
   static new(
     arr: NdArray | ArbDimNumArray | number,
-    dtype?: string | Function
+    dtype?: string | ArrayLikeConstructor
   ) {
     return createArray(arr, dtype);
   }
@@ -1342,7 +1379,7 @@ const doConvolve5x5 = cwise({
 
 function createArray(
   arr: NdArray | ArbDimNumArray | number,
-  dtype?: string | Function
+  dtype?: string | ArrayLikeConstructor
 ) {
   if (arr instanceof NdArray) {
     return arr;
