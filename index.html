@@ -3,12 +3,13 @@
   <h1>@d4c/numjs</h1>
 </a>
 <p><a href="https://www.npmjs.com/package/@d4c/numjs"><img src="https://img.shields.io/npm/v/%40d4c/numjs.svg" alt="npm version"></a> <img src="https://github.com/grimmer0125/numjs/actions/workflows/node.js.yml/badge.svg" alt="example workflow"></p>
-<p>This project is a fork of <a href="https://github.com/nicolaspanel/numjs">https://github.com/nicolaspanel/numjs</a> and does below modifications </p>
+<p><strong>NumJs</strong> is built on top of <a href="https://scijs.net/packages/#scijs/ndarray">ndarray</a> and uses many <a href="https://scijs.net/packages/">scijs packages</a>. <code>ndarray</code> is imported as <code>nj.ndarray</code>, and any <code>NdArray</code> instance&#39;s property <code>selection</code> is also a <code>ndarray</code> object.</p>
+<p>This project is forked from <a href="https://github.com/nicolaspanel/numjs">https://github.com/nicolaspanel/numjs</a> and does below modifications </p>
 <ul>
-<li>Remove the feature of images manipulation</li>
+<li>Remove the feature of images manipulation. You could consider <a href="https://github.com/donmccurdy/ndarray-pixels">ndarray-pixels</a> if you need this feature. </li>
 <li>Add TypeScript typings and <code>.d.ts</code> is out of box, JavaScript is supported, too. Also, it includes <ul>
 <li>ES6 build (ES2015) with CommonJS module for main build in package.json.</li>
-<li>ES6 build (ES2015) with ES6 module for module build. Some tools will follow the module field in package.json, like Rollup, Webpack, or Parcel. It is good to let build tools can tree-shake your module build to import only the code they need.</li>
+<li>ES6 build (ES2015) with ES6 module for module build. Some tools will follow the module field in package.json, like Rollup, Webpack, or Parcel. It is good to let build tools can tree-shake this module build to import only the code they need.</li>
 </ul>
 </li>
 <li>Refactor internal code via ES6 syntax and does not change the core algorithm code.</li>
@@ -20,7 +21,7 @@
 </a>
 <p><strong>NumJs</strong> is a npm package for scientific computing with JavaScript. It contains among other things:</p>
 <ul>
-<li>a powerful N-dimensional array object</li>
+<li>a powerful N-dimensional array object, <code>NdArray</code></li>
 <li>linear algebra function</li>
 <li>fast Fourier transform</li>
 </ul>
@@ -50,7 +51,7 @@
 </a>
 <pre><code class="language-js"><span class="hl-0">&gt; </span><span class="hl-5">const</span><span class="hl-0"> </span><span class="hl-6">a</span><span class="hl-0"> = </span><span class="hl-3">nj</span><span class="hl-0">.</span><span class="hl-7">array</span><span class="hl-0">([</span><span class="hl-8">2</span><span class="hl-0">,</span><span class="hl-8">3</span><span class="hl-0">,</span><span class="hl-8">4</span><span class="hl-0">]);</span><br/><span class="hl-0">&gt; </span><span class="hl-3">a</span><br/><span class="hl-7">array</span><span class="hl-0">([ </span><span class="hl-8">2</span><span class="hl-0">, </span><span class="hl-8">3</span><span class="hl-0">, </span><span class="hl-8">4</span><span class="hl-0">])</span><br/><span class="hl-0">&gt; </span><span class="hl-5">const</span><span class="hl-0"> </span><span class="hl-6">b</span><span class="hl-0"> = </span><span class="hl-3">nj</span><span class="hl-0">.</span><span class="hl-7">array</span><span class="hl-0">([[</span><span class="hl-8">1</span><span class="hl-0">,</span><span class="hl-8">2</span><span class="hl-0">,</span><span class="hl-8">3</span><span class="hl-0">], [</span><span class="hl-8">4</span><span class="hl-0">,</span><span class="hl-8">5</span><span class="hl-0">,</span><span class="hl-8">6</span><span class="hl-0">]]);</span><br/><span class="hl-0">&gt; </span><span class="hl-3">b</span><br/><span class="hl-7">array</span><span class="hl-0">([[ </span><span class="hl-8">1</span><span class="hl-0">, </span><span class="hl-8">2</span><span class="hl-0">, </span><span class="hl-8">3</span><span class="hl-0">],</span><br/><span class="hl-0">       [ </span><span class="hl-8">4</span><span class="hl-0">, </span><span class="hl-8">5</span><span class="hl-0">, </span><span class="hl-8">6</span><span class="hl-0">]])</span>
 </code></pre>
-<p><strong>Note</strong>: Default data container is Javascript <code>Array</code> object. If needed, you can also use typed array such as <code>Uint8Array</code>:</p>
+<p><strong>Note</strong>: Default data container is JavaScript <code>Array</code> object. If needed, you can also use typed array such as <code>Uint8Array</code>:</p>
 <pre><code class="language-js"><span class="hl-0">&gt; </span><span class="hl-5">const</span><span class="hl-0"> </span><span class="hl-6">a</span><span class="hl-0"> = </span><span class="hl-3">nj</span><span class="hl-0">.</span><span class="hl-7">uint8</span><span class="hl-0">([</span><span class="hl-8">1</span><span class="hl-0">,</span><span class="hl-8">2</span><span class="hl-0">,</span><span class="hl-8">3</span><span class="hl-0">]);</span><br/><span class="hl-0">&gt; </span><span class="hl-3">a</span><br/><span class="hl-7">array</span><span class="hl-0">([ </span><span class="hl-8">1</span><span class="hl-0">, </span><span class="hl-8">2</span><span class="hl-0">, </span><span class="hl-8">3</span><span class="hl-0">], </span><span class="hl-3">dtype</span><span class="hl-0">=</span><span class="hl-3">uint8</span><span class="hl-0">)</span>
 </code></pre>
 <p><strong>Note</strong>: possible types are int8, uint8, int16, uint16, int32, uint32, float32, float64 and array (the default)</p>
@@ -221,17 +222,13 @@
   <h2>Documentation</h2>
 </a>
 <ul>
-<li><a href="https://nicolaspanel.github.io/numjs/global.html">numjs globals</a> from the original project<ul>
-<li><a href="https://grimmer0125.github.io/numjs/modules/">TypeDoc ver.</a></li>
+<li><a href="https://grimmer0125.github.io/numjs/modules/">numjs globals (nj) doc</a><ul>
+<li><a href="(https://nicolaspanel.github.io/numjs/global.html)">Original project doc</a></li>
 </ul>
 </li>
-<li><a href="https://nicolaspanel.github.io/numjs/NdArray.html">NdArray</a> from the original project<ul>
-<li><a href="https://grimmer0125.github.io/numjs/classes/ndarray.NdArray.html">TypeDoc ver.</a>
-<a href="#credits" id="credits" style="color: inherit; text-decoration: none;">
-  <h2>Credits</h2>
-</a>
-<strong>NumJs</strong> is built on top of <a href="https://scijs.net/packages/#scijs/ndarray">ndarray</a> and uses many <a href="https://scijs.net/packages/">scijs packages</a></li>
+<li><a href="https://grimmer0125.github.io/numjs/classes/ndarray.NdArray.html">NdArray doc</a><ul>
+<li><a href="https://nicolaspanel.github.io/numjs/NdArray.html">Original project doc</a></li>
 </ul>
 </li>
 </ul>
-</div></div><div class="col-4 col-menu menu-sticky-wrap menu-highlight"><nav class="tsd-navigation primary"><ul><li class="current"><a href="modules.html">Modules</a></li><li class=" tsd-kind-module"><a href="modules/errors.html">errors</a></li><li class=" tsd-kind-module"><a href="modules/index.html">index</a></li><li class=" tsd-kind-module"><a href="modules/ndarray.html">ndarray</a></li></ul></nav></div></div></div><footer class="with-border-bottom"><div class="container"><h2>Legend</h2><div class="tsd-legend-group"><ul class="tsd-legend"><li class="tsd-kind-type-alias"><span class="tsd-kind-icon">Type alias</span></li></ul><ul class="tsd-legend"><li class="tsd-kind-interface tsd-has-type-parameter"><span class="tsd-kind-icon">Interface with type parameter</span></li></ul><ul class="tsd-legend"><li class="tsd-kind-class"><span class="tsd-kind-icon">Class</span></li></ul></div><h2>Settings</h2><p>Theme <select id="theme"><option value="os">OS</option><option value="light">Light</option><option value="dark">Dark</option></select></p></div></footer><div class="container tsd-generator"><p>Generated using <a href="https://typedoc.org/" target="_blank">TypeDoc</a></p></div><div class="overlay"></div><script src="assets/main.js"></script></body></html>
+</div></div><div class="col-4 col-menu menu-sticky-wrap menu-highlight"><nav class="tsd-navigation primary"><ul><li class="current"><a href="modules.html">Modules</a></li><li class=" tsd-kind-module"><a href="modules/errors.html">errors</a></li><li class=" tsd-kind-module"><a href="modules/index.html">index</a></li><li class=" tsd-kind-module"><a href="modules/ndarray.html">ndarray</a></li></ul></nav></div></div></div><footer class="with-border-bottom"><div class="container"><h2>Legend</h2><div class="tsd-legend-group"><ul class="tsd-legend"><li class="tsd-kind-function"><span class="tsd-kind-icon">Function</span></li><li class="tsd-kind-type-alias"><span class="tsd-kind-icon">Type alias</span></li></ul><ul class="tsd-legend"><li class="tsd-kind-interface tsd-has-type-parameter"><span class="tsd-kind-icon">Interface with type parameter</span></li></ul><ul class="tsd-legend"><li class="tsd-kind-class"><span class="tsd-kind-icon">Class</span></li></ul></div><h2>Settings</h2><p>Theme <select id="theme"><option value="os">OS</option><option value="light">Light</option><option value="dark">Dark</option></select></p></div></footer><div class="container tsd-generator"><p>Generated using <a href="https://typedoc.org/" target="_blank">TypeDoc</a></p></div><div class="overlay"></div><script src="assets/main.js"></script></body></html>
