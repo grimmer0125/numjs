@@ -1,6 +1,6 @@
 # @d4c/numjs
 
-[![npm version](https://img.shields.io/npm/v/%40d4c/numjs.svg)](https://www.npmjs.com/package/@d4c/numjs)
+[![npm version](https://img.shields.io/npm/v/%40d4c/numjs.svg)](https://www.npmjs.com/package/@d4c/numjs) ![example workflow](https://github.com/grimmer0125/numjs/actions/workflows/node.js.yml/badge.svg)
 
 This project is a fork of https://github.com/nicolaspanel/numjs and does below modifications 
 - Remove the feature of images manipulation
