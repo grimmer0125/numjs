@@ -250,24 +250,24 @@ export function mod(
  * @param {(number|...number)} [axes]
  * @returns {NdArray}
  * @example
+ * ```typescript
+ * arr = nj.arange(6).reshape(1,2,3)
+ * // array([[[ 0, 1, 2],
+ * //         [ 3, 4, 5]]])
  *
- arr = nj.arange(6).reshape(1,2,3)
- // array([[[ 0, 1, 2],
- //         [ 3, 4, 5]]])
- arr.T
- // array([[[ 0],
- //         [ 3]],
- //        [[ 1],
- //         [ 4]],
- //        [[ 2],
- //         [ 5]]])
-
- arr.transpose(1,0,2)
- // array([[[ 0, 1, 2]],
- //        [[ 3, 4, 5]]])
-
+ * arr.T
+ * // array([[[ 0],
+ * //         [ 3]],
+ * //        [[ 1],
+ * //         [ 4]],
+ * //        [[ 2],
+ * //         [ 5]]])
+ *
+ * arr.transpose(1,0,2)
+ * // array([[[ 0, 1, 2]],
+ * //        [[ 3, 4, 5]]])
+ * ```
  */
-
 export function transpose(
   x: NdArray | ArbDimNumArray | number,
   axes?: number[]

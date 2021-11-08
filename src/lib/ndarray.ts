@@ -153,71 +153,75 @@ export class NdArray {
   }
 
   /**
-  * Return a subarray by fixing a particular axis
-  *
-  * @param {...(number|null)} axis
-  * @returns {NdArray}
-  *
-  * @example
-  arr = nj.arange(4*4).reshape(4,4)
-  // array([[  0,  1,  2,  3],
-  //        [  4,  5,  6,  7],
-  //        [  8,  9, 10, 11],
-  //        [ 12, 13, 14, 15]])
-
-  arr.pick(1)
-  // array([ 4, 5, 6, 7])
-
-  arr.pick(null, 1)
-  // array([  1,  5,  9, 13])
-  */
+   * Return a subarray by fixing a particular axis
+   *
+   * @param {...(number|null)} axis
+   * @returns {NdArray}
+   *
+   * @example
+   * ```typescript
+   * arr = nj.arange(4*4).reshape(4,4)
+   * // array([[  0,  1,  2,  3],
+   * //        [  4,  5,  6,  7],
+   * //        [  8,  9, 10, 11],
+   * //        [ 12, 13, 14, 15]])
+   *
+   * arr.pick(1)
+   * // array([ 4, 5, 6, 7])
+   *
+   * arr.pick(null, 1)
+   * // array([  1,  5,  9, 13])
+   * ```
+   **/
   pick(...axis: Array<number | null>) {
     return new NdArray(this.selection.pick.apply(this.selection, arguments));
   }
 
   /**
-  * Return a shifted view of the array. Think of it as taking the upper left corner of the image and dragging it inward
-  *
-  * @returns {NdArray}
-  *
-  * @example
-  arr = nj.arange(4*4).reshape(4,4)
-  // array([[  0,  1,  2,  3],
-  //        [  4,  5,  6,  7],
-  //        [  8,  9, 10, 11],
-  //        [ 12, 13, 14, 15]])
-  arr.lo(1,1)
-  // array([[  5,  6,  7],
-  //        [  9, 10, 11],
-  //        [ 13, 14, 15]])
-  */
+   * Return a shifted view of the array. Think of it as taking the upper left corner of the image and dragging it inward
+   *
+   * @returns {NdArray}
+   *
+   * @example
+   * ```typescript
+   * arr = nj.arange(4*4).reshape(4,4)
+   * // array([[  0,  1,  2,  3],
+   * //        [  4,  5,  6,  7],
+   * //        [  8,  9, 10, 11],
+   * //        [ 12, 13, 14, 15]])
+   * arr.lo(1,1)
+   * // array([[  5,  6,  7],
+   * //        [  9, 10, 11],
+   * //        [ 13, 14, 15]])
+   * ```
+   **/
   lo(...args: number[]) {
     return new NdArray(this.selection.lo.apply(this.selection, args));
   }
 
   /**
-  * Return a sliced view of the array.
-  *
-  * @returns {NdArray}
-  *
-  * @example
-
-  arr = nj.arange(4*4).reshape(4,4)
-  // array([[  0,  1,  2,  3],
-  //        [  4,  5,  6,  7],
-  //        [  8,  9, 10, 11],
-  //        [ 12, 13, 14, 15]])
-
-  arr.hi(3,3)
-  // array([[  0,  1,  2],
-  //        [  4,  5,  6],
-  //        [  8,  9, 10]])
-
-  arr.lo(1,1).hi(2,2)
-  // array([[ 5,  6],
-  //        [ 9, 10]])
-
-  */
+   * Return a sliced view of the array.
+   *
+   * @returns {NdArray}
+   *
+   * @example
+   * ```typescript
+   * arr = nj.arange(4*4).reshape(4,4)
+   * // array([[  0,  1,  2,  3],
+   * //        [  4,  5,  6,  7],
+   * //        [  8,  9, 10, 11],
+   * //        [ 12, 13, 14, 15]])
+   *
+   * arr.hi(3,3)
+   * // array([[  0,  1,  2],
+   * //        [  4,  5,  6],
+   * //        [  8,  9, 10]])
+   *
+   * arr.lo(1,1).hi(2,2)
+   * // array([[ 5,  6],
+   * //        [ 9, 10]])
+   * ```
+   */
   hi(...args: number[]) {
     return new NdArray(this.selection.hi.apply(this.selection, args));
   }
