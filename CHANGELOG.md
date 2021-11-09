@@ -1,6 +1,11 @@
 # Changelog
 
-### [0.17.0](https://github.com/grimmer0125/numjs/compare/v0.16.0.1...v0.17.0) (2021-10-03)
+### [0.17.10](https://github.com/grimmer0125/numjs/compare/v0.17.0...v0.17.10) (2021-11-09)
+
+- Improve documentation.
+- Improve typings (mainly concatenate return type and dtype ArrayLikeConstructor). 
+- Add data container "uint8_clamped" / Uint8ClampedArray support (experimental).  
+### [0.17.0](https://github.com/grimmer0125/numjs/compare/v0.16.0.1...v0.17.0) (2021-11-08)
 
 - Remove image manipulation which may cause mac m1 installation failure, also it may be not needed in some use cases. 
 - Add TypeScript and typing for parameters and return value.

@@ -10,6 +10,7 @@ This project is forked from https://github.com/nicolaspanel/numjs and does below
     - ES6 build (ES2015) with CommonJS module for main build in package.json.
     - ES6 build (ES2015) with ES6 module for module build. Some tools will follow the module field in package.json, like Rollup, Webpack, or Parcel. It is good to let build tools can tree-shake this module build to import only the code they need.
 - Refactor internal code via ES6 syntax and does not change the core algorithm code.
+- Add "uint8_clamped" (Uint8ClampedArray) experimental support. 
 
 You can check the [changelog](https://github.com/grimmer0125/numjs/blob/master/CHANGELOG.md).
 
@@ -70,7 +71,7 @@ __Note__: Default data container is JavaScript `Array` object. If needed, you ca
 array([ 1, 2, 3], dtype=uint8)
 ```
 
-__Note__: possible types are int8, uint8, int16, uint16, int32, uint32, float32, float64 and array (the default)
+__Note__: possible types are int8, uint8, int16, uint16, int32, uint32, float32, float64, uint8_clamped and array (the default)
 
 To create arrays with a given shape, you can use `zeros`, `ones` or `random` functions:
 
@@ -673,6 +674,4 @@ array([0, 1, 2, 3, 4, 0, 1])
 
 ## Documentation
 - [numjs globals (nj) doc](https://grimmer0125.github.io/numjs/modules/)
-    - [Original project doc](https://nicolaspanel.github.io/numjs/global.html)
 - [NdArray doc](https://grimmer0125.github.io/numjs/classes/ndarray.NdArray.html)
-    - [Original project doc](https://nicolaspanel.github.io/numjs/NdArray.html)
