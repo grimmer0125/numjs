@@ -57,31 +57,29 @@ export class NdArray {
   }
 
   /**
-   * @property {Number} NdArray#size - Number of elements in the array.
+   * @property NdArray#size - Number of elements in the array.
    */
-  get size() {
+  get size(): number {
     return this.selection.size;
   }
 
   /**
    * The shape of the array
    *
-   * @property {Array}
    * @name NdArray#shape
    * @readonly
    */
-  get shape() {
+  get shape(): number[] {
     return this.selection.shape;
   }
 
   /**
    * Number of array dimensions.
    *
-   * @property {Number}
    * @name NdArray#ndim
    * @readonly
    */
-  get ndim() {
+  get ndim(): number {
     return this.selection.shape.length;
   }
 
@@ -106,11 +104,10 @@ export class NdArray {
   /**
    * Permute the dimensions of the array.
    *
-   * @property {String}
    * @name NdArray#T
    * @readonly
    */
-  get T() {
+  get T(): NdArray {
     return this.transpose();
   }
 
@@ -128,7 +125,7 @@ export class NdArray {
     return this.selection.set.apply(this.selection, args);
   }
 
-  slice(...args: Array<number | number[]>) {
+  slice(...args: Array<number | number[]>): NdArray {
     const d = this.ndim;
     const hi = new Array(d);
     const lo = new Array(d);
@@ -176,7 +173,6 @@ export class NdArray {
   /**
    * Return a subarray by fixing a particular axis
    * @param axis a array whose element could be `null` or `number`
-   * @returns {NdArray}
    *
    * @example
    * ```typescript
@@ -193,14 +189,12 @@ export class NdArray {
    * // array([  1,  5,  9, 13])
    * ```
    **/
-  pick(...axis: number[]) {
+  pick(...axis: number[]): NdArray {
     return new NdArray(this.selection.pick.apply(this.selection, arguments));
   }
 
   /**
    * Return a shifted view of the array. Think of it as taking the upper left corner of the image and dragging it inward
-   *
-   * @returns {NdArray}
    *
    * @example
    * ```typescript
@@ -215,14 +209,12 @@ export class NdArray {
    * //        [ 13, 14, 15]])
    * ```
    **/
-  lo(...args: number[]) {
+  lo(...args: number[]): NdArray {
     return new NdArray(this.selection.lo.apply(this.selection, args));
   }
 
   /**
    * Return a sliced view of the array.
-   *
-   * @returns {NdArray}
    *
    * @example
    * ```typescript
@@ -242,20 +234,18 @@ export class NdArray {
    * //        [ 9, 10]])
    * ```
    */
-  hi(...args: number[]) {
+  hi(...args: number[]): NdArray {
     return new NdArray(this.selection.hi.apply(this.selection, args));
   }
 
-  step(...args: number[]) {
+  step(...args: number[]): NdArray {
     return new NdArray(this.selection.step.apply(this.selection, args));
   }
 
   /**
    * Return a copy of the array collapsed into one dimension using row-major order (C-style)
-   *
-   * @returns {NdArray}
    */
-  flatten() {
+  flatten(): NdArray {
     if (this.ndim === 1) {
       // already flattened
       return new NdArray(this.selection);
@@ -270,8 +260,8 @@ export class NdArray {
 
   /**
    * Gives a new shape to the array without changing its data.
-   * @param {number|Array|...number} shape - The new shape should be compatible with the original shape. If an integer, then the result will be a 1-D array of that length. One shape dimension can be -1. In this case, the value is inferred from the length of the array and remaining dimensions.
-   * @returns {NdArray} a new view object if possible, a copy otherwise,
+   * @param shape - The new shape should be compatible with the original shape. If an integer, then the result will be a 1-D array of that length. One shape dimension can be -1. In this case, the value is inferred from the length of the array and remaining dimensions.
+   * @returns a new view object if possible, a copy otherwise,
    */
   reshape(...shape: number[]): NdArray;
   reshape(shape: number[]): NdArray;
@@ -378,10 +368,6 @@ export class NdArray {
 
   /**
    * Permute the dimensions of the array.
-   *
-   * @param {Array<number>|...number} [axes]
-   * @returns {NdArray}
-   *
    * @example
    * ```typescript
    * arr = nj.arange(6).reshape(1,2,3)
@@ -421,9 +407,6 @@ export class NdArray {
 
   /**
    * Dot product of two arrays.
-   *
-   * @param {(ArbDimNumArray|NdArray)} x
-   * @returns {NdArray}
    */
   dot(x: ArbDimNumArray | NdArray): NdArray {
     x = x instanceof NdArray ? x : createArray(x, this.dtype);
@@ -471,12 +454,8 @@ export class NdArray {
 
   /**
    * Assign `x` to the array, element-wise.
-   *
-   * @param {(NdArray|ArbDimNumArray|number)} x
-   * @param {boolean} [copy=true]
-   * @returns {NdArray}
    */
-  assign(x: NdArray | ArbDimNumArray | number, copy = true) {
+  assign(x: NdArray | ArbDimNumArray | number, copy = true): NdArray {
     if (arguments.length === 1) {
       copy = true;
     }
@@ -493,12 +472,8 @@ export class NdArray {
 
   /**
    * Add `x` to the array, element-wise.
-   *
-   * @param {(NdArray|ArbDimNumArray|number)} x
-   * @param {boolean} [copy=true]
-   * @returns {NdArray}
    */
-  add(x: NdArray | ArbDimNumArray | number, copy = true) {
+  add(x: NdArray | ArbDimNumArray | number, copy = true): NdArray {
     if (arguments.length === 1) {
       copy = true;
     }
@@ -515,12 +490,8 @@ export class NdArray {
 
   /**
    * Subtract `x` to the array, element-wise.
-   *
-   * @param {(NdArray|ArbDimNumArray|number)} x
-   * @param {boolean} [copy=true]
-   * @returns {NdArray}
    */
-  subtract(x: NdArray | ArbDimNumArray | number, copy = true) {
+  subtract(x: NdArray | ArbDimNumArray | number, copy = true): NdArray {
     if (arguments.length === 1) {
       copy = true;
     }
@@ -537,12 +508,8 @@ export class NdArray {
 
   /**
    * Multiply array by `x`, element-wise.
-   *
-   * @param {(NdArray|ArbDimNumArray|number)} x
-   * @param {boolean} [copy=true]
-   * @returns {NdArray}
    */
-  multiply(x: NdArray | ArbDimNumArray | number, copy = true) {
+  multiply(x: NdArray | ArbDimNumArray | number, copy = true): NdArray {
     if (arguments.length === 1) {
       copy = true;
     }
@@ -560,12 +527,8 @@ export class NdArray {
 
   /**
    * Divide array by `x`, element-wise.
-   *
-   * @param {(NdArray|ArbDimNumArray|number)} x
-   * @param {boolean} [copy=true]
-   * @returns {NdArray}
    */
-  divide(x: NdArray | ArbDimNumArray | number, copy = true) {
+  divide(x: NdArray | ArbDimNumArray | number, copy = true): NdArray {
     if (arguments.length === 1) {
       copy = true;
     }
@@ -584,11 +547,10 @@ export class NdArray {
   /**
    * Raise array elements to powers from given array, element-wise.
    *
-   * @param {(NdArray|ArbDimNumArray|number)} x
-   * @param {boolean} copy - set to false to modify the array rather than create a new one
-   * @returns {NdArray}
+   * @param x
+   * @param copy - set to false to modify the array rather than create a new one
    */
-  pow(x: NdArray | ArbDimNumArray | number, copy = true) {
+  pow(x: NdArray | ArbDimNumArray | number, copy = true): NdArray {
     if (arguments.length === 1) {
       copy = true;
     }
@@ -606,10 +568,9 @@ export class NdArray {
   /**
    * Calculate the exponential of all elements in the array, element-wise.
    *
-   * @param {boolean} copy - set to false to modify the array rather than create a new one
-   * @returns {NdArray}
+   * @param copy - set to false to modify the array rather than create a new one
    */
-  exp(copy = true) {
+  exp(copy = true): NdArray {
     if (arguments.length === 0) {
       copy = true;
     }
@@ -621,10 +582,9 @@ export class NdArray {
   /**
    * Calculate the natural logarithm of all elements in the array, element-wise.
    *
-   * @param {boolean} copy - set to false to modify the array rather than create a new one
-   * @returns {NdArray}
+   * @param copy - set to false to modify the array rather than create a new one
    */
-  log(copy = true) {
+  log(copy = true): NdArray {
     if (arguments.length === 0) {
       copy = true;
     }
@@ -638,7 +598,7 @@ export class NdArray {
    *
    * @param copy set to false to modify the array rather than create a new one
    */
-  sqrt(copy = true) {
+  sqrt(copy = true): NdArray {
     if (arguments.length === 0) {
       copy = true;
     }
@@ -649,8 +609,6 @@ export class NdArray {
 
   /**
    * Return the maximum value of the array
-   *
-   * @returns {Number}
    */
   max(): number {
     if (this.selection.size === 0) {
@@ -661,8 +619,6 @@ export class NdArray {
 
   /**
    * Return the minimum value of the array
-   *
-   * @returns {Number}
    */
   min(): number {
     if (this.selection.size === 0) {
@@ -673,8 +629,6 @@ export class NdArray {
 
   /**
    * Sum of array elements.
-   *
-   * @returns {number}
    */
   sum(): number {
     return ops.sum(this.selection);
@@ -684,7 +638,6 @@ export class NdArray {
    * Returns the standard deviation, a measure of the spread of a distribution, of the array elements.
    *
    * @param {object} options default {ddof:0}
-   * @returns {number}
    */
   std(options?: { ddof: number }) {
     options = _.defaults(options, { ddof: 0 });
@@ -701,21 +654,15 @@ export class NdArray {
 
   /**
    * Return the arithmetic mean of array elements.
-   *
-   * @returns {number}
    */
-  mean() {
+  mean(): number {
     return ops.sum(this.selection) / _.shapeSize(this.shape);
   }
 
   /**
    * Return element-wise remainder of division.
-   *
-   * @param {(NdArray|ArbDimNumArray|number)} x
-   * @param {boolean} [copy=true]
-   * @returns {NdArray}
    */
-  mod(x: NdArray | ArbDimNumArray | number, copy = true) {
+  mod(x: NdArray | ArbDimNumArray | number, copy = true): NdArray {
     if (arguments.length === 1) {
       copy = true;
     }
@@ -733,20 +680,17 @@ export class NdArray {
 
   /**
    * Converts {NdArray} to a native JavaScript {Array}
-   *
-   * @returns {ArbDimNumArray}
    */
   tolist(): ArbDimNumArray {
     return unpackArray(this.selection);
   }
 
-  valueOf() {
+  valueOf(): ArbDimNumArray {
     return this.tolist();
   }
 
   /**
    * Stringify the array to make it readable in the console, by a human.
-   *
    */
   [util.inspect.custom]() {
     return this.toString();
@@ -754,10 +698,8 @@ export class NdArray {
 
   /**
    * Stringify the array to make it readable by a human.
-   *
-   * @returns {string}
    */
-  toString() {
+  toString(): string {
     const nChars = formatNumber(this.max()).length;
 
     const reg1 = /\]\,(\s*)\[/g;
@@ -812,18 +754,15 @@ export class NdArray {
 
   /**
    * Stringify object to JSON
-   * @returns {*}
    */
-  toJSON() {
+  toJSON(): string {
     return JSON.stringify(this.tolist());
   }
 
   /**
    * Create a full copy of the array
-   *
-   * @returns {NdArray}
    */
-  clone() {
+  clone(): NdArray {
     const s = this.selection;
     if (typeof s.data.slice === "undefined") {
       return new NdArray(
@@ -835,8 +774,6 @@ export class NdArray {
 
   /**
    * Return true if two arrays have the same shape and elements, false otherwise.
-   * @param {(ArbDimNumArray|NdArray)} array
-   * @returns {boolean}
    */
   equal(array: ArbDimNumArray | NdArray): boolean {
     array = createArray(array);
@@ -855,11 +792,8 @@ export class NdArray {
 
   /**
    * Round array to the to the nearest integer.
-   *
-   * @param {boolean} [copy=true]
-   * @returns {NdArray}
    */
-  round(copy = true) {
+  round(copy = true): NdArray {
     if (arguments.length === 0) {
       copy = true;
     }
@@ -870,16 +804,14 @@ export class NdArray {
 
   /**
    * Return the inverse of the array, element-wise.
-   *
-   * @returns {NdArray}
    */
-  negative() {
+  negative(): NdArray {
     const c = this.clone();
     ops.neg(c.selection, this.selection);
     return c;
   }
 
-  diag() {
+  diag(): NdArray {
     const d = this.ndim;
     if (d === 1) {
       // input is a vector => return a diagonal matrix
@@ -933,10 +865,8 @@ export class NdArray {
    * @note: Arrays must have the same dimensions and `filter` must be smaller than the array.
    * @note: The convolution product is only given for points where the signals overlap completely. Values outside the signal boundary have no effect. This behaviour is known as the 'valid' mode.
    * @note: Use optimized code for 3x3, 3x3x1, 5x5, 5x5x1 filters, FFT otherwise.
-   *
-   * @param {ArbDimNumArray|NdArray} filter
    */
-  convolve(filter: ArbDimNumArray | NdArray) {
+  convolve(filter: ArbDimNumArray | NdArray): NdArray {
     filter = NdArray.new(filter);
     const ndim = this.ndim;
     if (ndim !== filter.ndim) {
@@ -1077,7 +1007,7 @@ export class NdArray {
     }
   }
 
-  fftconvolve(filter: ArbDimNumArray | NdArray) {
+  fftconvolve(filter: ArbDimNumArray | NdArray): NdArray {
     filter = NdArray.new(filter);
 
     if (this.ndim !== filter.ndim) {
@@ -1159,7 +1089,7 @@ export class NdArray {
   static new(
     arr: NdArray | ArbDimNumArray | number | ndarray.TypedArray,
     dtype?: string | ArrayLikeConstructor
-  ) {
+  ): NdArray {
     return createArray(arr, dtype);
   }
 }
@@ -1381,7 +1311,7 @@ const doConvolve5x5 = cwise({
 function createArray(
   arr: NdArray | ArbDimNumArray | number | ndarray.TypedArray,
   dtype?: string | ArrayLikeConstructor
-) {
+): NdArray {
   if (arr instanceof NdArray) {
     return arr;
   }

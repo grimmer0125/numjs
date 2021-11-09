@@ -28,7 +28,7 @@ export function broadcast(shape1: number[], shape2: number[]) {
   const reversed1 = shape1.slice().reverse();
   const reversed2 = shape2.slice().reverse();
   const maxLength = Math.max(shape1.length, shape2.length);
-  const outShape = new Array(maxLength);
+  const outShape: number[] = new Array(maxLength);
   for (let i = 0; i < maxLength; i++) {
     if (!reversed1[i] || reversed1[i] === 1) {
       outShape[i] = reversed2[i];
@@ -45,38 +45,26 @@ export function broadcast(shape1: number[], shape2: number[]) {
 
 /**
  * Add arguments, element-wise.
- *
- * @param {(NdArray|ArbDimNumArray|number)} a
- * @param {(NdArray|ArbDimNumArray|number)} b
- * @returns {NdArray}
  */
 export function add(
   a: NdArray | ArbDimNumArray | number,
   b: NdArray | ArbDimNumArray | number
-) {
+): NdArray {
   return NdArray.new(a).add(b);
 }
 
 /**
  * Multiply arguments, element-wise.
- *
- * @param {(ArbDimNumArray|NdArray)} a
- * @param {(ArbDimNumArray|NdArray|number)} b
- * @returns {NdArray}
  */
 export function multiply(
   a: ArbDimNumArray | NdArray,
   b: ArbDimNumArray | NdArray | number
-) {
+): NdArray {
   return NdArray.new(a).multiply(b);
 }
 
 /**
  * Divide `a` by `b`, element-wise.
- *
- * @param {(ArbDimNumArray|NdArray)} a
- * @param {(ArbDimNumArray|NdArray|number)} b
- * @returns {NdArray}
  */
 export function divide(
   a: ArbDimNumArray | NdArray,
@@ -87,23 +75,16 @@ export function divide(
 
 /**
  * Subtract second argument from the first, element-wise.
- *
- * @param {(ArbDimNumArray|NdArray|number)} a
- * @param {(ArbDimNumArray|NdArray|number)} b
- * @returns {NdArray}
  */
 export function subtract(
   a: ArbDimNumArray | NdArray | number,
   b: ArbDimNumArray | NdArray | number
-) {
+): NdArray {
   return NdArray.new(a).subtract(b);
 }
 
 /**
  * Return true if two arrays have the same shape and elements, false otherwise.
- * @param {(ArbDimNumArray|NdArray)} array1
- * @param {(ArbDimNumArray|NdArray)} array2
- * @returns {boolean}
  */
 export function equal(
   array1: ArbDimNumArray | NdArray,
@@ -114,24 +95,20 @@ export function equal(
 
 /**
  * Return a copy of the array collapsed into one dimension using row-major order (C-style)
-
- * @param {(ArbDimNumArray|NdArray)} array
- * @returns {NdArray}
  */
-export function flatten(array: ArbDimNumArray | NdArray) {
+export function flatten(array: ArbDimNumArray | NdArray): NdArray {
   return NdArray.new(array).flatten();
 }
 
 /**
  * Gives a new shape to an array without changing its data.
- * @param {(ArbDimNumArray|NdArray)} array
- * @param {Array|number} shape - The new shape should be compatible with the original shape. If an integer, then the result will be a 1-D array of that length
- * @returns {NdArray}
+ * @param array
+ * @param shape - The new shape should be compatible with the original shape. If an integer, then the result will be a 1-D array of that length
  */
 export function reshape(
   array: ArbDimNumArray | NdArray,
   shape: number[] | number
-) {
+): NdArray {
   // TypeScript is not smart enought on parameters detection on overloading
   // workaround way
   if (typeof shape == "number") {
@@ -143,83 +120,61 @@ export function reshape(
 
 /**
  * Calculate the exponential of all elements in the input array, element-wise.
- * @param {(ArbDimNumArray|NdArray|number)} x
- * @returns {NdArray}
  */
-export function exp(x: ArbDimNumArray | NdArray | number) {
+export function exp(x: ArbDimNumArray | NdArray | number): NdArray {
   return NdArray.new(x).exp();
 }
 
 /**
  * Calculate the natural logarithm of all elements in the input array, element-wise.
- * @param {(ArbDimNumArray|NdArray|number)} x
- * @returns {NdArray}
  */
-export function log(x: ArbDimNumArray | NdArray | number) {
+export function log(x: ArbDimNumArray | NdArray | number): NdArray {
   return NdArray.new(x).log();
 }
 
 /**
  * Calculate the positive square-root of all elements in the input array, element-wise.
- * @param {(ArbDimNumArray|NdArray|number)} x
- * @returns {NdArray}
  */
-export function sqrt(x: ArbDimNumArray | NdArray | number) {
+export function sqrt(x: ArbDimNumArray | NdArray | number): NdArray {
   return NdArray.new(x).sqrt();
 }
 
 /**
  * Raise first array elements to powers from second array, element-wise.
- *
- * @param {(ArbDimNumArray|NdArray|number)} x1
- * @param {(ArbDimNumArray|NdArray|number)} x2
- * @returns {NdArray}
  */
 export function power(
   x1: ArbDimNumArray | NdArray | number,
   x2: ArbDimNumArray | NdArray | number
-) {
+): NdArray {
   return NdArray.new(x1).pow(x2);
 }
 
 /**
  * Return the sum of input array elements.
- *
- * @param {(ArbDimNumArray|NdArray|number)} x
- * @returns {number}
  */
-export function sum(x: ArbDimNumArray | NdArray | number) {
+export function sum(x: ArbDimNumArray | NdArray | number): number {
   return NdArray.new(x).sum();
 }
 
 /**
  * Return the arithmetic mean of input array elements.
- *
- * @param {(ArbDimNumArray|NdArray|number)} x
- * @returns {number}
  */
-export function mean(x: ArbDimNumArray | NdArray | number) {
+export function mean(x: ArbDimNumArray | NdArray | number): number {
   return NdArray.new(x).mean();
 }
 
 /**
  * Returns the standard deviation, a measure of the spread of a distribution, of the input array elements.
- *
- * @param {(ArbDimNumArray|NdArray|number)} x
- * @returns {number}
  */
 export function std(
   x: ArbDimNumArray | NdArray | number,
   options?: { ddof: number }
-) {
+): number {
   return NdArray.new(x).std(options);
 }
 
 /**
  * Return the minimum value of the array
- *
- * @param {(ArbDimNumArray|NdArray|number)} x
- * @returns {Number}
  */
 export function min(x: ArbDimNumArray | NdArray | number): number {
   return NdArray.new(x).min();
@@ -227,9 +182,6 @@ export function min(x: ArbDimNumArray | NdArray | number): number {
 
 /**
  * Return the maximum value of the array
- *
- * @param {(ArbDimNumArray|NdArray|number)} x
- * @returns {Number}
  */
 export function max(x: ArbDimNumArray | NdArray | number): number {
   return NdArray.new(x).max();
@@ -238,51 +190,38 @@ export function max(x: ArbDimNumArray | NdArray | number): number {
 /**
  * Return element-wise remainder of division.
  * Computes the remainder complementary to the `floor` function. It is equivalent to the Javascript modulus operator``x1 % x2`` and has the same sign as the divisor x2.
- *
- * @param {(NdArray|ArbDimNumArray|number)} x1
- * @param {(NdArray|ArbDimNumArray|number)} x2
- * @returns {NdArray}
  */
 export function mod(
   x1: NdArray | ArbDimNumArray | number,
   x2: NdArray | ArbDimNumArray | number
-) {
+): NdArray {
   return NdArray.new(x1).mod(x2);
 }
 
 /**
  * Permute the dimensions of the input array according to the given axes.
- *
- * @param {(Array|NdArray|number)} x
- * @param {(number[])} [axes]
- * @returns {NdArray}
  */
 export function transpose(
   x: NdArray | ArbDimNumArray | number,
   axes?: number[]
-) {
+): NdArray {
   return NdArray.new(x).transpose(axes);
 }
 
 /**
  * Return the inverse of the input array, element-wise.
- *
- * @param {(ArbDimNumArray|NdArray|number)} x
- * @returns {NdArray}
  */
-export function negative(x: ArbDimNumArray | NdArray | number) {
+export function negative(x: ArbDimNumArray | NdArray | number): NdArray {
   return NdArray.new(x).negative();
 }
 
 /**
  * Return evenly spaced values within a given interval.
  *
- * @param {int} start - Default 0. Start of interval. The interval includes this value.
- * @param {int} stop - End of interval. The interval does not include this value.
- * @param {int} step - Default 1. Spacing between values. The default step size is 1. If step is specified, start must also be given.
+ * @param start - Default 0 (int). Start of interval. The interval includes this value.
+ * @param stop - End of interval (int). The interval does not include this value.
+ * @param step - Default 1 (int). Spacing between values. The default step size is 1. If step is specified, start must also be given.
  * @param dtype Defaut is "array". The type of the output array. Either string (e.g. 'uint8') or a Constructor function (e.g. Uint8Array).
- *
- * @return {NdArray} Array of evenly spaced values.
  */
 export function arange(
   start: number,
@@ -340,15 +279,14 @@ export function arange(...args: any[]): NdArray {
 /**
  * Return a new array of given shape and type, filled with zeros.
  *
- * @param {(Array|int)} shape - Shape of the new array, e.g., [2, 3] or 2.
+ * @param shape - Shape of the new array, e.g., [2, 3] or 2.
  * @param dtype Defaut is "array". The type of the output array. E.g., 'uint8' or Uint8Array.
  *
- * @return {NdArray} Array of zeros with the given shape and dtype
  */
 export function zeros(
   shape: number | number[],
   dtype?: string | ArrayLikeConstructor
-) {
+): NdArray {
   if (_.isNumber(shape) && shape >= 0) {
     shape = [shape as number];
   }
@@ -364,15 +302,15 @@ export function zeros(
 /**
  * Return a new array of given shape and type, filled with ones.
  *
- * @param {(Array|int)} shape - Shape of the new array, e.g., [2, 3] or 2.
- * @param {(String|ArrayLikeConstructor)}  dtype - Defaut is "array". The type of the output array. E.g., 'uint8' or Uint8Array.
+ * @param shape - Shape of the new array, e.g., [2, 3] or 2.
+ * @param dtype - Defaut is "array". The type of the output array. E.g., 'uint8' or Uint8Array.
  *
- * @return {NdArray} Array of ones with the given shape and dtype
+ * @return Array of ones with the given shape and dtype
  */
 export function ones(
   shape: number[] | number,
   dtype?: string | ArrayLikeConstructor
-) {
+): NdArray {
   if (_.isNumber(shape) && shape >= 0) {
     shape = [shape as number];
   }
@@ -386,15 +324,15 @@ export function ones(
 /**
  * Return a new array of given shape and type, filled with `undefined` values.
  *
- * @param {(Array|int)} shape - Shape of the new array, e.g., [2, 3] or 2.
+ * @param shape - Shape of the new array, e.g., [2, 3] or 2.
  * @param dtype - Defaut is "array". The type of the output array. E.g., 'uint8' or Uint8Array.
  *
- * @return {NdArray} Array of `undefined` values with the given shape and dtype
+ * @return Array of `undefined` values with the given shape and dtype
  */
 export function empty(
   shape: number[] | number,
   dtype?: string | ArrayLikeConstructor
-) {
+): NdArray {
   if (_.isNumber(shape) && shape >= 0) {
     shape = [shape as number];
   }
@@ -405,8 +343,7 @@ export function empty(
 
 /**
  * Create an array of the given shape and propagate it with random samples from a uniform distribution over [0, 1].
- * @param {number|Array|...number} shape - The dimensions of the returned array, should all be positive integers
- * @returns {NdArray}
+ * @param shape - The dimensions of the returned array, should all be positive integers
  */
 export function random(...shape: number[]): NdArray;
 export function random(shape?: number | number[]): NdArray;
@@ -427,10 +364,8 @@ export function random(...args: any[]): NdArray {
 
 /**
  * Return the softmax, or normalized exponential, of the input array, element-wise.
- * @param {(ArbDimNumArray|NdArray|number)} x
- * @returns {NdArray}
  */
-export function softmax(x: ArbDimNumArray | NdArray | number) {
+export function softmax(x: ArbDimNumArray | NdArray | number): NdArray {
   const e = NdArray.new(x).exp();
   const se = e.sum(); // scalar
   ops.divseq(e.selection, se);
@@ -447,9 +382,8 @@ const doSigmoid = cwise({
 
 /**
  * Return the sigmoid of the input array, element-wise.
- * @param {(ArbDimNumArray|NdArray|number)} x
+ * @param x
  * @param t - stifness parameter
- * @returns {NdArray}
  */
 export function sigmoid(x: ArbDimNumArray | NdArray | number, t = 1): NdArray {
   x = NdArray.new(x).clone();
@@ -468,13 +402,12 @@ const doClip = cwise({
 
 /**
  * Clip (limit) the values in an array between min and max, element-wise.
- *
- * @param {(ArbDimNumArray|NdArray|number)} x
- * @param {number} [min=0]
- * @param {number} [max=1]
- * @returns {NdArray}
  */
-export function clip(x: ArbDimNumArray | NdArray | number, min = 0, max = 1) {
+export function clip(
+  x: ArbDimNumArray | NdArray | number,
+  min = 0,
+  max = 1
+): NdArray {
   if (arguments.length === 1) {
     min = 0;
     max = 1;
@@ -496,7 +429,7 @@ const doLeakyRelu = cwise({
 export function leakyRelu(
   x: NdArray | ArbDimNumArray | number,
   alpha?: number
-) {
+): NdArray {
   alpha = alpha || 1e-3;
   const s = x instanceof NdArray ? x.clone() : NdArray.new(x);
   doLeakyRelu(s.selection, alpha);
@@ -513,11 +446,8 @@ const doTanh = cwise({
 
 /**
  * Return hyperbolic tangent of the input array, element-wise.
- *
- * @param {(ArbDimNumArray|NdArray|number)} x
- * @returns {NdArray}
  */
-export function tanh(x: ArbDimNumArray | NdArray | number) {
+export function tanh(x: ArbDimNumArray | NdArray | number): NdArray {
   const s = x instanceof NdArray ? x.clone() : NdArray.new(x);
   doTanh(s.selection);
   return s;
@@ -525,11 +455,8 @@ export function tanh(x: ArbDimNumArray | NdArray | number) {
 
 /**
  * Return absolute value of the input array, element-wise.
- *
- * @param {(ArbDimNumArray|NdArray|number)} x
- * @returns {NdArray}
  */
-export function abs(x: ArbDimNumArray | NdArray | number) {
+export function abs(x: ArbDimNumArray | NdArray | number): NdArray {
   const s = x instanceof NdArray ? x.clone() : NdArray.new(x);
   ops.abseq(s.selection);
   return s;
@@ -537,11 +464,8 @@ export function abs(x: ArbDimNumArray | NdArray | number) {
 
 /**
  * Return trigonometric cosine of the input array, element-wise.
- *
- * @param {(ArbDimNumArray|NdArray|number)} x
- * @returns {NdArray}
  */
-export function cos(x: ArbDimNumArray | NdArray | number) {
+export function cos(x: ArbDimNumArray | NdArray | number): NdArray {
   const s = x instanceof NdArray ? x.clone() : NdArray.new(x);
   ops.coseq(s.selection);
   return s;
@@ -549,11 +473,8 @@ export function cos(x: ArbDimNumArray | NdArray | number) {
 
 /**
  * Return trigonometric inverse cosine of the input array, element-wise.
- *
- * @param {(ArbDimNumArray|NdArray|number)} x
- * @returns {NdArray}
  */
-export function arccos(x: ArbDimNumArray | NdArray | number) {
+export function arccos(x: ArbDimNumArray | NdArray | number): NdArray {
   const s = x instanceof NdArray ? x.clone() : NdArray.new(x);
   ops.acoseq(s.selection);
   return s;
@@ -561,11 +482,8 @@ export function arccos(x: ArbDimNumArray | NdArray | number) {
 
 /**
  * Return trigonometric sine of the input array, element-wise.
- *
- * @param {(ArbDimNumArray|NdArray|number)} x
- * @returns {NdArray}
  */
-export function sin(x: ArbDimNumArray | NdArray | number) {
+export function sin(x: ArbDimNumArray | NdArray | number): NdArray {
   const s = x instanceof NdArray ? x.clone() : NdArray.new(x);
   ops.sineq(s.selection);
   return s;
@@ -573,11 +491,8 @@ export function sin(x: ArbDimNumArray | NdArray | number) {
 
 /**
  * Return trigonometric inverse sine of the input array, element-wise.
- *
- * @param {(ArbDimNumArray|NdArray|number)} x
- * @returns {NdArray}
  */
-export function arcsin(x: ArbDimNumArray | NdArray | number) {
+export function arcsin(x: ArbDimNumArray | NdArray | number): NdArray {
   const s = x instanceof NdArray ? x.clone() : NdArray.new(x);
   ops.asineq(s.selection);
   return s;
@@ -585,11 +500,8 @@ export function arcsin(x: ArbDimNumArray | NdArray | number) {
 
 /**
  * Return trigonometric tangent of the input array, element-wise.
- *
- * @param {(ArbDimNumArray|NdArray|number)} x
- * @returns {NdArray}
  */
-export function tan(x: ArbDimNumArray | NdArray | number) {
+export function tan(x: ArbDimNumArray | NdArray | number): NdArray {
   const s = x instanceof NdArray ? x.clone() : NdArray.new(x);
   ops.taneq(s.selection);
   return s;
@@ -597,11 +509,8 @@ export function tan(x: ArbDimNumArray | NdArray | number) {
 
 /**
  * Return trigonometric inverse tangent of the input array, element-wise.
- *
- * @param {(ArbDimNumArray|NdArray|number)} x
- * @returns {NdArray}
  */
-export function arctan(x: ArbDimNumArray | NdArray | number) {
+export function arctan(x: ArbDimNumArray | NdArray | number): NdArray {
   const s = x instanceof NdArray ? x.clone() : NdArray.new(x);
   ops.ataneq(s.selection);
   return s;
@@ -615,9 +524,6 @@ export function arctan(x: ArbDimNumArray | NdArray | number) {
  *  - vector dot vector
  *  - matrix dot vector
  *  - vector dot matrix
- * @param {(ArbDimNumArray|NdArray)} a
- * @param {(ArbDimNumArray|NdArray)} b
- * @returns {NdArray}
  */
 export function dot(
   a: ArbDimNumArray | NdArray,
@@ -628,9 +534,6 @@ export function dot(
 
 /**
  * Join given arrays along the last axis.
- *
- * @param {Array<number|ArbDimNumArray|NdArray>|...(number|ArbDimNumArray|NdArray)} arrays
- * @returns {NdArray}
  */
 export function concatenate(
   ...arrays: Array<number | ArbDimNumArray | NdArray>
@@ -701,11 +604,8 @@ export function concatenate(...args: any[]): NdArray {
 
 /**
  * Round an array to the to the nearest integer.
- *
- * @param {(ArbDimNumArray|NdArray)} x
- * @returns {NdArray}
  */
-export function round(x: ArbDimNumArray | NdArray) {
+export function round(x: ArbDimNumArray | NdArray): NdArray {
   return NdArray.new(x).round();
 }
 
@@ -714,14 +614,11 @@ export function round(x: ArbDimNumArray | NdArray) {
  *
  * @note: Arrays must have the same dimensions and a must be greater than b.
  * @note: The convolution product is only given for points where the signals overlap completely. Values outside the signal boundary have no effect. This behaviour is known as the 'valid' mode.
- *
- * @param {ArbDimNumArray|NdArray} a
- * @param {ArbDimNumArray|NdArray} b
  */
 export function convolve(
   a: ArbDimNumArray | NdArray,
   b: ArbDimNumArray | NdArray
-) {
+): NdArray {
   return NdArray.new(a).convolve(b);
 }
 
@@ -730,14 +627,11 @@ export function convolve(
  *
  * @note: Arrays must have the same dimensions and a must be greater than b.
  * @note: The convolution product is only given for points where the signals overlap completely. Values outside the signal boundary have no effect. This behaviour is known as the 'valid' mode.
- *
- * @param {ArbDimNumArray|NdArray} a
- * @param {ArbDimNumArray|NdArray} b
  */
 export function fftconvolve(
   a: ArbDimNumArray | NdArray,
   b: ArbDimNumArray | NdArray
-) {
+): NdArray {
   return NdArray.new(a).fftconvolve(b);
 }
 
@@ -785,21 +679,22 @@ export function ifft(x: ArbDimNumArray | NdArray): NdArray {
 
 /**
  * Extract a diagonal or construct a diagonal array.
- *
- * @param {ArbDimNumArray|NdArray} x
- * @returns {NdArray} a view a of the original array when possible, a new array otherwise
+ * @returns a view a of the original array when possible, a new array otherwise
  */
-export function diag(x: ArbDimNumArray | NdArray) {
+export function diag(x: ArbDimNumArray | NdArray): NdArray {
   return NdArray.new(x).diag();
 }
 
 /**
  * The identity array is a square array with ones on the main diagonal.
- * @param {number} n number of rows (and columns) in n x n output.
+ * @param n number of rows (and columns) in n x n output.
  * @param dtype Defaut is "array". The type of the output array. E.g., 'uint8' or Uint8Array.
- * @return {NdArray} n x n array with its main diagonal set to one, and all other elements 0
+ * @return n x n array with its main diagonal set to one, and all other elements 0
  */
-export function identity(n: number, dtype?: string | ArrayLikeConstructor) {
+export function identity(
+  n: number,
+  dtype?: string | ArrayLikeConstructor
+): NdArray {
   const arr = zeros([n, n], dtype);
   for (let i = 0; i < n; i++) arr.set(i, i, 1);
   return arr;
@@ -809,9 +704,9 @@ export function identity(n: number, dtype?: string | ArrayLikeConstructor) {
  * Join a sequence of arrays along a new axis.
  * The axis parameter specifies the index of the new axis in the dimensions of the result.
  * For example, if axis=0 it will be the first dimension and if axis=-1 it will be the last dimension.
- * @param {Array<NdArray|ArbDimNumArray|number>} arrays Sequence of array_like
+ * @param arrays Sequence of array_like
  * @param axis The axis in the result array along which the input arrays are stacked.
- * @return {NdArray} The stacked array has one more dimension than the input arrays.
+ * @return The stacked array has one more dimension than the input arrays.
  */
 export function stack(
   arrays: Array<NdArray | ArbDimNumArray | number>,
@@ -866,9 +761,9 @@ export function stack(
  * Reverse the order of elements in an array along the given axis.
  * The shape of the array is preserved, but the elements are reordered.
  * New in version 0.15.0.
- * @param {ArbDimNumArray|NdArray} m Input array.
- * @param {number} axis Axis in array, which entries are reversed.
- * @return {NdArray} A view of `m` with the entries of axis reversed.  Since a view is returned, this operation is done in constant time.
+ * @param m Input array.
+ * @param axis Axis in array, which entries are reversed.
+ * @return A view of `m` with the entries of axis reversed.  Since a view is returned, this operation is done in constant time.
  */
 export function flip(m: ArbDimNumArray | NdArray, axis: number): NdArray {
   m = NdArray.new(m);
@@ -890,10 +785,10 @@ export function flip(m: ArbDimNumArray | NdArray, axis: number): NdArray {
  * Rotate an array by 90 degrees in the plane specified by axes.
  * Rotation direction is from the first towards the second axis.
  * New in version 0.15.0.
- * @param {ArbDimNumArray|NdArray} m array_like
- * @param {number} k Number of times the array is rotated by 90 degrees.
- * @param {Array|NdArray} axes Default [0, 1]. The array is rotated in the plane defined by the axes. Axes must be different.
- * @return {NdArray} A rotated view of m.
+ * @param m array_like
+ * @param k Number of times the array is rotated by 90 degrees.
+ * @param axes Default [0, 1]. The array is rotated in the plane defined by the axes. Axes must be different.
+ * @return A rotated view of m.
  */
 export function rot90(
   m: ArbDimNumArray | NdArray,
@@ -936,31 +831,33 @@ export function rot90(
  * @param dtype Defaut is "array". The type of the output array. E.g., 'uint8' or Uint8Array.
  */
 export const array = NdArray.new;
+
 export const remainder = mod;
-export function int8(array) {
+
+export function int8(array: ArbDimNumArray | number): NdArray {
   return NdArray.new(array, "int8");
 }
-export function uint8(array: ArbDimNumArray | number) {
+export function uint8(array: ArbDimNumArray | number): NdArray {
   return NdArray.new(array, "uint8");
 }
-export function int16(array: ArbDimNumArray | number) {
+export function int16(array: ArbDimNumArray | number): NdArray {
   return NdArray.new(array, "int16");
 }
-export function uint16(array: ArbDimNumArray | number) {
+export function uint16(array: ArbDimNumArray | number): NdArray {
   return NdArray.new(array, "uint16");
 }
-export function int32(array: ArbDimNumArray | number) {
+export function int32(array: ArbDimNumArray | number): NdArray {
   return NdArray.new(array, "int32");
 }
-export function uint32(array: ArbDimNumArray | number) {
+export function uint32(array: ArbDimNumArray | number): NdArray {
   return NdArray.new(array, "uint32");
 }
-export function float32(array: ArbDimNumArray | number) {
+export function float32(array: ArbDimNumArray | number): NdArray {
   return NdArray.new(array, "float32");
 }
-export function float64(array: ArbDimNumArray | number) {
+export function float64(array: ArbDimNumArray | number): NdArray {
   return NdArray.new(array, "float64");
 }
-export function uint8_clamped(array: ArbDimNumArray | number) {
+export function uint8_clamped(array: ArbDimNumArray | number): NdArray {
   return NdArray.new(array, "uint8_clamped");
 }
