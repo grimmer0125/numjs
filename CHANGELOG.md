@@ -1,5 +1,9 @@
 # Changelog
 
+### [0.17.11](https://github.com/grimmer0125/numjs/compare/v0.17.10...v0.17.11) (2021-11-09)
+
+Fix nj.array and nj.int8, nj.int16...nj.uint8_clamped parameter typings. 
+
 ### [0.17.10](https://github.com/grimmer0125/numjs/compare/v0.17.0...v0.17.10) (2021-11-09)
 
 - Improve documentation.
