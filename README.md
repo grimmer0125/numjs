@@ -71,6 +71,18 @@ __Note__: Default data container is JavaScript `Array` object. If needed, you ca
 array([ 1, 2, 3], dtype=uint8)
 ```
 
+Below are alternative ways to create same `NdArray`.
+
+```js
+const a = nj.array([1, 2, 3], "uint8");
+const b = nj.array([1, 2, 3], Uint8Array);
+const c = nj.array(new Uint8Array([1, 2, 3]));
+const d = nj.arange(3); // results in array([ 0, 1, 2], dtype=uint8) 
+// but we want [1,2,3], how?  
+// we can manually create a scijs/ndarray object, then assign it as selection property 
+d.selection = nj.ndarray(new Uint8Array([1, 2, 3]));
+```
+
 __Note__: possible types are int8, uint8, int16, uint16, int32, uint32, float32, float64, uint8_clamped and array (the default)
 
 To create arrays with a given shape, you can use `zeros`, `ones` or `random` functions:
