@@ -1,6 +1,6 @@
 /**
  * This is `nj` module page. Below References, Namespaces, Properties, Functions all are the default exported module `nj` properties.
- * For example, ater import `nj` via `import nj from "@d4c/numjs";` or `const nj = require('@d4c/numjs').default;`,
+ * For example, after import `nj` via `import nj from "@d4c/numjs";` or `const nj = require('@d4c/numjs').default;`,
  * you can use `nj.array` to use create a `NdArray`.
  *
  * @packageDocumentation
@@ -940,27 +940,27 @@ export const remainder = mod;
 export function int8(array) {
   return NdArray.new(array, "int8");
 }
-export function uint8(array: number[] | number) {
+export function uint8(array: ArbDimNumArray | number) {
   return NdArray.new(array, "uint8");
 }
-export function int16(array: number[] | number) {
+export function int16(array: ArbDimNumArray | number) {
   return NdArray.new(array, "int16");
 }
-export function uint16(array: number[] | number) {
+export function uint16(array: ArbDimNumArray | number) {
   return NdArray.new(array, "uint16");
 }
-export function int32(array: number[] | number) {
+export function int32(array: ArbDimNumArray | number) {
   return NdArray.new(array, "int32");
 }
-export function uint32(array: number[] | number) {
+export function uint32(array: ArbDimNumArray | number) {
   return NdArray.new(array, "uint32");
 }
-export function float32(array: number[] | number) {
+export function float32(array: ArbDimNumArray | number) {
   return NdArray.new(array, "float32");
 }
-export function float64(array: number[] | number) {
+export function float64(array: ArbDimNumArray | number) {
   return NdArray.new(array, "float64");
 }
-export function uint8_clamped(array: number[] | number) {
+export function uint8_clamped(array: ArbDimNumArray | number) {
   return NdArray.new(array, "uint8_clamped");
 }
