@@ -35,6 +35,7 @@ export type ArrayLikeConstructor =
  * data-type object (dtype), one of which is associated with each NdArray.
  * @constructor
  */
+
 export class NdArray {
   selection: ndarray.NdArray;
 
@@ -1156,7 +1157,7 @@ export class NdArray {
   }
 
   static new(
-    arr: NdArray | ArbDimNumArray | number,
+    arr: NdArray | ArbDimNumArray | number | ndarray.TypedArray,
     dtype?: string | ArrayLikeConstructor
   ) {
     return createArray(arr, dtype);
@@ -1378,7 +1379,7 @@ const doConvolve5x5 = cwise({
 });
 
 function createArray(
-  arr: NdArray | ArbDimNumArray | number,
+  arr: NdArray | ArbDimNumArray | number | ndarray.TypedArray,
   dtype?: string | ArrayLikeConstructor
 ) {
   if (arr instanceof NdArray) {
@@ -1399,7 +1400,7 @@ function createArray(
   if (!(arr instanceof T)) {
     arr = new T(arr);
   }
-  return new NdArray(arr as ArbDimNumArray, shape);
+  return new NdArray(arr as ArbDimNumArray | ndarray.TypedArray, shape);
 }
 // NdArray.new = createArray;
 
