@@ -39,12 +39,12 @@ yarn add @d4c/numjs
 
 then either using ES6 import: 
 
-```js
+```ts
 import nj from "@d4c/numjs"; 
 ```
 or CommonJS require:
 
-```js
+```ts
 // TypeScript users will not get typings when using require
 const nj = require('@d4c/numjs').default; 
 ```
@@ -53,7 +53,7 @@ const nj = require('@d4c/numjs').default;
 
 ### Array Creation
 
-```js
+```ts
 > const a = nj.array([2,3,4]);
 > a
 array([ 2, 3, 4])
@@ -65,7 +65,7 @@ array([[ 1, 2, 3],
 
 __Note__: Default data container is JavaScript `Array` object. If needed, you can also use typed array such as `Uint8Array`:
 
-```js
+```ts
 > const a = nj.uint8([1,2,3]);
 > a
 array([ 1, 2, 3], dtype=uint8)
@@ -73,7 +73,7 @@ array([ 1, 2, 3], dtype=uint8)
 
 Below are alternative ways to create same `NdArray`.
 
-```js
+```ts
 const a = nj.array([1, 2, 3], "uint8");
 const b = nj.array([1, 2, 3], Uint8Array);
 const c = nj.array(new Uint8Array([1, 2, 3]));
@@ -87,7 +87,7 @@ __Note__: possible types are int8, uint8, int16, uint16, int32, uint32, float32,
 
 To create arrays with a given shape, you can use `zeros`, `ones` or `random` functions:
 
-```js
+```ts
 > nj.zeros([2,3]);
 array([[ 0, 0, 0],
        [ 0, 0, 0]])
@@ -108,7 +108,7 @@ array([[ 0.9182 , 0.85176, 0.22587],
 
 To create sequences of numbers, __NumJs__ provides a function called `arange`:
 
-```js
+```ts
 > nj.arange(4);
 array([ 0, 1, 2, 3])
 
@@ -131,7 +131,7 @@ An `NdArray` can always be converted to a native JavaScript `Array` using `NdArr
 
 
 Example:
-```js
+```ts
 > a = nj.arange(15).reshape(3, 5);
 array([[  0,  1,  2,  3,  4],
        [  5,  6,  7,  8,  9],
@@ -168,7 +168,7 @@ When you print the beautified content of an array, __NumJs__ displays it in a si
 
 One-dimensional arrays are then printed as rows, bidimensionals as matrices and tridimensionals as lists of matrices.
 
-```js
+```ts
 > const a = nj.arange(6);                 // 1d array
 > console.log(a);
 array([ 0, 1, 2, 3, 4, 5])
@@ -193,7 +193,7 @@ array([[[  0,  1,  2,  3],
 
 If an array is too large to be printed, __NumJs__ automatically skips the central part of the array and only prints the corners:
 
-```js
+```ts
 > console.log(nj.arange(10000).reshape(100,100))
 array([[    0,    1, ...,   98,   99],
        [  100,  101, ...,  198,  199],
@@ -203,7 +203,7 @@ array([[    0,    1, ...,   98,   99],
 ```
 
 To customize this behaviour, you can change the printing options using `nj.config.printThreshold` (default is `7`):
-```js
+```ts
 > nj.config.printThreshold = 9;
 > console.log(nj.arange(10000).reshape(100,100))
 array([[    0,    1,    2,    3, ...,   96,   97,   98,   99],
@@ -221,7 +221,7 @@ array([[    0,    1,    2,    3, ...,   96,   97,   98,   99],
 ### Indexing
 
 Single element indexing  uses `get` and `set` methods. It is 0-based, and accepts negative indices for indexing from the end of the array:
-```js
+```ts
 > const a = nj.array([0,1,2]);
 > a.get(1)
 1
@@ -252,7 +252,7 @@ array([[ 1, 1, 2],
 
 It is possible to slice and stride arrays to extract arrays of the same number of dimensions, but of different sizes than the original. The slicing and striding works exactly the same way it does in NumPy:
 
-```js
+```ts
 > const a = nj.arange(5);
 > a
 array([  0,  1,  2,  3,  4])
@@ -306,7 +306,7 @@ Note that slices do not copy the internal array data, it produces a new views of
 
 Arithmetic operators such as `*` (`multiply`), `+` (`add`), `-` (`subtract`), `/` (`divide`), `**` (`pow`), `=` (`assign`) apply elemen-twise. A new array is created and filled with the result:
 
-```js
+```ts
 > zeros = nj.zeros([3,4]);
 array([[ 0, 0, 0, 0],
        [ 0, 0, 0, 0],
@@ -336,7 +336,7 @@ array([[ 1, 1, 1, 1],
 
 To modify an existing array rather than create a new one you can set the `copy` parameter to `false`:
 
-```js
+```ts
 > ones = nj.ones([3,4]);
 array([[ 1, 1, 1, 1],
        [ 1, 1, 1, 1],
@@ -364,7 +364,7 @@ __Note__: available for `add`, `subtract`, `multiply`, `divide`, `assign` and `p
 
 The matrix product can be performed using the `dot` function:
 
-```js
+```ts
 > a = nj.arange(12).reshape(3,4);
 array([[  0,  1,  2,  3],
        [  4,  5,  6,  7],
@@ -384,7 +384,7 @@ array([[  14,  38,  62],
 
 Many unary operations, such as computing the sum of all the elements in the array, are implemented as methods of the `NdArray` class:
 
-```js
+```ts
 > a = nj.random([2,3])
 array([[0.62755, 0.8278,0.21384],
        [ 0.7029,0.27584,0.46472]])
@@ -407,7 +407,7 @@ array([[0.62755, 0.8278,0.21384],
 ### Universal Functions
 __NumJs__ provides familiar mathematical functions such as `sin`, `cos`, and `exp`. These functions operate element-wise on an array, producing an `NdArray` as output:
 
-```js
+```ts
 > a = nj.array([-1, 0, 1])
 array([-1, 0, 1])
 >
@@ -451,7 +451,7 @@ array([-1, 0, 1])
 ### Shape Manipulation
 An array has a shape given by the number of elements along each axis:
 
-```js
+```ts
 > a = nj.array([[  0,  1,  2,  3], [  4,  5,  6,  7], [  8,  9, 10, 11]]);
 array([[  0,  1,  2,  3],
        [  4,  5,  6,  7],
@@ -462,7 +462,7 @@ array([[  0,  1,  2,  3],
 ```
 
 The shape of an array can be changed with constious commands:
-```js
+```ts
 > a.flatten();
 array([  0,  1,  2, ...,  9, 10, 11])
 >
@@ -481,7 +481,7 @@ array([[  0,  1,  2],
 ```
 
 Since `a` is matrix we may want its diagonal:
-```js
+```ts
 > nj.diag(a)
 array([  0,  5, 10])
 >
@@ -490,7 +490,7 @@ array([  0,  5, 10])
 ### Identity matrix
 The identity array is a square array with ones on the main diagonal:
 
-```js
+```ts
 > nj.identity(3)
 array([[ 1, 0, 0],
        [ 0, 1, 0],
@@ -501,7 +501,7 @@ array([[ 1, 0, 0],
 
 Several arrays can be stacked together using `concatenate` function:
 
-```js
+```ts
 > a = nj.arange(12).reshape(3,4)
 array([[  0,  1,  2,  3],
        [  4,  5,  6,  7],
@@ -522,7 +522,7 @@ __Notes__:
 
 It is still possible to concatenate along other dimensions using transpositions:
 
-```js
+```ts
 > a = nj.arange(12).reshape(3,4)
 array([[  0,  1,  2,  3],
        [  4,  5,  6,  7],
@@ -541,7 +541,7 @@ array([[  0,  1,  2,  3],
 
 ### Stack multiple arrays
 
-```js
+```ts
 > a = nj.array([1, 2, 3])
 > b = nj.array([2, 3, 4])
 
@@ -561,7 +561,7 @@ __Notes__:
 ### Deep Copy
 The `clone` method makes a complete copy of the array and its data.
 
-```js
+```ts
 > a = nj.arange(12).reshape(3,4)
 array([[  0,  1,  2,  3],
        [  4,  5,  6,  7],
@@ -590,7 +590,7 @@ array([[  0,  1,  2,  3],
 `fft` and `ifft` functions can be used to compute the N-dimensional discrete Fourier Transform and its inverse.
 
 Example:
-```js
+```ts
 > RI = nj.concatenate(nj.ones([10,1]), nj.zeros([10,1]))
 array([[ 1, 0],
        [ 1, 0],
@@ -629,7 +629,7 @@ __Note__: The convolution product is only given for points where the signals ove
 
 
 Example:
-```js
+```ts
 > x = nj.array([0,0,1,2,1,0,0])
 array([ 0, 0, 1, 2, 1, 0, 0])
 >
@@ -658,7 +658,7 @@ __Note__: `convolve` uses Fast Fourier Transform (FFT) to speed up computation o
 
 ### Other utils
 `rot90`
-```js
+```ts
 > m = nj.array([[1,2],[3,4]], 'int')
 > m
 array([[1, 2],
@@ -678,7 +678,7 @@ array([[[1, 3],
 ```
 
 `mod` (since v0.16.0)
-```js
+```ts
 > nj.mod(nj.arange(7), 5)
 > m
 array([0, 1, 2, 3, 4, 0, 1])
