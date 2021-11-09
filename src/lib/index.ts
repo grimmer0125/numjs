@@ -858,6 +858,6 @@ export function float32(array: ArbDimNumArray | number): NdArray {
 export function float64(array: ArbDimNumArray | number): NdArray {
   return NdArray.new(array, "float64");
 }
-export function uint8_clamped(array: ArbDimNumArray | number): NdArray {
+export function uint8Clamped(array: ArbDimNumArray | number): NdArray {
   return NdArray.new(array, "uint8_clamped");
 }

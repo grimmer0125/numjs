@@ -63,7 +63,7 @@ import {
   uint32,
   float32,
   float64,
-  uint8_clamped,
+  uint8Clamped,
 } from "./lib/index";
 
 const nj = {
@@ -131,7 +131,7 @@ const nj = {
   uint32,
   float32,
   float64,
-  uint8_clamped,
+  uint8Clamped,
 };
 
 export default nj;
