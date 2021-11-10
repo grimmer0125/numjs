@@ -27,8 +27,6 @@ It works both in node.js and in the browser.
 
 __NumJs__ is licensed under the [MIT license](https://github.com/grimmer0125/numjs/blob/master/LICENSE), enabling reuse with almost no restrictions.
 
-__[See this jsfiddle](https://jsfiddle.net/nicolaspanel/047gwg0q/)__ for a concrete example of how to use the library to manipulate images in the browser.
-
 ## Installation
 
 ```sh
