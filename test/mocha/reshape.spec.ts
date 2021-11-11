@@ -3,9 +3,12 @@
 
 import { expect } from 'chai';
 
-const _ = require('lodash');
 import nj from "../../src";
 import { ValueError}  from "../../src/lib/errors"
+
+function _range(n:number){
+  return Array.from(Array(n).keys())
+}
 
 describe('reshape', function () {
   it('should accept native array as input', function () {
@@ -16,7 +19,7 @@ describe('reshape', function () {
   });
 
   it('should work on vectors', function () {
-    const vector = nj.array(_.range(12));
+    const vector = nj.array(_range(12));
     const init = vector.reshape([4, 3]);
     expect(init.shape)
       .to.eql([4, 3]);
@@ -24,7 +27,7 @@ describe('reshape', function () {
       .to.eql([[0, 1, 2], [3, 4, 5], [6, 7, 8], [9, 10, 11]]);
   });
   it('should work on matrix', function () {
-    const vector = nj.array(_.range(12));
+    const vector = nj.array(_range(12));
     const reshaped = vector.reshape([3, 4]);
     expect(reshaped.shape)
       .to.eql([3, 4]);

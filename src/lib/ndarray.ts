@@ -640,7 +640,9 @@ export class NdArray {
    * @param {object} options default {ddof:0}
    */
   std(options?: { ddof: number }) {
-    options = _.defaults(options, { ddof: 0 });
+    if (!options?.ddof) {
+      options = { ddof: 0 };
+    }
     const squares = this.clone();
     ops.powseq(squares.selection, 2);
     const mean = this.mean();

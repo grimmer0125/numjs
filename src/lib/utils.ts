@@ -1,6 +1,5 @@
 "use strict";
 import DTYPES from "./dtypes";
-const _ = require("lodash");
 
 function isNumber(value) {
   return typeof value === "number";
@@ -90,5 +89,4 @@ export default {
   shapeSize: shapeSize,
   getType: getType,
   getShape: getShape,
-  defaults: _.defaults,
 };

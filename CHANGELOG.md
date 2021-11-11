@@ -1,6 +1,11 @@
 # Changelog
 
-### [0.17.14](https://github.com/grimmer0125/numjs/compare/v0.17.11...v0.17.14) (2021-11-09)
+### [0.17.16](https://github.com/grimmer0125/numjs/compare/v0.17.14...v0.17.16) (2021-11-11)
+
+- Improve documentation. 
+- Remove lodash dependency.
+
+### [0.17.14](https://github.com/grimmer0125/numjs/compare/v0.17.11...v0.17.14) (2021-11-10)
 
 - Improve a little documentation and typings. 
 - Rename nj.uint8_clamped to nj.uint8Clamped
