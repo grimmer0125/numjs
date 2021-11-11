@@ -9,11 +9,12 @@
 <li>Remove the feature of images manipulation. You could consider <a href="https://github.com/donmccurdy/ndarray-pixels">ndarray-pixels</a> if you need this feature. </li>
 <li>Add TypeScript typings and <code>.d.ts</code> is out of box, JavaScript is supported, too. Also, it includes <ul>
 <li>ES6 build (ES2015) with CommonJS module for main build in package.json.</li>
-<li>ES6 build (ES2015) with ES6 module for module build. Some tools will follow the module field in package.json, like Rollup, Webpack, or Parcel. It is good to let build tools can tree-shake this module build to import only the code they need.</li>
+<li>ES6 build (ES2015) with ES6 module for module build.</li>
 </ul>
 </li>
 <li>Refactor internal code via ES6 syntax and does not change the core algorithm code.</li>
-<li>Add &quot;uint8_clamped&quot; (Uint8ClampedArray) support.</li>
+<li>Add &quot;uint8_clamped&quot; (Uint8ClampedArray) support. </li>
+<li>Requires Node.js 12+.</li>
 </ul>
 <p>You can check the <a href="https://github.com/grimmer0125/numjs/blob/master/CHANGELOG.md">changelog</a>.</p>
 
