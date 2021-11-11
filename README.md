@@ -8,9 +8,10 @@ This project is forked from https://github.com/nicolaspanel/numjs and does below
 - Remove the feature of images manipulation. You could consider [ndarray-pixels](https://github.com/donmccurdy/ndarray-pixels) if you need this feature. 
 - Add TypeScript typings and `.d.ts` is out of box, JavaScript is supported, too. Also, it includes 
     - ES6 build (ES2015) with CommonJS module for main build in package.json.
-    - ES6 build (ES2015) with ES6 module for module build. Some tools will follow the module field in package.json, like Rollup, Webpack, or Parcel. It is good to let build tools can tree-shake this module build to import only the code they need.
+    - ES6 build (ES2015) with ES6 module for module build.
 - Refactor internal code via ES6 syntax and does not change the core algorithm code.
 - Add "uint8_clamped" (Uint8ClampedArray) support. 
+- Requires Node.js 12+.
 
 You can check the [changelog](https://github.com/grimmer0125/numjs/blob/master/CHANGELOG.md).
 
