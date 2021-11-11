@@ -50,7 +50,7 @@ const nj = require('@d4c/numjs').default;
 or download from CDN: 
 ```html
 <script type="module">
-    import nj from 'https://cdn.jsdelivr.net/npm/@d4c/numjs@0.17.19/build/module/numjs.min.js';
+    import nj from 'https://cdn.jsdelivr.net/npm/@d4c/numjs/build/module/numjs.min.js';
     // optional: assign to global to let other code can use: globalThis.nj = nj;
 </script>
 ```
