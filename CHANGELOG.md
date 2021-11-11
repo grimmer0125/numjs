@@ -1,5 +1,8 @@
 # Changelog
 
+### [0.17.19](https://github.com/grimmer0125/numjs/compare/v0.17.16...v0.17.19) (2021-11-11)
+
+- Add CDN parcel build. 
 ### [0.17.16](https://github.com/grimmer0125/numjs/compare/v0.17.14...v0.17.16) (2021-11-11)
 
 - Improve documentation. 
