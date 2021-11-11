@@ -1,17 +1,22 @@
-"use strict";
+// "use strict";
 
-const cwise = require("cwise");
-const ops = require("ndarray-ops");
-const gemm = require("ndarray-gemm");
-const ndFFT = require("ndarray-fft");
-const ndPool = require("typedarray-pool");
+// const cwise = require("cwise");
+// const ops = require("ndarray-ops");
+//const ndFFT = require("ndarray-fft");
+// const gemm = require("ndarray-gemm");
+// const ndPool = require("typedarray-pool");
 
-const util = require("util");
+import cwise from "cwise";
+import ops from "ndarray-ops";
+import ndFFT from "ndarray-fft";
+import gemm from "ndarray-gemm";
+import ndPool from "typedarray-pool";
 
 import ndarray from "ndarray";
 import CONF from "./config";
 import * as errors from "./errors";
 import _ from "./utils";
+const util = require("util");
 
 export interface ArbitraryDimArray<T> extends Array<T | ArbitraryDimArray<T>> {}
 
@@ -291,7 +296,7 @@ export class NdArray {
       shape = [].slice.call(arguments);
     }
     if (
-      (shape as number[]).filter(function (s) {
+      (shape as number[]).filter(function(s) {
         return s === -1;
       }).length > 1
     ) {
@@ -299,7 +304,7 @@ export class NdArray {
     }
     const currentShapeSize = _.shapeSize(shape);
     shape = shape.map(
-      function (s) {
+      function(s) {
         return s === -1 ? (-1 * this.size) / currentShapeSize : s;
       }.bind(this)
     );
@@ -398,7 +403,7 @@ export class NdArray {
         axes[i] = d - i - 1;
       }
     } else if (args.length > 1) {
-      axes = args as unknown as number[];
+      axes = (args as unknown) as number[];
     } else {
       axes = args[0];
     }
@@ -428,7 +433,9 @@ export class NdArray {
       tShape[0] === xShape[0]
     ) {
       // vector/matrix
-      return this.reshape([tShape[0], 1]).T.dot(x).reshape(xShape[1]);
+      return this.reshape([tShape[0], 1])
+        .T.dot(x)
+        .reshape(xShape[1]);
     } else if (
       tShape.length === 2 &&
       xShape.length === 1 &&
@@ -732,7 +739,7 @@ export class NdArray {
         new Array(k + 1).join(" ") +
         "[" +
         arr
-          .map(function (i, ii) {
+          .map(function(i, ii) {
             return formatArray(ii === 0 && k === 0 ? 1 : k + 1, i);
           })
           .join(",") +
@@ -1099,7 +1106,7 @@ export class NdArray {
 /* istanbul ignore next */
 const doConjMuleq = cwise({
   args: ["array", "array", "array", "array"],
-  body: function (xi, yi, ui, vi) {
+  body: function(xi, yi, ui, vi) {
     const a = ui;
     const b = vi;
     const c = xi;
@@ -1134,7 +1141,7 @@ const doConvolve3x3 = cwise({
     { offset: [1, 0], array: 1 }, // xh
     { offset: [1, 1], array: 1 }, // xi
   ],
-  body: function (
+  body: function(
     c,
     xe,
     fa,
@@ -1225,7 +1232,7 @@ const doConvolve5x5 = cwise({
     { offset: [2, 1], array: 1 }, // xx
     { offset: [2, 2], array: 1 }, // xy
   ],
-  body: function (
+  body: function(
     index,
     c,
     xm,

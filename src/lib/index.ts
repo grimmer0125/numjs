@@ -5,11 +5,14 @@
  *
  * @packageDocumentation
  */
-"use strict";
+// "use strict";
 
-const cwise = require("cwise");
-const ops = require("ndarray-ops");
-const ndFFT = require("ndarray-fft");
+import cwise from "cwise";
+import ops from "ndarray-ops";
+import ndFFT from "ndarray-fft";
+//const cwise = require("cwise");
+// const ops = require("ndarray-ops");
+// const ndFFT = require("ndarray-fft");
 
 export { default as config } from "./config";
 export { default as dtypes } from "./dtypes";
@@ -716,7 +719,7 @@ export function stack(
   if (!arrays || arrays.length === 0) {
     throw new errors.ValueError("need at least one array to stack");
   }
-  const arrays2 = arrays.map(function (a) {
+  const arrays2 = arrays.map(function(a) {
     return (_.isNumber(a) ? a : NdArray.new(a)) as number | NdArray;
   });
   const expectedShape = (arrays2[0] as NdArray).shape || []; // for numbers

@@ -38,6 +38,7 @@
   },
   "scripts": {
     "build": "tsdx build",
+    "buildall": "tsdx build --format cjs,esm,umd",
     "lint": "tsdx lint",
     "build_depreciated": "run-p build:*",
     "build:main": "tsc -p tsconfig.json",
