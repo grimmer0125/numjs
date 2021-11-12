@@ -87,6 +87,7 @@ const d = nj.arange(3); // results in array([ 0, 1, 2], dtype=uint8)
 // but we want [1,2,3], how?  
 // we can manually create a scijs/ndarray object, then assign it as selection property 
 d.selection = nj.ndarray(new Uint8Array([1, 2, 3]));
+// d.selection.data is the stored raw Uint8Array([1, 2, 3])
 ```
 
 __Note__: possible types are int8, uint8, int16, uint16, int32, uint32, float32, float64, uint8_clamped and array (the default)
