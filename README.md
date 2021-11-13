@@ -693,5 +693,5 @@ array([0, 1, 2, 3, 4, 0, 1])
 
 ## Documentation
 - [@d4c/numjs](https://grimmer0125.github.io/numjs/)
-    - [numjs globals (nj) doc](https://grimmer0125.github.io/numjs/modules/)
+    - [numjs module (nj) doc](https://grimmer0125.github.io/numjs/modules/)
     - [NdArray doc](https://grimmer0125.github.io/numjs/classes/ndarray.NdArray.html)
