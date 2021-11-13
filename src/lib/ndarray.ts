@@ -27,15 +27,14 @@ export type ArrayLikeConstructor =
   | Float32ArrayConstructor
   | Float64ArrayConstructor
   | Uint8ClampedArrayConstructor;
+
 /**
  * Multidimensional, homogeneous array of fixed-size items
  *
  * The number of dimensions and items in an array is defined by its shape, which is a tuple of N positive
  * integers that specify the sizes of each dimension. The type of items in the array is specified by a separate
  * data-type object (dtype), one of which is associated with each NdArray.
- * @constructor
  */
-
 export class NdArray {
   selection: ndarray.NdArray;
 
