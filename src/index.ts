@@ -64,9 +64,11 @@ import {
   float32,
   float64,
   uint8Clamped,
-} from "./lib/index";
+} from "./lib";
 
-const nj = {
+export { NdArray, ndarray } from "./lib";
+
+export default {
   config,
   dtypes,
   NdArray,
@@ -133,5 +135,3 @@ const nj = {
   float64,
   uint8Clamped,
 };
-
-export default nj;
