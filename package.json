@@ -2,10 +2,16 @@
   "name": "@d4c/numjs",
   "version": "0.17.23",
   "description": "Like NumPy, in TypeScript and JavaScript",
+  "type": "module",
   "source": "src/index.ts",
-  "main": "build/main/index.js",
-  "typings": "build/main/index.d.ts",
-  "module": "build/module/index.js",
+  "main": "dist/numjs.umd.js",
+  "umd:main": "dist/numjs.umd.js",
+  "module": "dist/numjs.umd.js",
+  "exports": {
+    "require": "./dist/numjs.js",
+    "default": "./dist/numjs.modern.js"
+  },
+  "types": "dist/numjs.d.ts",
   "targets": {
     "main": false,
     "module": {
@@ -39,6 +45,7 @@
     "chai": "^4.3.4",
     "codecov": "^3.8.3",
     "gh-pages": "^3.2.3",
+    "microbundle": "^0.14.1",
     "mocha": "^9.1.3",
     "npm-run-all": "^4.1.5",
     "nyc": "^15.1.0",
@@ -48,6 +55,7 @@
     "typescript": "^4.4.2"
   },
   "scripts": {
+    "micro": "microbundle",
     "build": "run-s build:parcel build:main build:module",
     "build:main": "tsc -p tsconfig.json",
     "build:module": "tsc -p tsconfig.module.json",
