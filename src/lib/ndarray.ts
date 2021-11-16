@@ -1,17 +1,18 @@
 "use strict";
 
-const cwise = require("cwise");
-const ops = require("ndarray-ops");
-const gemm = require("ndarray-gemm");
-const ndFFT = require("ndarray-fft");
-const ndPool = require("typedarray-pool");
+import cwise from "cwise";
+import ops from "ndarray-ops";
+import ndFFT from "ndarray-fft";
 
-const util = require("util");
+import gemm from "ndarray-gemm";
+import ndPool from "typedarray-pool";
 
 import ndarray from "ndarray";
 import CONF from "./config";
 import * as errors from "./errors";
 import _ from "./utils";
+
+import util from "util";
 
 export interface ArbitraryDimArray<T> extends Array<T | ArbitraryDimArray<T>> {}
 

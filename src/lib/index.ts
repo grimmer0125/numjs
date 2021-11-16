@@ -7,9 +7,9 @@
  */
 "use strict";
 
-const cwise = require("cwise");
-const ops = require("ndarray-ops");
-const ndFFT = require("ndarray-fft");
+import cwise from "cwise";
+import ops from "ndarray-ops";
+import ndFFT from "ndarray-fft";
 
 export { default as config } from "./config";
 export { default as dtypes } from "./dtypes";
