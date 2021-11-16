@@ -35,19 +35,19 @@ npm install @d4c/numjs
 yarn add @d4c/numjs
 ```
 
-then either using ES6 import: 
+then using ES6 import: 
 
 ```ts
 import nj from "@d4c/numjs"; 
 ```
-or CommonJS require:
+Or CommonJS require:
 
 ```ts
 // TypeScript users will not get typings when using require
 const nj = require('@d4c/numjs').default; 
 ```
 
-or download from CDN: 
+Or download from CDN: 
 ```html
 <script type="module">
     import nj from 'https://cdn.jsdelivr.net/npm/@d4c/numjs/build/module/numjs.min.js';
@@ -55,6 +55,7 @@ or download from CDN:
 </script>
 ```
 
+If using `ES6 import` or `CommonJS require` resuls in some errors, please try to use `import nj from "@d4c/numjs/build/module/numjs.min.js` in your environments. 
 ## Basics
 
 ### Array Creation
