@@ -83,8 +83,8 @@ Below are alternative ways to create same `NdArray`.
 ```ts
 const a = nj.array([1, 2, 3], "uint8");
 const b = nj.array([1, 2, 3], Uint8Array);
-const c = nj.array(new Uint8Array([1, 2, 3]));
-const d = nj.arange(3); // results in array([ 0, 1, 2], dtype=uint8) 
+const c = nj.array(new Uint8Array([1, 2, 3]), "uint8");
+const d = nj.arange(3,"uint8"); // results in array([ 0, 1, 2], dtype=uint8) 
 // but we want [1,2,3], how?  
 // we can manually create a scijs/ndarray object, then assign it as selection property 
 d.selection = nj.ndarray(new Uint8Array([1, 2, 3]));
