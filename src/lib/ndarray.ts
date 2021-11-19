@@ -36,7 +36,7 @@ export type ArrayLikeConstructor =
  * integers that specify the sizes of each dimension. The type of items in the array is specified by a separate
  * data-type object (dtype), one of which is associated with each NdArray.
  */
-export class NdArray {
+export class NdArray<T = unknown> {
   selection: ndarray.NdArray;
 
   constructor(data: ndarray.NdArray);
@@ -1088,10 +1088,10 @@ export class NdArray {
     return out;
   }
 
-  static new(
-    arr: NdArray | ArbDimNumArray | number | ndarray.TypedArray,
+  static new<T>(
+    arr: NdArray<T> | ArbDimNumArray | number | ndarray.TypedArray,
     dtype?: string | ArrayLikeConstructor
-  ): NdArray {
+  ): NdArray<T> {
     return createArray(arr, dtype);
   }
 }
