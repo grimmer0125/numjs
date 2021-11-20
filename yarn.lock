@@ -1207,7 +1207,7 @@
   resolved "https://registry.yarnpkg.com/@types/mocha/-/mocha-9.0.0.tgz#3205bcd15ada9bc681ac20bef64e9e6df88fd297"
   integrity sha512-scN0hAWyLVAvLR9AyW7HoFF5sJZglyBsbPuHO4fv7JRvfmPBMfp1ozWqOf/e4wwPNxezBZXRfWzMb6iFLgEVRA==
 
-"@types/ndarray@^1.0.10":
+"@types/ndarray@1.0.10":
   version "1.0.10"
   resolved "https://registry.yarnpkg.com/@types/ndarray/-/ndarray-1.0.10.tgz#e2b04075731a9861ab4ea475a52af964d5847138"
   integrity sha512-UMQxmWA9V0hHqMntIItRVVc6sHmut9E4tBIv811EBPucuyMbAG70KgEdrhnEoD5L3BrLTpnWiCSxQA1HnXfXbw==
