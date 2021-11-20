@@ -1323,14 +1323,15 @@ function createArray(
   // this condition is to fix https://github.com/grimmer0125/numjs/pull/9
   if (dtype) {
     T = _.getType(dtype);
-    if (_.isNumber(arr)) {
-      if (T !== Array) {
-        return new NdArray(new T([arr as number]), [1]);
-      } else {
-        return new NdArray([arr as number], [1]);
-      }
+  }
+  if (_.isNumber(arr)) {
+    if (T && T !== Array) {
+      return new NdArray(new T([arr as number]), [1]);
+    } else {
+      return new NdArray([arr as number], [1]);
     }
   }
+
   const shape = _.getShape(arr);
   if (shape.length > 1) {
     arr = _.flatten(arr, true);
