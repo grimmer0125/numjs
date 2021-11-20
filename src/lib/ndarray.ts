@@ -1090,7 +1090,7 @@ export class NdArray {
     return out;
   }
 
-  static new<T>(
+  static new(
     arr: NdArray | ArbDimNumArray | number | TypedArray,
     dtype?: string | ArrayLikeConstructor
   ): NdArray {
