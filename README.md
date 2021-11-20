@@ -4,13 +4,14 @@
 
 __NumJs__ is built on top of [ndarray](https://scijs.net/packages/#scijs/ndarray) and uses many [scijs packages](https://scijs.net/packages/). `ndarray` is imported as `nj.ndarray`, and any `NdArray` instance's property `selection` is also a `ndarray` object.
 
-This project is forked from https://github.com/nicolaspanel/numjs and does below modifications 
+This project is modified from https://github.com/nicolaspanel/numjs and does below modifications 
 - Remove the feature of images manipulation. You could consider [ndarray-pixels](https://github.com/donmccurdy/ndarray-pixels) if you need this feature. 
 - Add TypeScript typings and `.d.ts` is out of box, JavaScript is supported, too. Also, it includes 
     - ES6 build (ES2015) with CommonJS module for main build in package.json.
     - ES6 build (ES2015) with ES6 module for module build. Some tools will follow the module field in package.json, like Rollup, Webpack, or Parcel.
 - Refactor internal code via ES6 syntax and does not change the core algorithm code.
 - Add "uint8_clamped" (Uint8ClampedArray) support. 
+- Other improvements.
 
 You can check the [changelog](https://github.com/grimmer0125/numjs/blob/master/CHANGELOG.md).
 
@@ -83,7 +84,7 @@ Below are alternative ways to create same `NdArray`.
 ```ts
 const a = nj.array([1, 2, 3], "uint8");
 const b = nj.array([1, 2, 3], Uint8Array);
-const c = nj.array(new Uint8Array([1, 2, 3]), "uint8");
+const c = nj.array(new Uint8Array([1, 2, 3]));
 const d = nj.arange(3,"uint8"); // results in array([ 0, 1, 2], dtype=uint8) 
 // but we want [1,2,3], how?  
 // we can manually create a scijs/ndarray object, then assign it as selection property 

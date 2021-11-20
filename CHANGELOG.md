@@ -1,5 +1,11 @@
 # Changelog
 
+### [0.17.25](https://github.com/grimmer0125/numjs/compare/v0.17.19...v0.17.25) (2021-11-11)
+
+- Fix wrong internal ndarray container when using TypedArray in nj.array #9
+
+- Improve documentation. 
+
 ### [0.17.19](https://github.com/grimmer0125/numjs/compare/v0.17.16...v0.17.19) (2021-11-11)
 
 - Add CDN parcel build. 

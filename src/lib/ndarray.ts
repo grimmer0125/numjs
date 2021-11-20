@@ -8,6 +8,8 @@ import gemm from "ndarray-gemm";
 import ndPool from "typedarray-pool";
 
 import ndarray from "ndarray";
+import { TypedArray, NdArray as BaseNdArray } from "ndarray";
+
 import CONF from "./config";
 import * as errors from "./errors";
 import _ from "./utils";
@@ -37,11 +39,11 @@ export type ArrayLikeConstructor =
  * data-type object (dtype), one of which is associated with each NdArray.
  */
 export class NdArray {
-  selection: ndarray.NdArray;
+  selection: BaseNdArray;
 
-  constructor(data: ndarray.NdArray);
+  constructor(data: BaseNdArray);
   constructor(
-    data: ArbDimNumArray | ndarray.TypedArray,
+    data: ArbDimNumArray | TypedArray,
     shape?: number[],
     stride?: number[],
     offset?: number
@@ -1089,7 +1091,7 @@ export class NdArray {
   }
 
   static new(
-    arr: NdArray | ArbDimNumArray | number | ndarray.TypedArray,
+    arr: NdArray | ArbDimNumArray | number | TypedArray,
     dtype?: string | ArrayLikeConstructor
   ): NdArray {
     return createArray(arr, dtype);
@@ -1311,28 +1313,43 @@ const doConvolve5x5 = cwise({
 });
 
 function createArray(
-  arr: NdArray | ArbDimNumArray | number | ndarray.TypedArray,
+  arr: NdArray | ArbDimNumArray | number | TypedArray,
   dtype?: string | ArrayLikeConstructor
 ): NdArray {
   if (arr instanceof NdArray) {
     return arr;
   }
-  const T = _.getType(dtype);
+  let T: any;
+  // this condition is to fix https://github.com/grimmer0125/numjs/pull/9
+  if (dtype) {
+    T = _.getType(dtype);
+  }
   if (_.isNumber(arr)) {
-    if (T !== Array) {
+    if (T && T !== Array) {
       return new NdArray(new T([arr as number]), [1]);
     } else {
       return new NdArray([arr as number], [1]);
     }
   }
+
   const shape = _.getShape(arr);
   if (shape.length > 1) {
     arr = _.flatten(arr, true);
   }
-  if (!(arr instanceof T)) {
-    arr = new T(arr);
+
+  if (T && !(arr instanceof T)) {
+    // below is to fix https://github.com/grimmer0125/numjs/pull/9
+    if (arr instanceof Array) {
+      arr = new T(arr);
+    } else if (T === Array) {
+      arr = Array.from(arr as TypedArray);
+    } else {
+      throw new errors.ValueError(
+        "Passed TypedArray and (Typed) dtype are not the same types, not support these conversions yet"
+      );
+    }
   }
-  return new NdArray(arr as ArbDimNumArray | ndarray.TypedArray, shape);
+  return new NdArray(arr as ArbDimNumArray | TypedArray, shape);
 }
 // NdArray.new = createArray;
 
