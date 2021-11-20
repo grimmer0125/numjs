@@ -7,7 +7,7 @@ import ndFFT from "ndarray-fft";
 import gemm from "ndarray-gemm";
 import ndPool from "typedarray-pool";
 
-import ndarray from "ndarray";
+import ndarray, { DataType } from "ndarray";
 import { TypedArray, NdArray as BaseNdArray } from "ndarray";
 
 import CONF from "./config";
@@ -1104,7 +1104,7 @@ export class NdArray {
 
   static new(
     arr: NdArray | ArbDimNumArray | number | TypedArray,
-    dtype?: string | ArrayLikeConstructor
+    dtype?: DataType | ArrayLikeConstructor
   ): NdArray {
     return createArray(arr, dtype);
   }
@@ -1326,7 +1326,7 @@ const doConvolve5x5 = cwise({
 
 function createArray(
   arr: NdArray | ArbDimNumArray | number | TypedArray,
-  dtype?: string | ArrayLikeConstructor
+  dtype?: DataType | ArrayLikeConstructor
 ): NdArray {
   if (arr instanceof NdArray) {
     return arr;
@@ -1363,6 +1363,7 @@ function createArray(
   }
   return new NdArray(arr as oneDimArray | TypedArray, shape);
 }
+
 // NdArray.new = createArray;
 
 /*     utils    */

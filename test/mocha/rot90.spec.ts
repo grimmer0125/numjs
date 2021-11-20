@@ -9,7 +9,7 @@ import { ValueError}  from "../../src/lib/errors"
 describe('rot90', function () {
 
   it('should work with default params', function () {
-    const m = nj.array([[1,2],[3,4]], 'int');
+    const m = nj.array([[1,2],[3,4]], 'int8');
     expect(nj.rot90(m).tolist()).to.eql([[2, 4], [1, 3]]);
   });
 
@@ -19,17 +19,17 @@ describe('rot90', function () {
   });
 
   it('should work when k = 2 ', function () {
-    const m = nj.array([[1,2],[3,4]], 'int');
+    const m = nj.array([[1,2],[3,4]], 'int8');
     expect(nj.rot90(m, 2).tolist()).to.eql([[4, 3], [2, 1]]);
   });
 
   it('should work when k = 3', function () {
-    const m = nj.array([[1,2],[3,4]], 'int');
+    const m = nj.array([[1,2],[3,4]], 'int8');
     expect(nj.rot90(m, 3).tolist()).to.eql([[3,1],[4,2]]);
   });
 
   it('should work when k = 4', function () {
-    const m = nj.array([[1,2],[3,4]], 'int');
+    const m = nj.array([[1,2],[3,4]], 'int8');
     expect(nj.rot90(m, 4).tolist()).to.eql([[1,2],[3,4]]);
   });
 
@@ -44,7 +44,7 @@ describe('rot90', function () {
     }).to.throw(ValueError, 'Axes must be different.');
   });
   it('should support custom axes', function () {
-    const m = nj.array([[1,2],[3,4]], 'int');
+    const m = nj.array([[1,2],[3,4]], 'int8');
     expect(nj.rot90(m, 1, [1,0]).tolist()).to.eql([[3,1],[4,2]]);
   });
   it('should work on ndarrays', function () {
