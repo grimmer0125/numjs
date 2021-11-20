@@ -28,6 +28,7 @@ It works both in node.js and in the browser.
 
 __NumJs__ is licensed under the [MIT license](https://github.com/grimmer0125/numjs/blob/master/LICENSE), enabling reuse with almost no restrictions.
 
+Try this [jsfiddle](https://jsfiddle.net/grimmer0125/8jft09q3) to play around with the library.
 ## Installation
 
 ```sh
