@@ -1,12 +1,12 @@
 # Changelog
 
 
-### [0.17.30](https://github.com/grimmer0125/numjs/compare/v0.17.15...v0.17.28) (2021-11-20)
+### [0.17.30](https://github.com/grimmer0125/numjs/compare/v0.17.28...v0.17.30) (2021-11-20)
 
 - Use DataType instead of string for dtype autocomplete.
 - Fix some tpyo dtype "int" in unit tests and README.  
 
-### [0.17.28](https://github.com/grimmer0125/numjs/compare/v0.17.15...v0.17.28) (2021-11-20)
+### [0.17.28](https://github.com/grimmer0125/numjs/compare/v0.17.25...v0.17.28) (2021-11-20)
 
 - Improve NdArray constructor parameter typing.
 
