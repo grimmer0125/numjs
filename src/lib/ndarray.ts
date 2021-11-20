@@ -31,6 +31,18 @@ export type ArrayLikeConstructor =
   | Float64ArrayConstructor
   | Uint8ClampedArrayConstructor;
 
+type oneDimArray =
+  | Array<number>
+  | Int8Array
+  | Int16Array
+  | Int32Array
+  | Uint8Array
+  | Uint8ClampedArray
+  | Uint16Array
+  | Uint32Array
+  | Float32Array
+  | Float64Array;
+
 /**
  * Multidimensional, homogeneous array of fixed-size items
  *
@@ -43,7 +55,7 @@ export class NdArray {
 
   constructor(data: BaseNdArray);
   constructor(
-    data: ArbDimNumArray | TypedArray,
+    data: oneDimArray | TypedArray,
     shape?: number[],
     stride?: number[],
     offset?: number
@@ -1349,7 +1361,7 @@ function createArray(
       );
     }
   }
-  return new NdArray(arr as ArbDimNumArray | TypedArray, shape);
+  return new NdArray(arr as oneDimArray | TypedArray, shape);
 }
 // NdArray.new = createArray;
 
