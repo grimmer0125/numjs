@@ -1,5 +1,11 @@
 # Changelog
 
+### [0.17.28](https://github.com/grimmer0125/numjs/compare/v0.17.15...v0.17.28) (2021-11-11)
+
+- Improve NdArray constructor parameter typing.
+
+- Improve documentation. 
+
 ### [0.17.25](https://github.com/grimmer0125/numjs/compare/v0.17.19...v0.17.25) (2021-11-11)
 
 - Fix wrong internal ndarray container when using TypedArray in nj.array #9
