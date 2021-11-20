@@ -5,7 +5,7 @@
 __NumJs__ is built on top of [ndarray](https://scijs.net/packages/#scijs/ndarray) and uses many [scijs packages](https://scijs.net/packages/). `ndarray` is imported as `nj.ndarray`, and any `NdArray` instance's property `selection` is also a `ndarray` object.
 
 This project is modified from https://github.com/nicolaspanel/numjs and does below modifications 
-- Remove the feature of images manipulation. You could consider [ndarray-pixels](https://github.com/donmccurdy/ndarray-pixels) if you need this feature. 
+- Remove the feature of images manipulation whose dependencies may result in some installation failure on Mac M1 ARM machine. You could consider [ndarray-pixels](https://github.com/donmccurdy/ndarray-pixels) if you need this feature. 
 - Add TypeScript typings and `.d.ts` is out of box, JavaScript is supported, too. Also, it includes 
     - ES6 build (ES2015) with CommonJS module for main build in package.json.
     - ES6 build (ES2015) with ES6 module for module build. Some tools will follow the module field in package.json, like Rollup, Webpack, or Parcel.
