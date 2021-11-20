@@ -6,7 +6,7 @@
 <p><strong>NumJs</strong> is built on top of <a href="https://scijs.net/packages/#scijs/ndarray">ndarray</a> and uses many <a href="https://scijs.net/packages/">scijs packages</a>. <code>ndarray</code> is imported as <code>nj.ndarray</code>, and any <code>NdArray</code> instance&#39;s property <code>selection</code> is also a <code>ndarray</code> object.</p>
 <p>This project is modified from <a href="https://github.com/nicolaspanel/numjs">https://github.com/nicolaspanel/numjs</a> and does below modifications </p>
 <ul>
-<li>Remove the feature of images manipulation. You could consider <a href="https://github.com/donmccurdy/ndarray-pixels">ndarray-pixels</a> if you need this feature. </li>
+<li>Remove the feature of images manipulation whose dependencies may result in some installation failure on Mac M1 ARM machine. You could consider <a href="https://github.com/donmccurdy/ndarray-pixels">ndarray-pixels</a> if you need this feature. </li>
 <li>Add TypeScript typings and <code>.d.ts</code> is out of box, JavaScript is supported, too. Also, it includes <ul>
 <li>ES6 build (ES2015) with CommonJS module for main build in package.json.</li>
 <li>ES6 build (ES2015) with ES6 module for module build. Some tools will follow the module field in package.json, like Rollup, Webpack, or Parcel.</li>
