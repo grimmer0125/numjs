@@ -129,6 +129,24 @@ array([ 10, 15, 20, 25])
 array([ 1, 2, 3, 4], dtype=uint8)
 ```
 
+#### Additional NdArray constructor parameters, stride and offset
+
+The code is like 
+
+```ts
+// pass data, shape, stride, offset arguments. The latter three arguments are optional.
+// this will call nj.ndarray([2, 3, 4], [3], [1], 0) and assign it to NdArray's selection property
+const a = new NdArray([2, 3, 4], [3], [1], 0);
+```
+
+Or you want to apply on a raw scijs ndarray object
+
+```ts
+// scijs ndarray object
+const a = nj.ndarray(n[2, 3, 4], [3], [1], 0);
+
+```
+
 ### More info about the array
 
 __NumJs__’s array class is called `NdArray`. It is also known by the alias `array`. The more important properties of an `NdArray` object are:
