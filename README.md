@@ -687,7 +687,7 @@ __Note__: `convolve` uses Fast Fourier Transform (FFT) to speed up computation o
 ### Other utils
 `rot90`
 ```ts
-> m = nj.array([[1,2],[3,4]], 'int')
+> m = nj.array([[1,2],[3,4]], 'int8')
 > m
 array([[1, 2],
        [3, 4]])
