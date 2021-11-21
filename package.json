@@ -1,6 +1,6 @@
 {
   "name": "@d4c/numjs",
-  "version": "0.17.31",
+  "version": "0.17.32",
   "description": "Like NumPy, in TypeScript and JavaScript",
   "source": "src/index.ts",
   "main": "build/main/index.js",
@@ -21,7 +21,7 @@
   "homepage": "https://grimmer0125.github.io/numjs",
   "license": "MIT",
   "dependencies": {
-    "@types/ndarray": "1.0.10",
+    "@types/ndarray": "^1.0.11",
     "cwise": "^1.0.10",
     "ndarray": "^1.0.19",
     "ndarray-fft": "^1.0.3",
