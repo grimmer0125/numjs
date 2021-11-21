@@ -3,22 +3,19 @@
 import cwise from "cwise";
 import ops from "ndarray-ops";
 import ndFFT from "ndarray-fft";
-
 import gemm from "ndarray-gemm";
 import ndPool from "typedarray-pool";
+import ndarray, { NdArray as BaseNdArray } from "ndarray";
 
-import ndarray, { DataType } from "ndarray";
-import { TypedArray, NdArray as BaseNdArray } from "ndarray";
+import util from "util";
 
 import CONF from "./config";
 import * as errors from "./errors";
 import _ from "./utils";
 
-import util from "util";
-
 export interface ArbitraryDimArray<T> extends Array<T | ArbitraryDimArray<T>> {}
-
 export type ArbDimNumArray = ArbitraryDimArray<number>;
+
 export type ArrayLikeConstructor =
   | ArrayConstructor
   | Int8ArrayConstructor
@@ -31,17 +28,36 @@ export type ArrayLikeConstructor =
   | Float64ArrayConstructor
   | Uint8ClampedArrayConstructor;
 
-type oneDimArray =
-  | Array<number>
+export type TypedArray =
   | Int8Array
-  | Int16Array
-  | Int32Array
   | Uint8Array
   | Uint8ClampedArray
+  | Int16Array
   | Uint16Array
+  | Int32Array
   | Uint32Array
   | Float32Array
   | Float64Array;
+export type OneDimNumArray = Array<number> | TypedArray;
+export type DType<D = OneDimNumArray> = D extends Int8Array
+  ? "int8"
+  : D extends Int16Array
+  ? "int16"
+  : D extends Int32Array
+  ? "int32"
+  : D extends Uint8Array
+  ? "uint8"
+  : D extends Uint8ClampedArray
+  ? "uint8_clamped"
+  : D extends Uint16Array
+  ? "uint16"
+  : D extends Uint32Array
+  ? "uint32"
+  : D extends Float32Array
+  ? "float32"
+  : D extends Float64Array
+  ? "float64"
+  : "array";
 
 /**
  * Multidimensional, homogeneous array of fixed-size items
@@ -55,8 +71,8 @@ export class NdArray {
 
   constructor(data: BaseNdArray);
   constructor(
-    data: oneDimArray | TypedArray,
-    shape?: number[],
+    data: OneDimNumArray,
+    shape: number[],
     stride?: number[],
     offset?: number
   );
@@ -339,7 +355,7 @@ export class NdArray {
       }
       if (sameShapes) {
         return new NdArray(
-          this.selection.data,
+          this.selection.data as OneDimNumArray,
           selfShape,
           selfStride,
           selfOffset
@@ -358,7 +374,12 @@ export class NdArray {
           offset -= (shape[i] - 1) * stride[i];
         }
       }
-      return new NdArray(this.selection.data, shape, stride, offset);
+      return new NdArray(
+        this.selection.data as OneDimNumArray,
+        shape,
+        stride,
+        offset
+      );
     }
 
     const minDim = Math.min(selfDim, d);
@@ -375,7 +396,12 @@ export class NdArray {
         stride[i] = selfStride[i] || 1;
       }
       offset = selfOffset;
-      return new NdArray(this.selection.data, shape, stride, offset);
+      return new NdArray(
+        this.selection.data as OneDimNumArray,
+        shape,
+        stride,
+        offset
+      );
     }
     return this.flatten().reshape(shape);
   }
@@ -423,7 +449,7 @@ export class NdArray {
    * Dot product of two arrays.
    */
   dot(x: ArbDimNumArray | NdArray): NdArray {
-    x = x instanceof NdArray ? x : createArray(x, this.dtype);
+    x = x instanceof NdArray ? x : createArray(x, this.dtype as DType);
     const tShape = this.shape;
     const xShape = x.shape;
 
@@ -479,7 +505,7 @@ export class NdArray {
       ops.assigns(arr.selection, x);
       return arr;
     }
-    x = createArray(x, this.dtype);
+    x = createArray(x, this.dtype as DType);
     ops.assign(arr.selection, x.selection);
     return arr;
   }
@@ -497,7 +523,7 @@ export class NdArray {
       ops.addseq(arr.selection, x);
       return arr;
     }
-    x = createArray(x, this.dtype);
+    x = createArray(x, this.dtype as DType);
     ops.addeq(arr.selection, x.selection);
     return arr;
   }
@@ -515,7 +541,7 @@ export class NdArray {
       ops.subseq(arr.selection, x);
       return arr;
     }
-    x = createArray(x, this.dtype);
+    x = createArray(x, this.dtype as DType);
     ops.subeq(arr.selection, x.selection);
     return arr;
   }
@@ -533,7 +559,7 @@ export class NdArray {
       return arr;
     }
 
-    x = createArray(x, this.dtype);
+    x = createArray(x, this.dtype as DType);
     ops.muleq(arr.selection, x.selection);
 
     return arr;
@@ -552,7 +578,7 @@ export class NdArray {
       return arr;
     }
 
-    x = createArray(x, this.dtype);
+    x = createArray(x, this.dtype as DType);
     ops.diveq(arr.selection, x.selection);
 
     return arr;
@@ -574,7 +600,7 @@ export class NdArray {
       return arr;
     }
 
-    x = createArray(x, this.dtype);
+    x = createArray(x, this.dtype as DType);
     ops.poweq(arr.selection, x.selection);
     return arr;
   }
@@ -688,7 +714,7 @@ export class NdArray {
       return arr;
     }
 
-    x = createArray(x, this.dtype);
+    x = createArray(x, this.dtype as DType);
     ops.modeq(arr.selection, x.selection);
 
     return arr;
@@ -780,12 +806,14 @@ export class NdArray {
    */
   clone(): NdArray {
     const s = this.selection;
-    if (typeof s.data.slice === "undefined") {
+    if (typeof (s.data as OneDimNumArray).slice === "undefined") {
       return new NdArray(
         ndarray([].slice.apply(s.data), s.shape, s.stride, s.offset)
       ); // for legacy browsers
     }
-    return new NdArray(ndarray(s.data.slice(), s.shape, s.stride, s.offset));
+    return new NdArray(
+      ndarray((s.data as OneDimNumArray).slice(), s.shape, s.stride, s.offset)
+    );
   }
 
   /**
@@ -849,7 +877,7 @@ export class NdArray {
       nstride += mstride[i];
     }
     return new NdArray(
-      this.selection.data,
+      this.selection.data as OneDimNumArray,
       [nshape],
       [nstride],
       this.selection.offset
@@ -870,7 +898,7 @@ export class NdArray {
         loc[ii] = ii === axis ? i : null;
       }
       const subArr = this.selection.pick.apply(this.selection, loc);
-      const xi = createArray(unpackArray(subArr), this.dtype);
+      const xi = createArray(unpackArray(subArr), this.dtype as DType);
       cb(xi, i);
     }
   }
@@ -1104,7 +1132,7 @@ export class NdArray {
 
   static new(
     arr: NdArray | ArbDimNumArray | number | TypedArray,
-    dtype?: DataType | ArrayLikeConstructor
+    dtype?: DType | ArrayLikeConstructor
   ): NdArray {
     return createArray(arr, dtype);
   }
@@ -1326,7 +1354,7 @@ const doConvolve5x5 = cwise({
 
 function createArray(
   arr: NdArray | ArbDimNumArray | number | TypedArray,
-  dtype?: DataType | ArrayLikeConstructor
+  dtype?: DType | ArrayLikeConstructor
 ): NdArray {
   if (arr instanceof NdArray) {
     return arr;
@@ -1361,7 +1389,7 @@ function createArray(
       );
     }
   }
-  return new NdArray(arr as oneDimArray | TypedArray, shape);
+  return new NdArray(arr as OneDimNumArray, shape);
 }
 
 // NdArray.new = createArray;
