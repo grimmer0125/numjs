@@ -136,16 +136,17 @@ The code is like
 ```ts
 // pass data, shape, stride, offset arguments.
 // this will call nj.ndarray([2, 3, 4], [3], [1], 0) and assign it to NdArray's selection property
-const a = new NdArray([2, 3, 4], [3], [1], 0);
+const a = new nj.NdArray([2, 3, 4], [3], [1], 0);
 ```
 
 Or you want to apply on a raw scijs ndarray object
 
 ```ts
 // scijs ndarray object
-const a = nj.ndarray(n[2, 3, 4], [3], [1], 0);
-
+const a = nj.ndarray([2, 3, 4], [3], [1], 0);
 ```
+
+`NdArray and ndarray` are also exported. You can also use `import { NdArray, ndarray } from "@d4c/numjs"` to reduce typing "`nj.`".
 
 ### More info about the array
 
