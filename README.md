@@ -129,12 +129,12 @@ array([ 10, 15, 20, 25])
 array([ 1, 2, 3, 4], dtype=uint8)
 ```
 
-#### Additional NdArray constructor parameters, stride and offset
+#### Optional NdArray constructor parameters, stride and offset
 
 The code is like 
 
 ```ts
-// pass data, shape, stride, offset arguments. The latter three arguments are optional.
+// pass data, shape, stride, offset arguments.
 // this will call nj.ndarray([2, 3, 4], [3], [1], 0) and assign it to NdArray's selection property
 const a = new NdArray([2, 3, 4], [3], [1], 0);
 ```

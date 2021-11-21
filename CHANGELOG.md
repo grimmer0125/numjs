@@ -1,5 +1,10 @@
 # Changelog
 
+### [0.17.32](https://github.com/grimmer0125/numjs/compare/v0.17.30...v0.17.32) (2021-11-21)
+
+- Define DType instead of DataType.
+- Make codes compatible latest @types/ndarray.
+- Improve NdArray constructor typings. 
 
 ### [0.17.30](https://github.com/grimmer0125/numjs/compare/v0.17.28...v0.17.30) (2021-11-20)
 

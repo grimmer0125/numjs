@@ -14,13 +14,17 @@ import ndFFT from "ndarray-fft";
 export { default as config } from "./config";
 export { default as dtypes } from "./dtypes";
 export { default as ndarray } from "ndarray";
-import { NdArray, ArbDimNumArray, ArrayLikeConstructor } from "./ndarray";
+import {
+  NdArray,
+  ArbDimNumArray,
+  ArrayLikeConstructor,
+  DType,
+} from "./ndarray";
 export { NdArray };
 import * as errors from "./errors";
 export { errors };
 
 import _ from "./utils";
-import { DataType } from "ndarray";
 
 export function broadcast(shape1: number[], shape2: number[]) {
   if (shape1.length === 0 || shape2.length === 0) {
@@ -228,18 +232,18 @@ export function arange(
   start: number,
   stop: number,
   step: number,
-  dtype: DataType | ArrayLikeConstructor
+  dtype: DType | ArrayLikeConstructor
 ): NdArray;
 export function arange(start: number, stop: number, step: number): NdArray;
 export function arange(
   start: number,
   stop: number,
-  dtype: DataType | ArrayLikeConstructor
+  dtype: DType | ArrayLikeConstructor
 ): NdArray;
 export function arange(start: number, stop: number): NdArray;
 export function arange(
   stop: number,
-  dtype: DataType | ArrayLikeConstructor
+  dtype: DType | ArrayLikeConstructor
 ): NdArray;
 export function arange(stop: number): NdArray;
 export function arange(...args: any[]): NdArray {
@@ -252,21 +256,21 @@ export function arange(...args: any[]): NdArray {
       0,
       arguments[0],
       1,
-      arguments[1] as DataType | ArrayLikeConstructor
+      arguments[1] as DType | ArrayLikeConstructor
     );
   } else if (arguments.length === 3 && !_.isNumber(arguments[2])) {
     return arange(
       arguments[0],
       arguments[1],
       1,
-      arguments[2] as DataType | ArrayLikeConstructor
+      arguments[2] as DType | ArrayLikeConstructor
     );
   }
 
   let start: number = arguments[0];
   const stop: number = arguments[1];
   const step: number = arguments[2];
-  const dtype: DataType | ArrayLikeConstructor = arguments[3];
+  const dtype: DType | ArrayLikeConstructor = arguments[3];
 
   const result = [];
   let i = 0;
@@ -286,7 +290,7 @@ export function arange(...args: any[]): NdArray {
  */
 export function zeros(
   shape: number | number[],
-  dtype?: DataType | ArrayLikeConstructor
+  dtype?: DType | ArrayLikeConstructor
 ): NdArray {
   if (_.isNumber(shape) && shape >= 0) {
     shape = [shape as number];
@@ -310,7 +314,7 @@ export function zeros(
  */
 export function ones(
   shape: number[] | number,
-  dtype?: DataType | ArrayLikeConstructor
+  dtype?: DType | ArrayLikeConstructor
 ): NdArray {
   if (_.isNumber(shape) && shape >= 0) {
     shape = [shape as number];
@@ -332,7 +336,7 @@ export function ones(
  */
 export function empty(
   shape: number[] | number,
-  dtype?: DataType | ArrayLikeConstructor
+  dtype?: DType | ArrayLikeConstructor
 ): NdArray {
   if (_.isNumber(shape) && shape >= 0) {
     shape = [shape as number];
@@ -694,7 +698,7 @@ export function diag(x: ArbDimNumArray | NdArray): NdArray {
  */
 export function identity(
   n: number,
-  dtype?: DataType | ArrayLikeConstructor
+  dtype?: DType | ArrayLikeConstructor
 ): NdArray {
   const arr = zeros([n, n], dtype);
   for (let i = 0; i < n; i++) arr.set(i, i, 1);
