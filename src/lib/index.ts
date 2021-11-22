@@ -1,5 +1,5 @@
 /**
- * This is `nj` module page. Below References, Namespaces, Properties, Functions all are the default exported module `nj` properties.
+ * This is default exported `nj` module page. Below References, Namespaces, Properties, Functions are all exported.
  * For example, after import `nj` via `import nj from "@d4c/numjs";` or `const nj = require('@d4c/numjs').default;`,
  * you can use `nj.array` to use create a `NdArray`.
  *
