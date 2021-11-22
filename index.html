@@ -3,7 +3,7 @@
   <h1>@d4c/numjs</h1>
 </a>
 <p><a href="https://www.npmjs.com/package/@d4c/numjs"><img src="https://img.shields.io/npm/v/%40d4c/numjs.svg" alt="npm version"></a> <img src="https://github.com/grimmer0125/numjs/actions/workflows/node.js.yml/badge.svg" alt="example workflow"></p>
-<p><strong>NumJs</strong> is built on top of <a href="https://scijs.net/packages/#scijs/ndarray">ndarray</a> and uses many <a href="https://scijs.net/packages/">scijs packages</a>. <code>ndarray</code> is imported as <code>nj.ndarray</code>, and any <code>NdArray</code> instance&#39;s property <code>selection</code> is also a <code>ndarray</code> object.</p>
+<p><strong>NumJs</strong> is built on top of <a href="https://scijs.net/packages/#scijs/ndarray">ndarray</a> and uses many <a href="https://scijs.net/packages/">scijs packages</a>. <code>ndarray</code> is exported as <code>nj.ndarray</code>, and any <code>NdArray</code> instance&#39;s property <code>selection</code> is a <code>ndarray</code> object.</p>
 <p>This project is modified from <a href="https://github.com/nicolaspanel/numjs">https://github.com/nicolaspanel/numjs</a> and does below modifications </p>
 <ul>
 <li>Remove the feature of images manipulation whose dependencies may result in some installation failure on Mac M1 ARM machine. You could consider <a href="https://github.com/donmccurdy/ndarray-pixels">ndarray-pixels</a> if you need this feature. </li>
@@ -80,7 +80,10 @@
 <p>Or you want to apply on a raw scijs ndarray object</p>
 <pre><code class="language-ts"><span class="hl-1">// scijs ndarray object</span><br/><span class="hl-5">const</span><span class="hl-0"> </span><span class="hl-6">a</span><span class="hl-0"> = </span><span class="hl-3">nj</span><span class="hl-0">.</span><span class="hl-7">ndarray</span><span class="hl-0">([</span><span class="hl-13">2</span><span class="hl-0">, </span><span class="hl-13">3</span><span class="hl-0">, </span><span class="hl-13">4</span><span class="hl-0">], [</span><span class="hl-13">3</span><span class="hl-0">], [</span><span class="hl-13">1</span><span class="hl-0">], </span><span class="hl-13">0</span><span class="hl-0">);</span>
 </code></pre>
-<p><code>NdArray and ndarray</code> are also exported. You can also use <code>import { NdArray, ndarray } from &quot;@d4c/numjs&quot;</code> to reduce typing &quot;<code>nj.</code>&quot;.</p>
+<p><code>NdArray and ndarray</code> are also exported. You can also use </p>
+<pre><code class="language-ts"><span class="hl-2">import</span><span class="hl-0"> { </span><span class="hl-3">NdArray</span><span class="hl-0">, </span><span class="hl-3">ndarray</span><span class="hl-0"> } </span><span class="hl-2">from</span><span class="hl-0"> </span><span class="hl-4">&quot;@d4c/numjs&quot;</span><br/><span class="hl-1">// or CommonJS:</span><br/><span class="hl-5">const</span><span class="hl-0"> </span><span class="hl-6">NdArray</span><span class="hl-0"> = </span><span class="hl-7">require</span><span class="hl-0">(</span><span class="hl-4">&#39;numjs&#39;</span><span class="hl-0">).</span><span class="hl-3">NdArray</span><span class="hl-0">;</span><br/><span class="hl-5">const</span><span class="hl-0"> </span><span class="hl-6">ndarray</span><span class="hl-0"> = </span><span class="hl-7">require</span><span class="hl-0">(</span><span class="hl-4">&#39;numjs&#39;</span><span class="hl-0">).</span><span class="hl-3">ndarray</span><span class="hl-0">;</span>
+</code></pre>
+<p>to reduce typing &quot;<code>nj.</code>&quot;.</p>
 
 <a href="#more-info-about-the-array" id="more-info-about-the-array" style="color: inherit; text-decoration: none;">
   <h3>More info about the array</h3>
