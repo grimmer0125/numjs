@@ -1,5 +1,8 @@
 # Changelog
 
+### [0.17.34](https://github.com/grimmer0125/numjs/compare/v0.17.32...v0.17.34) (2021-11-22)
+
+- Improve exported nj as a default export module instead of nj object for better IDE intelligence
 ### [0.17.32](https://github.com/grimmer0125/numjs/compare/v0.17.30...v0.17.32) (2021-11-21)
 
 - Define DType instead of DataType.
