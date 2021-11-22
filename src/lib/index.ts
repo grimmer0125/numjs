@@ -19,7 +19,7 @@ import {
   ArbDimNumArray,
   ArrayLikeConstructor,
   DType,
-} from "./ndarray";
+} from "./NdArray";
 export { NdArray };
 import * as errors from "./errors";
 export { errors };
